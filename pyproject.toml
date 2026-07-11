@@ -1,0 +1,24 @@
+[project]
+name = "mini-loihi"
+version = "0.1.0"
+description = "Deterministic Mini-Loihi-like architecture simulator and reproducible research artifact"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+test = ["pytest"]
+dev = ["pytest", "ruff", "mypy"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+markers = [
+    "smoke: fast CLI and architecture-validation smoke tests",
+]
+
+[tool.ruff]
+line-length = 120
+
+[tool.mypy]
+python_version = "3.10"
+ignore_missing_imports = true

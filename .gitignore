@@ -1,0 +1,26 @@
+﻿# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+build/
+dist/
+*.egg-info/
+
+# Editors and local agent state
+.vscode/
+.idea/
+.agents/
+.codex/
+
+# Broken former Git metadata backup
+.git.broken/
+
+# Separate unrelated project
+personal-intel-agent/
+personal-intel-agent.zip
+
+# OS files
+Thumbs.db
+.DS_Store

@@ -1,0 +1,105 @@
+{
+  "environment": {
+    "recorded_on": "2026-07-10",
+    "python": "3.13.5",
+    "os_context": "Windows workspace, PowerShell, local venv",
+    "machine_context": "developer workstation; host runtime is not hardware performance",
+    "regenerate_command": ".\\personal-intel-agent\\.venv\\Scripts\\python.exe -m mini_loihi reference-results --json"
+  },
+  "fixed_inference": {
+    "command": ".\\personal-intel-agent\\.venv\\Scripts\\python.exe -m mini_loihi toy --json",
+    "preset": "fixed_single_core_demo",
+    "seed": 0,
+    "expected_neuron_v": {
+      "1": 5,
+      "2": -3,
+      "3": 0
+    },
+    "expected_output_events": [
+      {
+        "source_id": 3,
+        "time": 0
+      }
+    ]
+  },
+  "plasticity_update": {
+    "command": ".\\personal-intel-agent\\.venv\\Scripts\\python.exe -m mini_loihi plasticity --json",
+    "preset": "plasticity_demo",
+    "seed": 0,
+    "initial_weight": 12,
+    "expected_final_weight_greater_than_initial": true
+  },
+  "stable_learning": {
+    "command": ".\\personal-intel-agent\\.venv\\Scripts\\python.exe -m mini_loihi pattern-learning --preset stable --json",
+    "preset": "stable",
+    "seed": 0,
+    "trials": 8,
+    "pre_accuracy": 0.5,
+    "post_accuracy": 1.0,
+    "stability": "stable_learning",
+    "expected_clamped_update_count": 0
+  },
+  "saturation_stress": {
+    "command": ".\\personal-intel-agent\\.venv\\Scripts\\python.exe -m mini_loihi pattern-learning --preset saturation_stress --json",
+    "preset": "saturation_stress",
+    "seed": 0,
+    "expected_failure_mode": "weight_saturation"
+  },
+  "scale_benchmark": {
+    "command": ".\\personal-intel-agent\\.venv\\Scripts\\python.exe -m mini_loihi benchmark --json",
+    "preset": "scale_benchmark",
+    "seed": 0,
+    "semantic_workloads": [
+      {
+        "name": "fixed_256",
+        "neurons": 256,
+        "synapses": 1024,
+        "estimated_memory_bytes": 6400
+      },
+      {
+        "name": "fixed_1k",
+        "neurons": 1024,
+        "synapses": 4096,
+        "estimated_memory_bytes": 25088
+      },
+      {
+        "name": "fixed_4k",
+        "neurons": 4096,
+        "synapses": 16384,
+        "estimated_memory_bytes": 99328
+      }
+    ],
+    "runtime_note": "events_per_second and elapsed_seconds are measured host Python runtime and should be regenerated locally"
+  },
+  "multicore": {
+    "command": ".\\personal-intel-agent\\.venv\\Scripts\\python.exe -m mini_loihi multicore-benchmark --json",
+    "seed": 0,
+    "scenarios": [
+      "feedforward_two_core",
+      "mostly_local",
+      "communication_heavy_four_core",
+      "multicast_heavy",
+      "sparse_recurrent_guarded",
+      "plastic_two_core"
+    ],
+    "exact_multicast_expected_destinations": [
+      0,
+      1
+    ]
+  },
+  "mapping_capacity": {
+    "command": ".\\personal-intel-agent\\.venv\\Scripts\\python.exe -m mini_loihi mapping-report --json",
+    "preset": "hardware_mapping_demo",
+    "seed": 0,
+    "global_neurons": 4,
+    "global_connections": 3,
+    "core_count": 2
+  },
+  "equivalence_validation": {
+    "command": ".\\personal-intel-agent\\.venv\\Scripts\\python.exe -m mini_loihi validation --json",
+    "preset": "validation_equivalence",
+    "seed": 0,
+    "equivalent": true,
+    "normalized_delay": 2
+  }
+}
