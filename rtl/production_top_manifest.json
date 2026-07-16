@@ -1,0 +1,16 @@
+{
+  "define": "SYNTHESIS",
+  "generated_package": "rtl/include/mini_loihi_generated_pkg.sv",
+  "memory_initialization": "none in production top; testbench hierarchical $readmemh only",
+  "schema_version": "1.0",
+  "sources": [
+    "rtl/include/mini_loihi_generated_pkg.sv",
+    "rtl/include/mini_loihi_arith_pkg.sv",
+    "rtl/common/rv_fifo.sv",
+    "rtl/core/synapse_lane.sv",
+    "rtl/core/lif_neuron_datapath.sv",
+    "rtl/core/mini_loihi_core.sv"
+  ],
+  "testbench_sources": [],
+  "top": "mini_loihi_core"
+}

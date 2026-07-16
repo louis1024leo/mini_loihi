@@ -5,7 +5,10 @@ import sys
 from dataclasses import asdict
 from typing import Any
 
+from mini_loihi.architecture import MINI_LOIHI_V6_REF
+from mini_loihi.artifacts import architecture_to_dict, validate_compiled_program, write_compiled_artifacts
 from mini_loihi.benchmark import SyntheticNetworkConfig, compare_fixed_vs_plastic, default_scale_configs, run_benchmark
+from mini_loihi.compiler import compile_network
 from mini_loihi.config import CoreConfig
 from mini_loihi.core import MiniLoihiCore
 from mini_loihi.event import Event
@@ -14,9 +17,25 @@ from mini_loihi.mapping import CoreCapacity, GlobalConnection, build_mapping_rep
 from mini_loihi.memory import NeuronState, NeuronStateMemory, SynapseEntry, SynapseMemory
 from mini_loihi.multicore import GlobalNeuronRef, LocalAxonRef, MultiCoreSystem, RoutingEntry
 from mini_loihi.multicore_benchmark import run_multicore_benchmark_scenarios, run_two_core_feedforward_benchmark
+from mini_loihi.model_ir import (
+    ALIFParameters,
+    LIFParameters,
+    ConnectionIR,
+    InputPortIR,
+    NetworkIR,
+    NeuronModelKind,
+    NeuronPopulationIR,
+    OutputPortIR,
+)
 from mini_loihi.pattern_task import build_microcircuit_template, run_training_experiment
 from mini_loihi.presets import PRESETS
 from mini_loihi.reference import build_reference_results
+from mini_loihi.reference_backend import run_compiled_program
+from mini_loihi.reference_state import ReferenceInputEvent, ReferenceRunResult
+from mini_loihi.reference_trace import write_reference_trace
+from mini_loihi.cycle_backend import run_cycle_differential, run_cycle_model
+from mini_loihi.cycle_trace import cycle_trace_sha256, write_cycle_trace
+from mini_loihi.microarchitecture import MINI_LOIHI_V6_2_REF
 from mini_loihi.stability_audit import (
     classify_stability,
     evaluate_guardrails,
@@ -24,6 +43,29 @@ from mini_loihi.stability_audit import (
     summarize_weights,
     run_diagnostic_training,
 )
+from mini_loihi.rtl_artifacts import export_rtl_fixture
+from mini_loihi.mempipe_artifacts import export_mempipe_fixture
+from mini_loihi.lifpipe_artifacts import export_lifpipe_fixture
+from mini_loihi.mempipe_verify import (
+    run_mempipe_demo,
+    run_seeded_mempipe_regression,
+    write_mempipe_trace,
+)
+from mini_loihi.lifpipe_verify import (
+    run_lifpipe_demo,
+    run_seeded_lifpipe_regression,
+    write_lifpipe_trace,
+)
+from mini_loihi.rtl_audit import (
+    rtl_audit_report,
+    rtl_storage_report,
+    run_rtl_gate,
+    run_rtl_lint,
+    run_rtl_synthesis_report,
+)
+from mini_loihi.rtl_config import MINI_LOIHI_V7_0_RTL
+from mini_loihi.rtl_vectors import build_rtl_demo_fixture
+from mini_loihi.rtl_verify import run_rtl_demo, run_seeded_rtl_regression
 from mini_loihi.validation import run_repeated_multicore_snapshot, run_single_partition_equivalence
 
 
@@ -35,7 +77,7 @@ def main(argv: list[str] | None = None) -> int:
         return int(exc.code)
     try:
         result = args.func(args)
-    except ValueError as exc:
+    except (ValueError, RuntimeError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2
     if result is not None:
@@ -76,6 +118,123 @@ def _build_parser() -> argparse.ArgumentParser:
     reference = _add_command(subparsers, "reference-results", _cmd_reference_results, "small reproducible result bundle", output_parent)
     reference.add_argument("--seed", type=int, default=0)
     _add_command(subparsers, "presets", _cmd_presets, "list reproducible presets", output_parent)
+    _add_command(subparsers, "architecture-report", _cmd_architecture_report, "V6 reference architecture", output_parent)
+    compile_demo = _add_command(
+        subparsers, "compile-demo", _cmd_compile_demo, "compile a deterministic V6 hardware image", output_parent
+    )
+    compile_demo.add_argument("--output-dir", required=True, help="artifact output directory")
+    compile_demo.add_argument("--num-cores", type=int, default=2)
+    compile_demo.add_argument("--placement", choices=("block", "round_robin"), default="block")
+    _add_command(subparsers, "execute-demo", _cmd_execute_demo, "execute the V6.1 compiled demo", output_parent)
+    _add_command(subparsers, "reference-trace", _cmd_reference_trace, "write a V6.1 golden trace", output_parent)
+    _add_command(subparsers, "cycle-demo", _cmd_cycle_demo, "execute the V6.2 cycle demo", output_parent)
+    _add_command(subparsers, "cycle-trace", _cmd_cycle_trace, "write a V6.2 full cycle trace", output_parent)
+    _add_command(subparsers, "timing-report", _cmd_timing_report, "report V6.2 timing and utilization", output_parent)
+    rtl_export = _add_command(
+        subparsers,
+        "rtl-export-demo",
+        _cmd_rtl_export_demo,
+        "export deterministic V7.0 RTL artifacts",
+        output_parent,
+    )
+    rtl_export.add_argument("--output-dir", required=True, help="RTL artifact output directory")
+    rtl_verify = _add_command(
+        subparsers,
+        "rtl-verify-demo",
+        _cmd_rtl_verify_demo,
+        "run V7.0 Icarus differential verification",
+        output_parent,
+    )
+    rtl_verify.add_argument("--vcd", help="optional VCD output path")
+    rtl_regression = _add_command(
+        subparsers,
+        "rtl-regression",
+        _cmd_rtl_regression,
+        "run deterministic V7.0 seeded RTL regression",
+        output_parent,
+    )
+    rtl_regression.add_argument("--seeds", type=int, default=20)
+    mempipe_export = _add_command(
+        subparsers,
+        "rtl-mempipe-export-demo",
+        _cmd_rtl_mempipe_export_demo,
+        "export deterministic V7.1B1 production image artifacts",
+        output_parent,
+    )
+    mempipe_export.add_argument("--output-dir", required=True, help="mempipe artifact output directory")
+    _add_command(
+        subparsers,
+        "rtl-mempipe-verify-demo",
+        _cmd_rtl_mempipe_verify_demo,
+        "run V7.1B1 functional and cycle differential verification",
+        output_parent,
+    )
+    mempipe_regression = _add_command(
+        subparsers,
+        "rtl-mempipe-regression",
+        _cmd_rtl_mempipe_regression,
+        "run deterministic V7.1B1 seeded RTL regression",
+        output_parent,
+    )
+    mempipe_regression.add_argument("--seeds", type=int, default=100)
+    mempipe_trace = _add_command(
+        subparsers,
+        "rtl-mempipe-trace",
+        _cmd_rtl_mempipe_trace,
+        "write the deterministic V7.1B1 trace",
+        output_parent,
+    )
+    lifpipe_export = _add_command(
+        subparsers,
+        "rtl-lifpipe-export-demo",
+        _cmd_rtl_lifpipe_export_demo,
+        "export deterministic V7.1B2 registered LIF pipeline artifacts",
+        output_parent,
+    )
+    lifpipe_export.add_argument("--output-dir", required=True, help="lifpipe artifact output directory")
+    _add_command(
+        subparsers,
+        "rtl-lifpipe-verify-demo",
+        _cmd_rtl_lifpipe_verify_demo,
+        "run V7.1B2 functional and physical-cycle differential verification",
+        output_parent,
+    )
+    lifpipe_regression = _add_command(
+        subparsers,
+        "rtl-lifpipe-regression",
+        _cmd_rtl_lifpipe_regression,
+        "run deterministic V7.1B2 seeded RTL regression",
+        output_parent,
+    )
+    lifpipe_regression.add_argument("--seeds", type=int, default=100)
+    _add_command(
+        subparsers,
+        "rtl-lifpipe-trace",
+        _cmd_rtl_lifpipe_trace,
+        "write the deterministic V7.1B2 physical pipeline trace",
+        output_parent,
+    )
+    _add_command(subparsers, "rtl-audit", _cmd_rtl_audit, "report V7.1A verification truth", output_parent)
+    _add_command(
+        subparsers,
+        "rtl-storage-report",
+        _cmd_rtl_storage_report,
+        "report active and maximum RTL storage",
+        output_parent,
+    )
+    _add_command(subparsers, "rtl-lint", _cmd_rtl_lint, "run V7.1C production RTL lint gates", output_parent)
+    _add_command(
+        subparsers,
+        "rtl-synth-report",
+        _cmd_rtl_synth_report,
+        "validate V7.1C structural and generic synthesis evidence",
+        output_parent,
+    )
+    rtl_gate = _add_command(subparsers, "rtl-gate", _cmd_rtl_gate, "run unified V7.1C gate", output_parent)
+    mode = rtl_gate.add_mutually_exclusive_group()
+    mode.add_argument("--quick", action="store_true", help="run the focused V7 gate")
+    mode.add_argument("--full", action="store_true", help="run the complete Python and RTL gate")
+    rtl_gate.add_argument("--seeds", type=int, help="seeded RTL simulation count")
     return parser
 
 
@@ -92,13 +251,14 @@ def _add_command(
 
 
 def _emit_result(result: dict[str, Any], args: argparse.Namespace) -> None:
-    if args.output:
+    output_consumed = bool(result.get("output_consumed", False))
+    if args.output and not output_consumed:
         write_json(result, args.output)
     if args.csv and "csv_rows" in result:
         write_csv_rows(result["csv_rows"], args.csv)
     if args.json:
         print(dumps_json(result["data"]))
-    elif not args.output:
+    elif not args.output or output_consumed:
         print(result["text"])
 
 
@@ -377,6 +537,559 @@ def _cmd_presets(_args: argparse.Namespace) -> dict[str, Any]:
     return {
         "data": data,
         "text": "Mini-Loihi presets\n" + "\n".join(f"  {name}: {preset.notes}" for name, preset in PRESETS.items()),
+    }
+
+
+def _cmd_architecture_report(_args: argparse.Namespace) -> dict[str, Any]:
+    data = architecture_to_dict(MINI_LOIHI_V6_REF)
+    return {
+        "data": data,
+        "text": (
+            "Mini-Loihi V6 reference architecture\n"
+            f"  identifier: {MINI_LOIHI_V6_REF.architecture_id}\n"
+            f"  version: {MINI_LOIHI_V6_REF.version}\n"
+            f"  neurons/axons/synapses: {MINI_LOIHI_V6_REF.maximum_neurons}/"
+            f"{MINI_LOIHI_V6_REF.maximum_axons}/{MINI_LOIHI_V6_REF.maximum_synapses}\n"
+            f"  packet width: {MINI_LOIHI_V6_REF.packet_format.packet_width} bits\n"
+            f"  same-tick policy: {MINI_LOIHI_V6_REF.execution_semantics.same_tick_policy}"
+        ),
+    }
+
+
+def _cmd_compile_demo(args: argparse.Namespace) -> dict[str, Any]:
+    network = _build_v6_demo_network()
+    program = compile_network(network, MINI_LOIHI_V6_REF, args.num_cores, args.placement)
+    validate_compiled_program(program, MINI_LOIHI_V6_REF)
+    written = write_compiled_artifacts(program, MINI_LOIHI_V6_REF, network, args.output_dir)
+    report = asdict(program.compilation_report)
+    data = {
+        "architecture_identifier": program.architecture_identifier,
+        "build_fingerprint": program.build_fingerprint,
+        "output_directory": str(args.output_dir),
+        "artifact_count": len(written),
+        "resource_report": report,
+    }
+    per_core = ", ".join(
+        f"core {index}: n={item['neurons_used']} a={item['axons_used']} s={item['synapses_used']} "
+        f"r={item['routing_entries_used']}"
+        for index, item in enumerate(report["per_core"])
+    )
+    return {
+        "data": data,
+        "text": (
+            "Mini-Loihi V6 compile demo\n"
+            f"  fingerprint: {program.build_fingerprint}\n"
+            f"  artifacts: {len(written)} in {args.output_dir}\n"
+            f"  resources: {per_core}"
+        ),
+    }
+
+
+def _build_v6_demo_network() -> NetworkIR:
+    return NetworkIR(
+        network_id="v6_compile_demo",
+        populations=(
+            NeuronPopulationIR("input", 2, NeuronModelKind.LIF, LIFParameters(threshold=10)),
+            NeuronPopulationIR(
+                "output",
+                2,
+                NeuronModelKind.ALIF,
+                ALIFParameters(threshold=12, adaptation_increment=2, adaptation_decay=1),
+            ),
+        ),
+        connections=(
+            ConnectionIR("input0_output0", "input", 0, "output", 0, 5, axonal_delay=1),
+            ConnectionIR("input1_output1", "input", 1, "output", 1, -3, axonal_delay=2),
+            ConnectionIR("output0_output1_delayed", "output", 0, "output", 1, 2, axonal_delay=1),
+        ),
+        input_ports=(InputPortIR("input_spikes", "input", 0, 2),),
+        output_ports=(OutputPortIR("classified_spikes", "output", 0, 2),),
+    )
+
+
+def _cmd_execute_demo(_args: argparse.Namespace) -> dict[str, Any]:
+    program = compile_network(_build_v6_demo_network(), MINI_LOIHI_V6_REF, num_cores=2)
+    result = run_compiled_program(program, MINI_LOIHI_V6_REF, _v6_reference_demo_events(), trace_level="summary")
+    data = _reference_result_data(result)
+    return {
+        "data": data,
+        "text": (
+            "Mini-Loihi V6.1 bit-exact execution demo\n"
+            f"  architecture: {result.architecture_identifier}\n"
+            f"  fingerprint: {result.program_fingerprint}\n"
+            f"  spikes: {data['spikes']}\n"
+            f"  final_state_digest: {result.final_state_digest}\n"
+            f"  counters: {data['counters']}"
+        ),
+    }
+
+
+def _cmd_reference_trace(args: argparse.Namespace) -> dict[str, Any]:
+    if not args.output:
+        raise ValueError("reference-trace requires --output <path>")
+    program = compile_network(_build_v6_demo_network(), MINI_LOIHI_V6_REF, num_cores=2)
+    result = run_compiled_program(program, MINI_LOIHI_V6_REF, _v6_reference_demo_events(), trace_level="full")
+    write_reference_trace(result.trace_records, args.output)
+    data = {
+        **_reference_result_data(result),
+        "trace_schema_version": result.trace_schema_version,
+        "trace_record_count": len(result.trace_records),
+        "tick_range": [result.tick_start, result.tick_end],
+        "trace_output": str(args.output),
+    }
+    return {
+        "data": data,
+        "output_consumed": True,
+        "text": (
+            "Mini-Loihi V6.1 reference trace\n"
+            f"  schema: {result.trace_schema_version}\n"
+            f"  ticks: {result.tick_start}..{result.tick_end}\n"
+            f"  records: {len(result.trace_records)}\n"
+            f"  final_state_digest: {result.final_state_digest}\n"
+            f"  output: {args.output}"
+        ),
+    }
+
+
+def _run_v6_cycle_demo(trace_level: str = "none"):
+    program = compile_network(_build_v6_demo_network(), MINI_LOIHI_V6_REF, num_cores=2)
+    return program, run_cycle_model(
+        program,
+        MINI_LOIHI_V6_REF,
+        MINI_LOIHI_V6_2_REF,
+        _v6_reference_demo_events(),
+        trace_level=trace_level,
+    )
+
+
+def _cycle_result_data(result: Any) -> dict[str, Any]:
+    report = result.timing_report
+    return {
+        "architecture_identifier": result.architecture_identifier,
+        "microarchitecture_identifier": result.microarchitecture_identifier,
+        "program_fingerprint": result.program_fingerprint,
+        "logical_tick_range": [result.logical_tick_start, result.logical_tick_end],
+        "logical_ticks_completed": report.logical_ticks_completed,
+        "hardware_cycles": result.hardware_cycles,
+        "logical_spikes": [asdict(item) for item in result.logical_spikes],
+        "final_functional_state_digest": result.final_functional_state_digest,
+        "timing_budget_passed": report.timing_budget_miss_count == 0,
+        "timing_budget_miss_count": report.timing_budget_miss_count,
+        "cycles_per_logical_tick": [list(item) for item in report.cycles_per_logical_tick],
+        "router_input_high_water_mark": report.router_input_high_water_mark,
+        "router_output_high_water_mark": report.router_output_high_water_mark,
+        "router_arbitration_waits": report.router_arbitration_waits,
+        "destination_backpressure_cycles": report.destination_backpressure_cycles,
+        "bottleneck_summary": report.bottleneck_summary,
+        "per_core": [asdict(item) for item in report.per_core],
+    }
+
+
+def _cmd_cycle_demo(_args: argparse.Namespace) -> dict[str, Any]:
+    program, result = _run_v6_cycle_demo()
+    differential = run_cycle_differential(
+        program,
+        MINI_LOIHI_V6_REF,
+        MINI_LOIHI_V6_2_REF,
+        _v6_reference_demo_events(),
+    )
+    data = {**_cycle_result_data(result), "v6_1_differential_passed": differential.equivalent}
+    return {
+        "data": data,
+        "text": (
+            "Mini-Loihi V6.2 deterministic cycle demo\n"
+            f"  architecture: {result.architecture_identifier}\n"
+            f"  microarchitecture: {result.microarchitecture_identifier}\n"
+            f"  fingerprint: {result.program_fingerprint}\n"
+            f"  logical ticks / hardware cycles: {result.timing_report.logical_ticks_completed} / "
+            f"{result.hardware_cycles}\n"
+            f"  logical spikes: {data['logical_spikes']}\n"
+            f"  V6.1 differential: {'PASS' if differential.equivalent else 'FAIL'}\n"
+            f"  timing budget: {'PASS' if data['timing_budget_passed'] else 'MISS'}\n"
+            f"  stalls: router_wait={result.timing_report.router_arbitration_waits}, "
+            f"destination_backpressure={result.timing_report.destination_backpressure_cycles}\n"
+            f"  final functional digest: {result.final_functional_state_digest}"
+        ),
+    }
+
+
+def _cmd_cycle_trace(args: argparse.Namespace) -> dict[str, Any]:
+    if not args.output:
+        raise ValueError("cycle-trace requires --output <path>")
+    _program, result = _run_v6_cycle_demo("full")
+    write_cycle_trace(result.trace_records, args.output)
+    hardware_range = [-1, -1]
+    logical_range = [-1, -1]
+    if result.trace_records:
+        hardware_range = [result.trace_records[0].hardware_cycle, result.trace_records[-1].hardware_cycle]
+        logical_range = [
+            min(record.logical_tick for record in result.trace_records),
+            max(record.logical_tick for record in result.trace_records),
+        ]
+    data = {
+        **_cycle_result_data(result),
+        "trace_schema_version": result.trace_schema_version,
+        "trace_record_count": len(result.trace_records),
+        "hardware_cycle_range": hardware_range,
+        "logical_tick_range": logical_range,
+        "trace_sha256": cycle_trace_sha256(result.trace_records),
+        "trace_output": str(args.output),
+    }
+    return {
+        "data": data,
+        "output_consumed": True,
+        "text": (
+            "Mini-Loihi V6.2 cycle trace\n"
+            f"  schema: {result.trace_schema_version}\n"
+            f"  records: {len(result.trace_records)}\n"
+            f"  hardware cycles: {hardware_range[0]}..{hardware_range[1]}\n"
+            f"  logical ticks: {logical_range[0]}..{logical_range[1]}\n"
+            f"  SHA-256: {data['trace_sha256']}\n"
+            f"  final functional digest: {result.final_functional_state_digest}\n"
+            f"  output: {args.output}"
+        ),
+    }
+
+
+def _cmd_timing_report(_args: argparse.Namespace) -> dict[str, Any]:
+    _program, result = _run_v6_cycle_demo()
+    data = _cycle_result_data(result)
+    report = result.timing_report
+    return {
+        "data": data,
+        "text": (
+            "Mini-Loihi V6.2 timing report\n"
+            f"  total cycles: {report.total_hardware_cycles}\n"
+            f"  cycles per logical tick: {report.cycles_per_logical_tick}\n"
+            f"  budget misses: {report.timing_budget_miss_count}\n"
+            f"  router FIFO high-water: {report.router_input_high_water_mark}/"
+            f"{report.router_output_high_water_mark}\n"
+            f"  bottleneck: {report.bottleneck_summary}"
+        ),
+    }
+
+
+def _cmd_rtl_export_demo(args: argparse.Namespace) -> dict[str, Any]:
+    fixture = build_rtl_demo_fixture()
+    result = export_rtl_fixture(
+        fixture.program,
+        MINI_LOIHI_V6_REF,
+        MINI_LOIHI_V6_2_REF,
+        MINI_LOIHI_V7_0_RTL,
+        fixture.events,
+        args.output_dir,
+    )
+    data = asdict(result)
+    data["exported_file_count"] = len(result.exported_files)
+    return {
+        "data": data,
+        "text": (
+            "Mini-Loihi V7.0 RTL export\n"
+            f"  architecture: {result.architecture_identifier}\n"
+            f"  microarchitecture: {result.microarchitecture_identifier}\n"
+            f"  RTL profile: {result.rtl_profile_identifier}\n"
+            f"  program fingerprint: {result.program_fingerprint}\n"
+            f"  contract fingerprint: {result.generated_contract_fingerprint}\n"
+            f"  supported subset: {result.supported_subset}\n"
+            f"  exported files: {len(result.exported_files)}"
+        ),
+    }
+
+
+def _cmd_rtl_verify_demo(args: argparse.Namespace) -> dict[str, Any]:
+    result = run_rtl_demo(vcd_path=args.vcd)
+    data = {
+        "status": "PASS" if result.passed else "FAIL",
+        "passed": result.passed,
+        "fixture_name": result.fixture_name,
+        "program_fingerprint": result.program_fingerprint,
+        "contract_fingerprint": result.contract_fingerprint,
+        "v6_1_functional_equivalent": result.functional_equivalent,
+        "v6_2_cycle_equivalent": result.cycle_equivalent,
+        "functional_equivalent": result.functional_equivalent,
+        "cycle_equivalent": result.cycle_equivalent,
+        "architectural_milestone_equivalent": result.architectural_milestone_equivalent,
+        "raw_trace_ordering_equivalent": result.raw_trace_ordering_equivalent,
+        "canonical_milestone_divergence": result.canonical_milestone_divergence,
+        "raw_trace_divergence": result.raw_trace_divergence,
+        "spike_output_comparison": result.spike_output_comparison,
+        "first_divergence": result.first_divergence,
+        "spikes": [asdict(item) for item in result.spikes],
+        "final_functional_state_digest": result.final_functional_state_digest,
+        "rtl_cycles_per_logical_tick": [list(item) for item in result.rtl_cycles_per_logical_tick],
+        "rtl_trace_sha256": result.rtl_trace_sha256,
+        "rtl_trace_record_count": result.rtl_trace_record_count,
+    }
+    return {
+        "data": data,
+        "text": (
+            "Mini-Loihi V7.0 RTL verification\n"
+            f"  result: {'PASS' if result.passed else 'FAIL'}\n"
+            f"  V6.1 functional differential: {result.functional_equivalent}\n"
+            f"  V6.2 cycle differential: {result.cycle_equivalent}\n"
+            f"  spikes: {data['spikes']}\n"
+            f"  cycles per logical tick: {result.rtl_cycles_per_logical_tick}\n"
+            f"  functional digest: {result.final_functional_state_digest}\n"
+            f"  trace SHA-256: {result.rtl_trace_sha256}"
+        ),
+    }
+
+
+def _cmd_rtl_regression(args: argparse.Namespace) -> dict[str, Any]:
+    result = run_seeded_rtl_regression(args.seeds)
+    data = asdict(result)
+    return {
+        "data": data,
+        "text": (
+            "Mini-Loihi V7.0 RTL regression\n"
+            f"  seeds: {result.total_seeds}\n"
+            f"  passed: {result.passed_seeds}\n"
+            f"  simulations: {result.total_simulations}\n"
+            f"  failed seed: {result.failed_seed}\n"
+            f"  fingerprint: {result.regression_fingerprint}\n"
+            f"  result: {'PASS' if result.failed_seed is None else 'FAIL'}"
+        ),
+    }
+
+
+def _cmd_rtl_mempipe_export_demo(args: argparse.Namespace) -> dict[str, Any]:
+    fixture = build_rtl_demo_fixture()
+    result = export_mempipe_fixture(
+        fixture.program,
+        fixture.events,
+        args.output_dir,
+        tick_ids=fixture.tick_ids,
+    )
+    data = asdict(result)
+    data["exported_file_count"] = len(result.exported_files)
+    return {
+        "data": data,
+        "text": (
+            "Mini-Loihi V7.1B1 mempipe export\n"
+            f"  RTL profile: {result.profile_identifier}\n"
+            f"  program fingerprint: {result.program_fingerprint}\n"
+            f"  contract fingerprint: {result.generated_contract_fingerprint}\n"
+            f"  exported files: {len(result.exported_files)}"
+        ),
+    }
+
+
+def _cmd_rtl_lifpipe_export_demo(args: argparse.Namespace) -> dict[str, Any]:
+    fixture = build_rtl_demo_fixture()
+    result = export_lifpipe_fixture(
+        fixture.program, fixture.events, args.output_dir, tick_ids=fixture.tick_ids
+    )
+    data = asdict(result)
+    data["exported_file_count"] = len(result.exported_files)
+    return {
+        "data": data,
+        "text": (
+            "Mini-Loihi V7.1B2 lifpipe export\n"
+            f"  RTL profile: {result.profile_identifier}\n"
+            f"  program fingerprint: {result.program_fingerprint}\n"
+            f"  contract fingerprint: {result.generated_contract_fingerprint}\n"
+            f"  exported files: {len(result.exported_files)}"
+        ),
+    }
+
+
+def _lifpipe_result_data(result: Any) -> dict[str, Any]:
+    utilization = asdict(result.utilization)
+    post_fill_cycles = max(
+        1,
+        result.utilization.total_pipeline_cycles - 5 * len(result.cycles_per_logical_tick),
+    )
+    utilization["achieved_neurons_per_cycle_after_fill"] = (
+        result.utilization.writebacks / post_fill_cycles
+    )
+    return {
+        "status": "PASS" if result.passed else "FAIL",
+        "passed": result.passed,
+        "fixture_name": result.fixture_name,
+        "program_fingerprint": result.program_fingerprint,
+        "contract_fingerprint": result.contract_fingerprint,
+        "v6_1_functional_equivalent": result.functional_equivalent,
+        "v7_1b2_cycle_equivalent": result.cycle_equivalent,
+        "initialization_equivalent": result.initialization_equivalent,
+        "utilization_equivalent": result.utilization_equivalent,
+        "first_divergence": result.first_divergence,
+        "spikes": [list(item) for item in result.spikes],
+        "final_functional_state_digest": result.final_functional_state_digest,
+        "cycles_per_logical_tick": [list(item) for item in result.cycles_per_logical_tick],
+        "initialization_cycles": result.initialization_cycles,
+        "trace_sha256": result.trace_sha256,
+        "trace_record_count": result.trace_record_count,
+        "utilization": utilization,
+    }
+
+
+def _cmd_rtl_lifpipe_verify_demo(_args: argparse.Namespace) -> dict[str, Any]:
+    result = run_lifpipe_demo()
+    data = _lifpipe_result_data(result)
+    return {
+        "data": data,
+        "text": (
+            "Mini-Loihi V7.1B2 lifpipe verification\n"
+            f"  result: {data['status']}\n"
+            f"  V6.1 functional differential: {result.functional_equivalent}\n"
+            f"  V7.1B2 cycle differential: {result.cycle_equivalent}\n"
+            f"  initialization differential: {result.initialization_equivalent}\n"
+            f"  cycles per logical tick: {result.cycles_per_logical_tick}\n"
+            f"  utilization: {result.utilization}\n"
+            f"  trace SHA-256: {result.trace_sha256}"
+        ),
+    }
+
+
+def _cmd_rtl_lifpipe_regression(args: argparse.Namespace) -> dict[str, Any]:
+    result = run_seeded_lifpipe_regression(args.seeds)
+    return {
+        "data": asdict(result),
+        "text": (
+            "Mini-Loihi V7.1B2 lifpipe regression\n"
+            f"  seeds: {result.total_seeds}\n"
+            f"  passed: {result.passed_seeds}\n"
+            f"  failed seed: {result.failed_seed}\n"
+            f"  fingerprint: {result.regression_fingerprint}"
+        ),
+    }
+
+
+def _cmd_rtl_lifpipe_trace(args: argparse.Namespace) -> dict[str, Any]:
+    if not args.output:
+        raise ValueError("rtl-lifpipe-trace requires --output")
+    result = run_lifpipe_demo()
+    write_lifpipe_trace(result, args.output)
+    data = _lifpipe_result_data(result)
+    data["output"] = args.output
+    return {
+        "data": data,
+        "output_consumed": True,
+        "text": (
+            "Mini-Loihi V7.1B2 lifpipe trace\n"
+            f"  records: {result.trace_record_count}\n"
+            f"  SHA-256: {result.trace_sha256}\n"
+            f"  output: {args.output}"
+        ),
+    }
+
+
+def _mempipe_result_data(result: Any) -> dict[str, Any]:
+    return {
+        "status": "PASS" if result.passed else "FAIL",
+        "passed": result.passed,
+        "fixture_name": result.fixture_name,
+        "program_fingerprint": result.program_fingerprint,
+        "contract_fingerprint": result.contract_fingerprint,
+        "v6_1_functional_equivalent": result.functional_equivalent,
+        "v7_1b_cycle_equivalent": result.cycle_equivalent,
+        "initialization_equivalent": result.initialization_equivalent,
+        "first_divergence": result.first_divergence,
+        "spikes": [list(item) for item in result.spikes],
+        "final_functional_state_digest": result.final_functional_state_digest,
+        "cycles_per_logical_tick": [list(item) for item in result.cycles_per_logical_tick],
+        "initialization_cycles": result.initialization_cycles,
+        "initialized_entries": result.initialized_entries,
+        "trace_sha256": result.trace_sha256,
+        "trace_record_count": result.trace_record_count,
+    }
+
+
+def _cmd_rtl_mempipe_verify_demo(_args: argparse.Namespace) -> dict[str, Any]:
+    result = run_mempipe_demo()
+    data = _mempipe_result_data(result)
+    return {
+        "data": data,
+        "text": (
+            "Mini-Loihi V7.1B1 mempipe verification\n"
+            f"  result: {data['status']}\n"
+            f"  V6.1 functional differential: {result.functional_equivalent}\n"
+            f"  V7.1B1 cycle differential: {result.cycle_equivalent}\n"
+            f"  initialization cycles: {result.initialization_cycles}\n"
+            f"  cycles per logical tick: {result.cycles_per_logical_tick}\n"
+            f"  trace SHA-256: {result.trace_sha256}"
+        ),
+    }
+
+
+def _cmd_rtl_mempipe_regression(args: argparse.Namespace) -> dict[str, Any]:
+    result = run_seeded_mempipe_regression(args.seeds)
+    data = asdict(result)
+    return {
+        "data": data,
+        "text": (
+            "Mini-Loihi V7.1B1 mempipe regression\n"
+            f"  seeds: {result.total_seeds}\n"
+            f"  passed: {result.passed_seeds}\n"
+            f"  failed seed: {result.failed_seed}\n"
+            f"  fingerprint: {result.regression_fingerprint}"
+        ),
+    }
+
+
+def _cmd_rtl_mempipe_trace(args: argparse.Namespace) -> dict[str, Any]:
+    if not args.output:
+        raise ValueError("rtl-mempipe-trace requires --output")
+    result = run_mempipe_demo()
+    write_mempipe_trace(result, args.output)
+    data = _mempipe_result_data(result)
+    data["output"] = args.output
+    return {
+        "data": data,
+        "output_consumed": True,
+        "text": (
+            "Mini-Loihi V7.1B1 mempipe trace\n"
+            f"  records: {result.trace_record_count}\n"
+            f"  SHA-256: {result.trace_sha256}\n"
+            f"  output: {args.output}"
+        ),
+    }
+
+
+def _report_command(title: str, data: dict[str, Any]) -> dict[str, Any]:
+    return {"data": data, "text": f"{title}\n{dumps_json(data)}"}
+
+
+def _cmd_rtl_audit(_args: argparse.Namespace) -> dict[str, Any]:
+    return _report_command("Mini-Loihi V7.1A/V7.1B1 RTL audit", rtl_audit_report())
+
+
+def _cmd_rtl_storage_report(_args: argparse.Namespace) -> dict[str, Any]:
+    return _report_command("Mini-Loihi V7.1A/V7.1B1 storage report", rtl_storage_report())
+
+
+def _cmd_rtl_lint(_args: argparse.Namespace) -> dict[str, Any]:
+    return _report_command("Mini-Loihi V7.1C lint report", run_rtl_lint())
+
+
+def _cmd_rtl_synth_report(_args: argparse.Namespace) -> dict[str, Any]:
+    return _report_command("Mini-Loihi V7.1C synthesis report", run_rtl_synthesis_report())
+
+
+def _cmd_rtl_gate(args: argparse.Namespace) -> dict[str, Any]:
+    full = bool(args.full)
+    seeds = args.seeds if args.seeds is not None else (100 if full else 20)
+    if seeds <= 0:
+        raise ValueError("--seeds must be positive")
+    return _report_command("Mini-Loihi V7.1C unified gate", run_rtl_gate(full=full, seeds=seeds))
+
+
+def _v6_reference_demo_events() -> tuple[ReferenceInputEvent, ...]:
+    return (
+        ReferenceInputEvent(0, 1, 0),
+        ReferenceInputEvent(0, 1, 0),
+        ReferenceInputEvent(0, 1, 0),
+    )
+
+
+def _reference_result_data(result: ReferenceRunResult) -> dict[str, Any]:
+    return {
+        "architecture_identifier": result.architecture_identifier,
+        "program_fingerprint": result.program_fingerprint,
+        "spikes": [asdict(item) for item in result.spikes],
+        "packets": [asdict(item) for item in result.packets],
+        "final_state_digest": result.final_state_digest,
+        "counters": asdict(result.counters),
     }
 
 

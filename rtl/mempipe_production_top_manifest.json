@@ -1,0 +1,20 @@
+{
+  "deployment": "V7.1B1 compile-time FPGA-oriented image",
+  "memory_initialization": "instance-local deterministic INIT_FILE parameters using $readmemh in sync_rom",
+  "profile": "mini_loihi_v7_1b_mempipe",
+  "runtime_configuration_bus": null,
+  "sources": [
+    "mini_loihi_generated_pkg.sv",
+    "rtl/include/mini_loihi_arith_pkg.sv",
+    "rtl/common/rv_fifo.sv",
+    "rtl/memory/sync_rom.sv",
+    "rtl/memory/sync_ram.sv",
+    "rtl/core/synapse_lane.sv",
+    "rtl/core/lif_neuron_datapath.sv",
+    "rtl/core/touched_neuron_scanner.sv",
+    "rtl/core/mini_loihi_core_mempipe.sv",
+    "mini_loihi_image_top.sv"
+  ],
+  "testbench_hierarchical_writes": false,
+  "top": "mini_loihi_image_top"
+}

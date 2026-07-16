@@ -7,6 +7,8 @@ venv/
 build/
 dist/
 *.egg-info/
+.v7_1c_baseline/
+.v7_1c_tmp/
 
 # Editors and local agent state
 .vscode/
