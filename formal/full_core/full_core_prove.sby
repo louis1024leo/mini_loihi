@@ -1,0 +1,35 @@
+[options]
+mode prove
+depth 8
+
+[engines]
+smtbmc boolector
+
+[script]
+read -formal -defer -sv -DSYNTHESIS -DFORMAL mini_loihi_generated_pkg.sv mini_loihi_arith_pkg.sv rv_fifo.sv sync_rom.sv sync_ram.sv synapse_lane.sv touched_neuron_scanner.sv lif_pipeline.sv mini_loihi_core_lifpipe.sv full_core_properties.sv full_core_harness.sv
+prep -top full_core_harness
+
+[files]
+mini_loihi_generated_pkg.sv
+mini_loihi_arith_pkg.sv
+rv_fifo.sv
+sync_rom.sv
+sync_ram.sv
+synapse_lane.sv
+touched_neuron_scanner.sv
+lif_pipeline.sv
+mini_loihi_core_lifpipe.sv
+full_core_properties.sv
+full_core_harness.sv
+axon_ptr.mem
+axon_len.mem
+synapse_target.mem
+synapse_weight.mem
+synapse_delay.mem
+synapse_rule.mem
+synapse_tag.mem
+neuron_model.mem
+neuron_threshold.mem
+neuron_reset.mem
+neuron_leak.mem
+neuron_voltage.mem

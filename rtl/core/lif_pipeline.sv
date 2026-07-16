@@ -38,6 +38,13 @@ module lif_pipeline (
   output logic signed [mini_loihi_generated_pkg::STATE_WIDTH-1:0] debug_n3_decay,
   output logic signed [mini_loihi_generated_pkg::STATE_WIDTH-1:0] debug_n3_candidate,
   output logic debug_n4_spike
+`ifdef FORMAL
+  , output logic formal_n5_valid
+  , output logic formal_n5_spike
+  , output logic [mini_loihi_generated_pkg::NEURON_ADDRESS_WIDTH-1:0] formal_n5_neuron
+  , output logic [mini_loihi_generated_pkg::TIMESTAMP_WIDTH-1:0] formal_n5_tick
+  , output logic signed [mini_loihi_generated_pkg::STATE_WIDTH-1:0] formal_n5_voltage
+`endif
 );
   import mini_loihi_generated_pkg::*;
   import mini_loihi_arith_pkg::*;
@@ -125,6 +132,13 @@ module lif_pipeline (
   assign commit_spike = n5_spike;
   assign commit_accumulator_saturated = n5_accumulator_saturated;
   assign commit_membrane_saturated = n5_membrane_saturated;
+`ifdef FORMAL
+  assign formal_n5_valid = n5_valid;
+  assign formal_n5_spike = n5_spike;
+  assign formal_n5_neuron = n5_neuron;
+  assign formal_n5_tick = n5_tick;
+  assign formal_n5_voltage = n5_voltage;
+`endif
 
   assign n1_accumulator_narrow = sat_wide_to_accumulator(n1_accumulator);
   assign n1_accumulator_saturated =

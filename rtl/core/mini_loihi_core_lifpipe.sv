@@ -101,6 +101,36 @@ module mini_loihi_core_lifpipe #(
   output logic [31:0] pipeline_stage_3_valid_cycle_count,
   output logic [31:0] pipeline_stage_4_valid_cycle_count,
   output logic [31:0] pipeline_stage_5_valid_cycle_count
+`ifdef FORMAL
+  , output logic formal_ingress_out_valid
+  , output logic [$clog2(mini_loihi_generated_pkg::INGRESS_FIFO_DEPTH+1)-1:0] formal_ingress_occupancy
+  , output logic formal_ingress_complete
+  , output logic formal_axon_pending
+  , output logic formal_synapse_pending
+  , output logic formal_accumulator_pending
+  , output logic formal_scanner_active
+  , output logic formal_scanner_done
+  , output logic formal_n0_accept
+  , output logic [mini_loihi_generated_pkg::NEURON_ADDRESS_WIDTH-1:0] formal_n0_neuron
+  , output logic formal_pipeline_commit_valid
+  , output logic formal_pipeline_commit_spike
+  , output logic formal_state_write_enable
+  , output logic formal_accumulator_retire
+  , output logic formal_touched_retire
+  , output logic formal_spike_fifo_enqueue
+  , output logic formal_spike_output_handshake
+  , output logic [$clog2(mini_loihi_generated_pkg::SPIKE_FIFO_DEPTH+1)-1:0] formal_spike_occupancy
+  , output logic formal_spike_in_ready
+  , output logic formal_state_response_pending
+  , output logic [mini_loihi_generated_pkg::TIMESTAMP_WIDTH-1:0] formal_current_tick
+  , output logic [mini_loihi_generated_pkg::NEURON_STORAGE_COUNT-1:0] formal_touched_bitmap
+  , output logic [mini_loihi_generated_pkg::NEURON_STORAGE_COUNT-1:0] formal_accumulator_zero
+  , output logic formal_n5_valid
+  , output logic formal_n5_spike
+  , output logic [mini_loihi_generated_pkg::NEURON_ADDRESS_WIDTH-1:0] formal_n5_neuron
+  , output logic [mini_loihi_generated_pkg::TIMESTAMP_WIDTH-1:0] formal_n5_tick
+  , output logic signed [mini_loihi_generated_pkg::STATE_WIDTH-1:0] formal_n5_voltage
+`endif
 );
   import mini_loihi_generated_pkg::*;
 
@@ -346,9 +376,50 @@ module mini_loihi_core_lifpipe #(
     .debug_n1_elapsed(debug_n1_elapsed), .debug_n2_leak_delta(debug_n2_leak_delta),
     .debug_n2_accumulator(debug_n2_accumulator), .debug_n3_decay(debug_n3_decay),
     .debug_n3_candidate(debug_n3_candidate), .debug_n4_spike(debug_n4_spike)
+`ifdef FORMAL
+    , .formal_n5_valid(formal_n5_valid), .formal_n5_spike(formal_n5_spike)
+    , .formal_n5_neuron(formal_n5_neuron), .formal_n5_tick(formal_n5_tick)
+    , .formal_n5_voltage(formal_n5_voltage)
+`endif
   );
 
   assign debug_pipeline_empty = pipeline_empty;
+
+`ifdef FORMAL
+  assign formal_ingress_out_valid = ingress_out_valid;
+  assign formal_ingress_occupancy = ingress_occupancy;
+  assign formal_ingress_complete = ingress_complete;
+  assign formal_axon_pending = state == STATE_AXON_WAIT;
+  assign formal_synapse_pending = state == STATE_SYNAPSE_REQUEST
+    || state == STATE_SYNAPSE_RESPONSE || state == STATE_ACCUMULATE
+    || pending_valid_0 || pending_valid_1;
+  assign formal_accumulator_pending = pending_valid_0 || pending_valid_1;
+  assign formal_scanner_active = scanner_active;
+  assign formal_scanner_done = scanner_done;
+  assign formal_n0_accept = pipeline_issue_valid && pipeline_issue_ready;
+  assign formal_n0_neuron = scanner_inspect_id;
+  assign formal_pipeline_commit_valid = pipeline_commit_valid;
+  assign formal_pipeline_commit_spike = pipeline_commit_spike;
+  assign formal_state_write_enable = state_write_enable;
+  assign formal_accumulator_retire = pipeline_commit_valid;
+  assign formal_touched_retire = pipeline_commit_valid;
+  assign formal_spike_fifo_enqueue = spike_in_valid && spike_in_ready;
+  assign formal_spike_output_handshake = spike_valid && spike_ready;
+  assign formal_spike_occupancy = spike_occupancy;
+  assign formal_spike_in_ready = spike_in_ready;
+  assign formal_state_response_pending = debug_pipeline_valid[0];
+  assign formal_current_tick = current_tick;
+  assign formal_touched_bitmap = touched_bitmap;
+  genvar formal_accumulator_index;
+  generate
+    for (formal_accumulator_index = 0;
+         formal_accumulator_index < NEURON_STORAGE_COUNT;
+         formal_accumulator_index = formal_accumulator_index + 1) begin : formal_accumulator_zero_bits
+      assign formal_accumulator_zero[formal_accumulator_index]
+        = accumulator_bank[formal_accumulator_index] == '0;
+    end
+  endgenerate
+`endif
 
   touched_neuron_scanner #(.COUNT(NEURON_COUNT), .ADDRESS_WIDTH(NEURON_ADDRESS_WIDTH)) scanner (
     .clk(clk), .rst(rst), .start(scanner_start), .advance(scanner_advance), .touched(touched_bitmap),

@@ -9,6 +9,7 @@ dist/
 *.egg-info/
 .v7_1c_baseline/
 .v7_1c_tmp/
+.v7_1d1_formal/
 
 # Editors and local agent state
 .vscode/

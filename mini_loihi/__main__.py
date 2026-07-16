@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 from dataclasses import asdict
+from pathlib import Path
 from typing import Any
 
 from mini_loihi.architecture import MINI_LOIHI_V6_REF
@@ -66,6 +68,7 @@ from mini_loihi.rtl_audit import (
 from mini_loihi.rtl_config import MINI_LOIHI_V7_0_RTL
 from mini_loihi.rtl_vectors import build_rtl_demo_fixture
 from mini_loihi.rtl_verify import run_rtl_demo, run_seeded_rtl_regression
+from mini_loihi.eda import run_full_core_formal, write_full_core_formal_reports
 from mini_loihi.validation import run_repeated_multicore_snapshot, run_single_partition_equivalence
 
 
@@ -235,6 +238,16 @@ def _build_parser() -> argparse.ArgumentParser:
     mode.add_argument("--quick", action="store_true", help="run the focused V7 gate")
     mode.add_argument("--full", action="store_true", help="run the complete Python and RTL gate")
     rtl_gate.add_argument("--seeds", type=int, help="seeded RTL simulation count")
+    formal_full = _add_command(
+        subparsers, "rtl-formal-full-core", _cmd_rtl_formal_full_core,
+        "run V7.1D1 full-core BMC, induction, and cover jobs", output_parent,
+    )
+    formal_full.add_argument("--artifact-dir", default=".v7_1d1_formal")
+    formal_full.add_argument("--report-dir", default="reports")
+    _add_command(
+        subparsers, "rtl-formal-report", _cmd_rtl_formal_report,
+        "read the checked V7.1D1 formal report", output_parent,
+    )
     return parser
 
 
@@ -1064,6 +1077,25 @@ def _cmd_rtl_lint(_args: argparse.Namespace) -> dict[str, Any]:
 
 def _cmd_rtl_synth_report(_args: argparse.Namespace) -> dict[str, Any]:
     return _report_command("Mini-Loihi V7.1C synthesis report", run_rtl_synthesis_report())
+
+
+def _cmd_rtl_formal_full_core(args: argparse.Namespace) -> dict[str, Any]:
+    report = run_full_core_formal(artifact_directory=args.artifact_dir)
+    json_path, text_path = write_full_core_formal_reports(report, args.report_dir)
+    result = dict(report)
+    result["report_json"] = str(json_path)
+    result["report_text"] = str(text_path)
+    return _report_command("Mini-Loihi V7.1D1 full-core formal", result)
+
+
+def _cmd_rtl_formal_report(_args: argparse.Namespace) -> dict[str, Any]:
+    path = Path(__file__).resolve().parents[1] / "reports" / "v7_1d1_formal.json"
+    if not path.is_file():
+        raise RuntimeError("V7.1D1 formal report is missing; run rtl-formal-full-core")
+    return _report_command(
+        "Mini-Loihi V7.1D1 formal report",
+        json.loads(path.read_text(encoding="ascii")),
+    )
 
 
 def _cmd_rtl_gate(args: argparse.Namespace) -> dict[str, Any]:

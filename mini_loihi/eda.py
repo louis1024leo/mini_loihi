@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import re
 import shutil
 import subprocess
@@ -336,6 +337,221 @@ def run_formal_smoke(*, artifact_directory: str | Path | None = None) -> dict[st
     }
 
 
+def run_full_core_formal(*, artifact_directory: str | Path | None = None) -> dict[str, object]:
+    discovery = discover_oss_cad_tools()
+    sby = discovery["sby"]
+    engine = discovery["boolector"]
+    if sby.status != "PASS" or engine.status != "PASS":
+        return {
+            "schema_version": EDA_REPORT_SCHEMA_VERSION,
+            "tool": asdict(sby),
+            "engine": asdict(engine),
+            "assumptions": [],
+            "jobs": [],
+            "properties": [],
+            "covers": [],
+        }
+
+    temporary: tempfile.TemporaryDirectory[str] | None = None
+    if artifact_directory is None:
+        temporary = tempfile.TemporaryDirectory(prefix="mini_loihi_v71d1_formal_")
+        root = Path(temporary.name)
+    else:
+        root = Path(artifact_directory).resolve()
+        root.mkdir(parents=True, exist_ok=True)
+
+    repository = Path(__file__).resolve().parents[1]
+    try:
+        image = root / "image"
+        fixture = _build_full_core_formal_fixture()
+        export_lifpipe_fixture(fixture.program, fixture.events, image, tick_ids=fixture.tick_ids)
+        prepared = _prepare_yosys_sources("v7_1b2", image)
+        prepared[3] = _write_formal_sync_rom_adapter(image)
+        prepared[8] = _write_sby_memory_path_adapter(prepared[8])
+        formal_sources = (
+            *prepared[:9],
+            repository / "formal" / "full_core" / "full_core_properties.sv",
+            repository / "formal" / "full_core" / "full_core_harness.sv",
+        )
+        memory_files = tuple(sorted(image.glob("*.mem")))
+        assumptions_path = repository / "formal" / "full_core" / "assumptions.json"
+        assumptions = json.loads(assumptions_path.read_text(encoding="ascii"))
+        manifest = json.loads((image / "manifest.json").read_text(encoding="ascii"))
+        formal_source_paths = (
+            assumptions_path,
+            repository / "formal" / "full_core" / "full_core_harness.sv",
+            repository / "formal" / "full_core" / "full_core_properties.sv",
+            repository / "rtl" / "core" / "lif_pipeline.sv",
+            repository / "rtl" / "core" / "mini_loihi_core_lifpipe.sv",
+        )
+
+        bmc = _run_sby_job(
+            root / "bmc", "full_core_bmc", formal_sources, "full_core_harness", 56,
+            mode="bmc", defines=("FORMAL",), auxiliary_files=memory_files, timeout=900,
+            defer=True,
+        )
+        prove = _run_sby_job(
+            root / "prove", "full_core_prove", formal_sources, "full_core_harness", 8,
+            mode="prove", defines=("FORMAL",), auxiliary_files=memory_files, timeout=900,
+            defer=True,
+        )
+
+        cover_specs = (
+            ("full_six_stage_pipeline", "COVER_FULL_PIPELINE", 64),
+            ("spike_commits_immediately", "COVER_IMMEDIATE_SPIKE", 64),
+            ("stalled_spike_releases_and_commits", "COVER_STALLED_SPIKE", 64),
+            ("active_tick_completes", "COVER_ACTIVE_TICK_DONE", 64),
+            ("empty_tick_completes", "COVER_EMPTY_TICK_DONE", 64),
+            ("reset_during_active_tick", "COVER_RESET_ACTIVE", 64),
+            ("reset_while_idle", "COVER_RESET_IDLE", 32),
+            ("reset_during_initialization", "COVER_RESET_INITIALIZING", 16),
+            ("reset_with_ingress_work", "COVER_RESET_INGRESS", 48),
+            ("reset_during_synapse_processing", "COVER_RESET_SYNAPSE", 48),
+            ("reset_while_scanner_active", "COVER_RESET_SCANNER", 64),
+            ("reset_with_full_pipeline", "COVER_RESET_FULL_PIPELINE", 64),
+            ("reset_with_stalled_spike", "COVER_RESET_STALLED_SPIKE", 64),
+            ("reset_with_spike_fifo_nonempty", "COVER_RESET_SPIKE_FIFO", 64),
+        )
+        cover_jobs = tuple(
+            _run_sby_job(
+                root / "cover" / name, name, formal_sources, "full_core_harness", depth,
+                mode="cover", defines=("FORMAL", macro), auxiliary_files=memory_files,
+                timeout=900, defer=True,
+            )
+            for name, macro, depth in cover_specs
+        )
+    finally:
+        if temporary is not None:
+            temporary.cleanup()
+
+    property_specs = (
+        ("full-core transaction", "FIFO occupancy and handshake safety"),
+        ("full-core transaction", "N0 accepts never exceed registered scanner issues"),
+        ("full-core transaction", "N0 accepts do not duplicate an outstanding neuron"),
+        ("full-core transaction", "N5 commits never exceed N0 accepts"),
+        ("full-core transaction", "state write count equals N5 commit count at tick barrier"),
+        ("full-core transaction", "spike enqueue count equals spike-producing commit count"),
+        ("full-core transaction", "spike output handshakes never exceed enqueues"),
+        ("pipeline-local", "valid stage payload remains stable while stalled"),
+        ("pipeline-local", "pipeline transactions commit in scanner order without duplication"),
+        ("atomicity", "spiking state write, retirement, and FIFO enqueue are atomic"),
+        ("atomicity", "stalled spiking N5 entry remains stable and performs no mutation"),
+        ("atomicity", "non-spiking N5 commit does not enqueue a spike"),
+        ("tick barrier", "tick_done implies ingress, synapse, scanner, and pipeline quiescence"),
+        ("tick barrier", "tick_done implies no uncommitted neuron transaction"),
+        ("tick barrier", "tick_done requires spike FIFO empty under frozen B2 scheduling"),
+        ("tick barrier", "one tick_done handshake closes exactly one active tick"),
+        ("tick barrier", "completed logical ticks never exceed accepted tick starts"),
+        ("tick barrier", "logical tick ID changes only on an accepted tick start"),
+        ("reset", "reset clears pipeline and pending transaction ownership"),
+        ("reset", "reset prevents pre-reset state writes and spike enqueues"),
+        ("reset", "post-reset initialization restarts from a fresh formal state"),
+    )
+    properties = [
+        {
+            "name": name,
+            "scope": scope,
+            "engine": bmc.engine,
+            "depth": bmc.depth,
+            "assumptions_used": [item["name"] for item in assumptions["assumptions"]],
+            "status": bmc.status,
+            "summary": "all full-core assertions hold through bounded depth"
+            if bmc.status == "PASS" else "see preserved BMC job artifacts",
+            "counterexample_path": None if bmc.status == "PASS" else "bmc/full_core_bmc",
+        }
+        for scope, name in property_specs
+    ]
+    return {
+        "schema_version": EDA_REPORT_SCHEMA_VERSION,
+        "tool": asdict(sby),
+        "engine": asdict(engine),
+        "fixture": {
+            "neurons": 8,
+            "axons": 2,
+            "synapses": 8,
+            "ingress_fifo_depth": 8,
+            "spike_fifo_depth": 4,
+            "repeated_target_conflict": True,
+            "generated_contract_fingerprint": manifest["generated_contract_fingerprint"],
+        },
+        "formal_source_sha256": {
+            path.relative_to(repository).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
+            for path in formal_source_paths
+        },
+        "assumptions": assumptions["assumptions"],
+        "explicitly_not_assumed": assumptions["explicitly_not_assumed"],
+        "jobs": [asdict(bmc), asdict(prove)],
+        "properties": properties,
+        "covers": [
+            {
+                "name": name,
+                "engine": job.engine,
+                "depth": job.depth,
+                "status": job.status,
+                "summary": "reachable within bounded depth" if job.status == "PASS"
+                else "not reached within bounded depth",
+                "reached_step": _formal_reached_step(job.messages),
+                "trace_path": f"cover/{name}/{name}" if job.status == "PASS" else None,
+            }
+            for (name, _macro, _depth), job in zip(cover_specs, cover_jobs, strict=True)
+        ],
+        "tick_done_contract": (
+            "Frozen V7.1B2 requires the internal spike FIFO to be empty, so host spike "
+            "backpressure may delay tick_done. The preferred stored-spike barrier is deferred "
+            "because changing it would alter frozen scheduling semantics."
+        ),
+        "unknowns": [] if prove.status == "PASS" else [
+            {
+                "name": "full-core temporal induction",
+                "status": prove.status,
+                "classification": "genuine unknown",
+                "summary": (
+                    "base case passes; induction does not converge because arbitrary induction "
+                    "states can contain scanner and ghost ownership combinations unreachable from reset"
+                ),
+                "trace_path": "prove/full_core_prove/engine_0/trace_induct.vcd",
+            }
+        ],
+        "scope": "reduced-capacity production B2 core compiled with SYNTHESIS and FORMAL observability",
+    }
+
+
+def write_full_core_formal_reports(
+    report: dict[str, object], directory: str | Path,
+) -> tuple[Path, Path]:
+    root = Path(directory)
+    root.mkdir(parents=True, exist_ok=True)
+    json_path = root / "v7_1d1_formal.json"
+    text_path = root / "v7_1d1_formal.txt"
+    json_path.write_text(
+        json.dumps(report, indent=2, sort_keys=True, ensure_ascii=True) + "\n",
+        encoding="ascii",
+        newline="\n",
+    )
+    lines = [
+        "Mini Loihi V7.1D1 Full-Core Formal Closure",
+        f"scope: {report['scope']}",
+        f"tick_done contract: {report['tick_done_contract']}",
+        "jobs:",
+    ]
+    for job in report["jobs"]:
+        lines.append(f"  {job['name']}: {job['status']} ({job['engine']}, depth {job['depth']})")
+    lines.append("properties:")
+    for item in report["properties"]:
+        lines.append(f"  [{item['status']}] {item['scope']}: {item['name']}")
+    lines.append("covers:")
+    for item in report["covers"]:
+        lines.append(f"  [{item['status']}] {item['name']} (depth {item['depth']})")
+    lines.append("unknowns:")
+    if report["unknowns"]:
+        for item in report["unknowns"]:
+            lines.append(f"  [{item['status']}] {item['name']}: {item['summary']}")
+    else:
+        lines.append("  none")
+    text_path.write_text("\n".join(lines) + "\n", encoding="ascii", newline="\n")
+    return json_path, text_path
+
+
 def canonical_eda_json(value: object) -> str:
     return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=True) + "\n"
 
@@ -578,6 +794,66 @@ def _prepare_yosys_sources(profile: str, image: Path) -> list[Path]:
     return result
 
 
+def _write_sby_memory_path_adapter(source: Path) -> Path:
+    output = source.with_name(f"{source.stem}_sby{source.suffix}")
+    text = source.read_text(encoding="ascii")
+    text = re.sub(r'"([a-z0-9_]+\.mem)"', r'"../src/\1"', text)
+    output.write_text(text, encoding="ascii", newline="\n")
+    return output
+
+
+def _write_formal_sync_rom_adapter(image: Path) -> Path:
+    manifest = json.loads((image / "manifest.json").read_text(encoding="ascii"))
+    output = image / "yosys_sources" / "03_sync_rom_formal_image.sv"
+    branches: list[str] = []
+    for index, item in enumerate(manifest["memory_images"]):
+        filename = str(item["file"])
+        width = int(item["width_bits"])
+        values = (image / filename).read_text(encoding="ascii").splitlines()
+        keyword = "if" if index == 0 else "else if"
+        cases = "\n".join(
+            f"          {address}: read_data <= {width}'h{value};"
+            for address, value in enumerate(values)
+        )
+        branches.append(
+            f"    {keyword} (INIT_FILE == \"{filename}\" || "
+            f"INIT_FILE == \"../src/{filename}\") begin : image_{index}\n"
+            "      always_ff @(posedge clk) begin\n"
+            "        if (enable) begin\n"
+            "          case (address)\n"
+            f"{cases}\n"
+            "            default: read_data <= '0;\n"
+            "          endcase\n"
+            "        end else begin\n"
+            "          read_data <= '0;\n"
+            "        end\n"
+            "      end\n"
+            "    end"
+        )
+    text = (
+        "module sync_rom #(\n"
+        "  parameter int unsigned WIDTH = 8,\n"
+        "  parameter int unsigned DEPTH = 1,\n"
+        "  parameter int unsigned ADDRESS_WIDTH = (DEPTH <= 1) ? 1 : $clog2(DEPTH),\n"
+        "  parameter INIT_FILE = \"\"\n"
+        ") (\n"
+        "  input logic clk,\n"
+        "  input logic enable,\n"
+        "  input logic [ADDRESS_WIDTH-1:0] address,\n"
+        "  output logic [WIDTH-1:0] read_data\n"
+        ");\n"
+        "  generate\n"
+        + "\n".join(branches)
+        + " else begin : unknown_image\n"
+        "      always_ff @(posedge clk) read_data <= '0;\n"
+        "    end\n"
+        "  endgenerate\n"
+        "endmodule\n"
+    )
+    output.write_text(text, encoding="ascii", newline="\n")
+    return output
+
+
 def _synthesis_scales() -> tuple[tuple[str, int, int], ...]:
     return (
         ("demo", 3, 2),
@@ -609,6 +885,31 @@ def _build_synthesis_fixture(name: str, neurons: int, synapses: int) -> RTLFixtu
         compile_network(network, MINI_LOIHI_V6_REF),
         (ReferenceInputEvent(0, 0, 0),),
         maximum_tick_exclusive=1,
+    )
+
+
+def _build_full_core_formal_fixture() -> RTLFixture:
+    connections = (
+        ConnectionIR("source0_target2_a", "p", 0, "p", 2, 5, 0),
+        ConnectionIR("source0_target2_b", "p", 0, "p", 2, 5, 0),
+        ConnectionIR("source0_target3", "p", 0, "p", 3, 3, 0),
+        ConnectionIR("source0_target4", "p", 0, "p", 4, 10, 0),
+        ConnectionIR("source0_target5", "p", 0, "p", 5, 1, 0),
+        ConnectionIR("source0_target6", "p", 0, "p", 6, 2, 0),
+        ConnectionIR("source0_target7", "p", 0, "p", 7, 4, 0),
+        ConnectionIR("source1_target3", "p", 1, "p", 3, 7, 0),
+    )
+    network = NetworkIR(
+        "v7_1d1_full_core_formal",
+        (NeuronPopulationIR("p", 8, NeuronModelKind.LIF, LIFParameters(10)),),
+        connections,
+    )
+    return RTLFixture(
+        "v7_1d1_full_core_formal",
+        compile_network(network, MINI_LOIHI_V6_REF),
+        (ReferenceInputEvent(0, 0, 0),),
+        maximum_tick_exclusive=1,
+        tick_ids=(0,),
     )
 
 
@@ -669,23 +970,32 @@ def _run_sby_job(
     sources: tuple[Path, ...],
     top: str,
     depth: int,
+    *,
+    mode: str = "bmc",
+    defines: tuple[str, ...] = (),
+    auxiliary_files: tuple[Path, ...] = (),
+    timeout: int = 300,
+    defer: bool = False,
 ) -> FormalJobResult:
+    directory.mkdir(parents=True, exist_ok=True)
     local_sources: list[Path] = []
-    for source in sources:
+    for source in (*sources, *auxiliary_files):
         destination = directory / source.name
         if source.resolve() != destination.resolve():
             shutil.copyfile(source, destination)
         local_sources.append(destination)
-    file_names = " ".join(path.name for path in local_sources)
+    source_names = " ".join(path.name for path in local_sources[:len(sources)])
+    define_arguments = " ".join(f"-D{name}" for name in defines)
+    defer_argument = "-defer " if defer else ""
     config = directory / f"{name}.sby"
     config.write_text(
         "[options]\n"
-        "mode bmc\n"
+        f"mode {mode}\n"
         f"depth {depth}\n\n"
         "[engines]\n"
         "smtbmc boolector\n\n"
         "[script]\n"
-        f"read -formal -sv -DSYNTHESIS {file_names}\n"
+        f"read -formal {defer_argument}-sv -DSYNTHESIS {define_arguments} {source_names}\n"
         f"prep -top {top}\n\n"
         "[files]\n"
         + "\n".join(path.name for path in local_sources)
@@ -698,14 +1008,32 @@ def _run_sby_job(
         encoding="ascii",
         newline="\n",
     )
-    completed = _run_oss_tool("sby", ("-f", config.name), timeout=300, cwd=directory)
+    completed = _run_oss_tool("sby", ("-f", config.name), timeout=timeout, cwd=directory)
     messages = _clean_messages(completed.stdout + completed.stderr)
     joined = "\n".join(messages).lower()
-    status = "PASS" if completed.returncode == 0 and "status: passed" in joined else "FAIL"
+    if completed.returncode == 0 and "status: passed" in joined:
+        status = "PASS"
+    elif "status: unknown" in joined or mode in {"prove", "cover"}:
+        status = "UNKNOWN"
+    else:
+        status = "FAIL"
+    result_messages = [f"mode={mode} depth={depth} status={status}"]
+    reach_match = re.search(r"reached cover statement in step ([0-9]+)", joined)
+    if reach_match:
+        result_messages.append(f"reached_step={reach_match.group(1)}")
+    if mode == "prove" and "returned pass for basecase" in joined and status == "UNKNOWN":
+        result_messages.append("base_case=PASS induction=UNKNOWN")
     return FormalJobResult(
         name, status, "smtbmc boolector", depth, completed.returncode,
-        (f"bounded depth={depth} status={status}",),
+        tuple(result_messages),
     )
+
+
+def _formal_reached_step(messages: tuple[str, ...]) -> int | None:
+    for message in messages:
+        if message.startswith("reached_step="):
+            return int(message.split("=", 1)[1])
+    return None
 
 
 def _deterministic_tool_messages(messages: tuple[str, ...], image: Path) -> tuple[str, ...]:

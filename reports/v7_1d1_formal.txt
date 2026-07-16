@@ -1,0 +1,45 @@
+Mini Loihi V7.1D1 Full-Core Formal Closure
+scope: reduced-capacity production B2 core compiled with SYNTHESIS and FORMAL observability
+tick_done contract: Frozen V7.1B2 requires the internal spike FIFO to be empty, so host spike backpressure may delay tick_done. The preferred stored-spike barrier is deferred because changing it would alter frozen scheduling semantics.
+jobs:
+  full_core_bmc: PASS (smtbmc boolector, depth 56)
+  full_core_prove: UNKNOWN (smtbmc boolector, depth 8)
+properties:
+  [PASS] full-core transaction: FIFO occupancy and handshake safety
+  [PASS] full-core transaction: N0 accepts never exceed registered scanner issues
+  [PASS] full-core transaction: N0 accepts do not duplicate an outstanding neuron
+  [PASS] full-core transaction: N5 commits never exceed N0 accepts
+  [PASS] full-core transaction: state write count equals N5 commit count at tick barrier
+  [PASS] full-core transaction: spike enqueue count equals spike-producing commit count
+  [PASS] full-core transaction: spike output handshakes never exceed enqueues
+  [PASS] pipeline-local: valid stage payload remains stable while stalled
+  [PASS] pipeline-local: pipeline transactions commit in scanner order without duplication
+  [PASS] atomicity: spiking state write, retirement, and FIFO enqueue are atomic
+  [PASS] atomicity: stalled spiking N5 entry remains stable and performs no mutation
+  [PASS] atomicity: non-spiking N5 commit does not enqueue a spike
+  [PASS] tick barrier: tick_done implies ingress, synapse, scanner, and pipeline quiescence
+  [PASS] tick barrier: tick_done implies no uncommitted neuron transaction
+  [PASS] tick barrier: tick_done requires spike FIFO empty under frozen B2 scheduling
+  [PASS] tick barrier: one tick_done handshake closes exactly one active tick
+  [PASS] tick barrier: completed logical ticks never exceed accepted tick starts
+  [PASS] tick barrier: logical tick ID changes only on an accepted tick start
+  [PASS] reset: reset clears pipeline and pending transaction ownership
+  [PASS] reset: reset prevents pre-reset state writes and spike enqueues
+  [PASS] reset: post-reset initialization restarts from a fresh formal state
+covers:
+  [PASS] full_six_stage_pipeline (depth 64)
+  [PASS] spike_commits_immediately (depth 64)
+  [PASS] stalled_spike_releases_and_commits (depth 64)
+  [PASS] active_tick_completes (depth 64)
+  [PASS] empty_tick_completes (depth 64)
+  [PASS] reset_during_active_tick (depth 64)
+  [PASS] reset_while_idle (depth 32)
+  [PASS] reset_during_initialization (depth 16)
+  [PASS] reset_with_ingress_work (depth 48)
+  [PASS] reset_during_synapse_processing (depth 48)
+  [PASS] reset_while_scanner_active (depth 64)
+  [PASS] reset_with_full_pipeline (depth 64)
+  [PASS] reset_with_stalled_spike (depth 64)
+  [PASS] reset_with_spike_fifo_nonempty (depth 64)
+unknowns:
+  [UNKNOWN] full-core temporal induction: base case passes; induction does not converge because arbitrary induction states can contain scanner and ghost ownership combinations unreachable from reset

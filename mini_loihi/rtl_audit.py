@@ -22,7 +22,7 @@ from mini_loihi.mempipe_verify import compile_mempipe_production, run_mempipe_de
 from mini_loihi.lifpipe_artifacts import export_lifpipe_fixture
 from mini_loihi.lifpipe_verify import compile_lifpipe_production, run_lifpipe_demo, run_seeded_lifpipe_regression
 from mini_loihi.lifpipe_throughput import dense_lifpipe_throughput_report
-from mini_loihi.eda import run_formal_smoke, run_production_lint, run_structural_checks
+from mini_loihi.eda import run_formal_smoke, run_full_core_formal, run_production_lint, run_structural_checks
 
 
 @dataclass(frozen=True)
@@ -369,6 +369,7 @@ def run_rtl_gate(*, full: bool, seeds: int) -> dict[str, object]:
     lint = run_rtl_lint()
     synthesis = run_rtl_synthesis_report()
     formal = run_formal_smoke()
+    full_core_formal = run_full_core_formal() if full else None
     formal_status = "PASS" if (
         formal["jobs"]
         and all(item["status"] == "PASS" for item in formal["jobs"])
@@ -411,6 +412,19 @@ def run_rtl_gate(*, full: bool, seeds: int) -> dict[str, object]:
         "ready_chain_audit": synthesis["ready_chain_audit"],
         "formal_status": formal_status,
         "formal": formal,
+        "v7_1c_pipeline_formal_smoke": formal_status,
+        "v7_1d1_full_core_bmc": (
+            full_core_formal["jobs"][0]["status"] if full_core_formal else "SKIPPED"
+        ),
+        "v7_1d1_full_core_prove": (
+            full_core_formal["jobs"][1]["status"] if full_core_formal else "SKIPPED"
+        ),
+        "v7_1d1_full_core_covers": (
+            "PASS" if full_core_formal
+            and all(item["status"] == "PASS" for item in full_core_formal["covers"])
+            else ("SKIPPED" if full_core_formal is None else "UNKNOWN")
+        ),
+        "full_core_formal": full_core_formal,
     }
 
 

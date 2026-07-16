@@ -1,0 +1,693 @@
+{
+  "assumptions": [
+    {
+      "name": "initial_synchronous_reset",
+      "reason": "the production core requires a sampled synchronous reset before use",
+      "rule": "rst is asserted in the initial formal state",
+      "scope": "external reset"
+    },
+    {
+      "name": "tick_start_stability",
+      "reason": "standard source-side ready/valid ownership",
+      "rule": "tick_start_valid and tick_id remain stable while valid is backpressured",
+      "scope": "tick-start ready/valid channel"
+    },
+    {
+      "name": "event_stability",
+      "reason": "standard source-side ready/valid ownership",
+      "rule": "event_valid, axon, payload, and priority remain stable while valid is backpressured",
+      "scope": "event ready/valid channel"
+    },
+    {
+      "name": "ingress_done_stability",
+      "reason": "standard source-side ready/valid ownership",
+      "rule": "ingress_done_valid remains asserted while backpressured",
+      "scope": "ingress-done ready/valid channel"
+    },
+    {
+      "name": "valid_axon_range",
+      "reason": "compiled image address contract",
+      "rule": "event_axon is less than AXON_COUNT whenever event_valid is asserted",
+      "scope": "event payload"
+    },
+    {
+      "name": "representable_payload_range",
+      "reason": "the production payload contract is exactly the encoded unsigned field width",
+      "rule": "all 8-bit event_payload values are legal; no narrower value assumption is made",
+      "scope": "event payload"
+    },
+    {
+      "name": "representable_logical_tick_range",
+      "reason": "the production host owns logical tick values within the encoded field width",
+      "rule": "all 16-bit tick_id values are legal; no monotonicity assumption is made",
+      "scope": "tick-start payload"
+    },
+    {
+      "name": "compiled_image_legality",
+      "reason": "the production top executes a compile-time image, not arbitrary malformed memories",
+      "rule": "ROM contents are the checked generated 8-neuron, 2-axon, 8-synapse image",
+      "scope": "instance-local memories"
+    },
+    {
+      "name": "supported_neuron_subset",
+      "reason": "frozen V7.1B2 supported subset",
+      "rule": "all models are fixed-synapse LIF with non-negative leak, zero delay, and no learning metadata",
+      "scope": "compiled image"
+    }
+  ],
+  "covers": [
+    {
+      "depth": 64,
+      "engine": "smtbmc boolector",
+      "name": "full_six_stage_pipeline",
+      "reached_step": 47,
+      "status": "PASS",
+      "summary": "reachable within bounded depth",
+      "trace_path": "cover/full_six_stage_pipeline/full_six_stage_pipeline"
+    },
+    {
+      "depth": 64,
+      "engine": "smtbmc boolector",
+      "name": "spike_commits_immediately",
+      "reached_step": 36,
+      "status": "PASS",
+      "summary": "reachable within bounded depth",
+      "trace_path": "cover/spike_commits_immediately/spike_commits_immediately"
+    },
+    {
+      "depth": 64,
+      "engine": "smtbmc boolector",
+      "name": "stalled_spike_releases_and_commits",
+      "reached_step": 53,
+      "status": "PASS",
+      "summary": "reachable within bounded depth",
+      "trace_path": "cover/stalled_spike_releases_and_commits/stalled_spike_releases_and_commits"
+    },
+    {
+      "depth": 64,
+      "engine": "smtbmc boolector",
+      "name": "active_tick_completes",
+      "reached_step": 39,
+      "status": "PASS",
+      "summary": "reachable within bounded depth",
+      "trace_path": "cover/active_tick_completes/active_tick_completes"
+    },
+    {
+      "depth": 64,
+      "engine": "smtbmc boolector",
+      "name": "empty_tick_completes",
+      "reached_step": 32,
+      "status": "PASS",
+      "summary": "reachable within bounded depth",
+      "trace_path": "cover/empty_tick_completes/empty_tick_completes"
+    },
+    {
+      "depth": 64,
+      "engine": "smtbmc boolector",
+      "name": "reset_during_active_tick",
+      "reached_step": 20,
+      "status": "PASS",
+      "summary": "reachable within bounded depth",
+      "trace_path": "cover/reset_during_active_tick/reset_during_active_tick"
+    },
+    {
+      "depth": 32,
+      "engine": "smtbmc boolector",
+      "name": "reset_while_idle",
+      "reached_step": 19,
+      "status": "PASS",
+      "summary": "reachable within bounded depth",
+      "trace_path": "cover/reset_while_idle/reset_while_idle"
+    },
+    {
+      "depth": 16,
+      "engine": "smtbmc boolector",
+      "name": "reset_during_initialization",
+      "reached_step": 3,
+      "status": "PASS",
+      "summary": "reachable within bounded depth",
+      "trace_path": "cover/reset_during_initialization/reset_during_initialization"
+    },
+    {
+      "depth": 48,
+      "engine": "smtbmc boolector",
+      "name": "reset_with_ingress_work",
+      "reached_step": 21,
+      "status": "PASS",
+      "summary": "reachable within bounded depth",
+      "trace_path": "cover/reset_with_ingress_work/reset_with_ingress_work"
+    },
+    {
+      "depth": 48,
+      "engine": "smtbmc boolector",
+      "name": "reset_during_synapse_processing",
+      "reached_step": 23,
+      "status": "PASS",
+      "summary": "reachable within bounded depth",
+      "trace_path": "cover/reset_during_synapse_processing/reset_during_synapse_processing"
+    },
+    {
+      "depth": 64,
+      "engine": "smtbmc boolector",
+      "name": "reset_while_scanner_active",
+      "reached_step": 22,
+      "status": "PASS",
+      "summary": "reachable within bounded depth",
+      "trace_path": "cover/reset_while_scanner_active/reset_while_scanner_active"
+    },
+    {
+      "depth": 64,
+      "engine": "smtbmc boolector",
+      "name": "reset_with_full_pipeline",
+      "reached_step": 48,
+      "status": "PASS",
+      "summary": "reachable within bounded depth",
+      "trace_path": "cover/reset_with_full_pipeline/reset_with_full_pipeline"
+    },
+    {
+      "depth": 64,
+      "engine": "smtbmc boolector",
+      "name": "reset_with_stalled_spike",
+      "reached_step": 52,
+      "status": "PASS",
+      "summary": "reachable within bounded depth",
+      "trace_path": "cover/reset_with_stalled_spike/reset_with_stalled_spike"
+    },
+    {
+      "depth": 64,
+      "engine": "smtbmc boolector",
+      "name": "reset_with_spike_fifo_nonempty",
+      "reached_step": 38,
+      "status": "PASS",
+      "summary": "reachable within bounded depth",
+      "trace_path": "cover/reset_with_spike_fifo_nonempty/reset_with_spike_fifo_nonempty"
+    }
+  ],
+  "engine": {
+    "executable": "C:\\tool\\oss-cad-suite\\bin\\boolector",
+    "fallback_used": false,
+    "messages": [
+      "3.2.4"
+    ],
+    "returncode": 0,
+    "status": "PASS",
+    "tool": "boolector",
+    "version": "3.2.4"
+  },
+  "explicitly_not_assumed": [
+    "spike_ready is always high",
+    "tick_done_ready is always high",
+    "the spike FIFO never fills",
+    "no neuron spikes",
+    "only one neuron is touched",
+    "the pipeline never stalls",
+    "tick_done eventually occurs",
+    "tick_id is monotonic",
+    "event_payload is nonzero",
+    "any asserted design output already satisfies a proved property"
+  ],
+  "fixture": {
+    "axons": 2,
+    "generated_contract_fingerprint": "f9d72c83bb6b55408c07cdb0fe711e7990025ae3875a7856dbe5fcb60d7c8fa5",
+    "ingress_fifo_depth": 8,
+    "neurons": 8,
+    "repeated_target_conflict": true,
+    "spike_fifo_depth": 4,
+    "synapses": 8
+  },
+  "formal_source_sha256": {
+    "formal/full_core/assumptions.json": "51dbe412e5b5edaf9e96f617049543d02557a26835206ef65dcb8ba88dd1ee67",
+    "formal/full_core/full_core_harness.sv": "97dd252b029fd35042572a3c181df1b3bff45ea0f98a22ccd8183fd1ac14b208",
+    "formal/full_core/full_core_properties.sv": "3c600218d9f411f2d43560f531f877ea6038d2c766856f7d4b448acc1f1a8e03",
+    "rtl/core/lif_pipeline.sv": "d144718d2b1ac9511f082cafd0238916bb9e83bf30f415cc41f7556fd9abc071",
+    "rtl/core/mini_loihi_core_lifpipe.sv": "667ae0968b41a8f513393d493673763d11f64c2c31b30ef31468c5db5c753cf3"
+  },
+  "jobs": [
+    {
+      "depth": 56,
+      "engine": "smtbmc boolector",
+      "messages": [
+        "mode=bmc depth=56 status=PASS"
+      ],
+      "name": "full_core_bmc",
+      "returncode": 0,
+      "status": "PASS"
+    },
+    {
+      "depth": 8,
+      "engine": "smtbmc boolector",
+      "messages": [
+        "mode=prove depth=8 status=UNKNOWN",
+        "base_case=PASS induction=UNKNOWN"
+      ],
+      "name": "full_core_prove",
+      "returncode": 4,
+      "status": "UNKNOWN"
+    }
+  ],
+  "properties": [
+    {
+      "assumptions_used": [
+        "initial_synchronous_reset",
+        "tick_start_stability",
+        "event_stability",
+        "ingress_done_stability",
+        "valid_axon_range",
+        "representable_payload_range",
+        "representable_logical_tick_range",
+        "compiled_image_legality",
+        "supported_neuron_subset"
+      ],
+      "counterexample_path": null,
+      "depth": 56,
+      "engine": "smtbmc boolector",
+      "name": "FIFO occupancy and handshake safety",
+      "scope": "full-core transaction",
+      "status": "PASS",
+      "summary": "all full-core assertions hold through bounded depth"
+    },
+    {
+      "assumptions_used": [
+        "initial_synchronous_reset",
+        "tick_start_stability",
+        "event_stability",
+        "ingress_done_stability",
+        "valid_axon_range",
+        "representable_payload_range",
+        "representable_logical_tick_range",
+        "compiled_image_legality",
+        "supported_neuron_subset"
+      ],
+      "counterexample_path": null,
+      "depth": 56,
+      "engine": "smtbmc boolector",
+      "name": "N0 accepts never exceed registered scanner issues",
+      "scope": "full-core transaction",
+      "status": "PASS",
+      "summary": "all full-core assertions hold through bounded depth"
+    },
+    {
+      "assumptions_used": [
+        "initial_synchronous_reset",
+        "tick_start_stability",
+        "event_stability",
+        "ingress_done_stability",
+        "valid_axon_range",
+        "representable_payload_range",
+        "representable_logical_tick_range",
+        "compiled_image_legality",
+        "supported_neuron_subset"
+      ],
+      "counterexample_path": null,
+      "depth": 56,
+      "engine": "smtbmc boolector",
+      "name": "N0 accepts do not duplicate an outstanding neuron",
+      "scope": "full-core transaction",
+      "status": "PASS",
+      "summary": "all full-core assertions hold through bounded depth"
+    },
+    {
+      "assumptions_used": [
+        "initial_synchronous_reset",
+        "tick_start_stability",
+        "event_stability",
+        "ingress_done_stability",
+        "valid_axon_range",
+        "representable_payload_range",
+        "representable_logical_tick_range",
+        "compiled_image_legality",
+        "supported_neuron_subset"
+      ],
+      "counterexample_path": null,
+      "depth": 56,
+      "engine": "smtbmc boolector",
+      "name": "N5 commits never exceed N0 accepts",
+      "scope": "full-core transaction",
+      "status": "PASS",
+      "summary": "all full-core assertions hold through bounded depth"
+    },
+    {
+      "assumptions_used": [
+        "initial_synchronous_reset",
+        "tick_start_stability",
+        "event_stability",
+        "ingress_done_stability",
+        "valid_axon_range",
+        "representable_payload_range",
+        "representable_logical_tick_range",
+        "compiled_image_legality",
+        "supported_neuron_subset"
+      ],
+      "counterexample_path": null,
+      "depth": 56,
+      "engine": "smtbmc boolector",
+      "name": "state write count equals N5 commit count at tick barrier",
+      "scope": "full-core transaction",
+      "status": "PASS",
+      "summary": "all full-core assertions hold through bounded depth"
+    },
+    {
+      "assumptions_used": [
+        "initial_synchronous_reset",
+        "tick_start_stability",
+        "event_stability",
+        "ingress_done_stability",
+        "valid_axon_range",
+        "representable_payload_range",
+        "representable_logical_tick_range",
+        "compiled_image_legality",
+        "supported_neuron_subset"
+      ],
+      "counterexample_path": null,
+      "depth": 56,
+      "engine": "smtbmc boolector",
+      "name": "spike enqueue count equals spike-producing commit count",
+      "scope": "full-core transaction",
+      "status": "PASS",
+      "summary": "all full-core assertions hold through bounded depth"
+    },
+    {
+      "assumptions_used": [
+        "initial_synchronous_reset",
+        "tick_start_stability",
+        "event_stability",
+        "ingress_done_stability",
+        "valid_axon_range",
+        "representable_payload_range",
+        "representable_logical_tick_range",
+        "compiled_image_legality",
+        "supported_neuron_subset"
+      ],
+      "counterexample_path": null,
+      "depth": 56,
+      "engine": "smtbmc boolector",
+      "name": "spike output handshakes never exceed enqueues",
+      "scope": "full-core transaction",
+      "status": "PASS",
+      "summary": "all full-core assertions hold through bounded depth"
+    },
+    {
+      "assumptions_used": [
+        "initial_synchronous_reset",
+        "tick_start_stability",
+        "event_stability",
+        "ingress_done_stability",
+        "valid_axon_range",
+        "representable_payload_range",
+        "representable_logical_tick_range",
+        "compiled_image_legality",
+        "supported_neuron_subset"
+      ],
+      "counterexample_path": null,
+      "depth": 56,
+      "engine": "smtbmc boolector",
+      "name": "valid stage payload remains stable while stalled",
+      "scope": "pipeline-local",
+      "status": "PASS",
+      "summary": "all full-core assertions hold through bounded depth"
+    },
+    {
+      "assumptions_used": [
+        "initial_synchronous_reset",
+        "tick_start_stability",
+        "event_stability",
+        "ingress_done_stability",
+        "valid_axon_range",
+        "representable_payload_range",
+        "representable_logical_tick_range",
+        "compiled_image_legality",
+        "supported_neuron_subset"
+      ],
+      "counterexample_path": null,
+      "depth": 56,
+      "engine": "smtbmc boolector",
+      "name": "pipeline transactions commit in scanner order without duplication",
+      "scope": "pipeline-local",
+      "status": "PASS",
+      "summary": "all full-core assertions hold through bounded depth"
+    },
+    {
+      "assumptions_used": [
+        "initial_synchronous_reset",
+        "tick_start_stability",
+        "event_stability",
+        "ingress_done_stability",
+        "valid_axon_range",
+        "representable_payload_range",
+        "representable_logical_tick_range",
+        "compiled_image_legality",
+        "supported_neuron_subset"
+      ],
+      "counterexample_path": null,
+      "depth": 56,
+      "engine": "smtbmc boolector",
+      "name": "spiking state write, retirement, and FIFO enqueue are atomic",
+      "scope": "atomicity",
+      "status": "PASS",
+      "summary": "all full-core assertions hold through bounded depth"
+    },
+    {
+      "assumptions_used": [
+        "initial_synchronous_reset",
+        "tick_start_stability",
+        "event_stability",
+        "ingress_done_stability",
+        "valid_axon_range",
+        "representable_payload_range",
+        "representable_logical_tick_range",
+        "compiled_image_legality",
+        "supported_neuron_subset"
+      ],
+      "counterexample_path": null,
+      "depth": 56,
+      "engine": "smtbmc boolector",
+      "name": "stalled spiking N5 entry remains stable and performs no mutation",
+      "scope": "atomicity",
+      "status": "PASS",
+      "summary": "all full-core assertions hold through bounded depth"
+    },
+    {
+      "assumptions_used": [
+        "initial_synchronous_reset",
+        "tick_start_stability",
+        "event_stability",
+        "ingress_done_stability",
+        "valid_axon_range",
+        "representable_payload_range",
+        "representable_logical_tick_range",
+        "compiled_image_legality",
+        "supported_neuron_subset"
+      ],
+      "counterexample_path": null,
+      "depth": 56,
+      "engine": "smtbmc boolector",
+      "name": "non-spiking N5 commit does not enqueue a spike",
+      "scope": "atomicity",
+      "status": "PASS",
+      "summary": "all full-core assertions hold through bounded depth"
+    },
+    {
+      "assumptions_used": [
+        "initial_synchronous_reset",
+        "tick_start_stability",
+        "event_stability",
+        "ingress_done_stability",
+        "valid_axon_range",
+        "representable_payload_range",
+        "representable_logical_tick_range",
+        "compiled_image_legality",
+        "supported_neuron_subset"
+      ],
+      "counterexample_path": null,
+      "depth": 56,
+      "engine": "smtbmc boolector",
+      "name": "tick_done implies ingress, synapse, scanner, and pipeline quiescence",
+      "scope": "tick barrier",
+      "status": "PASS",
+      "summary": "all full-core assertions hold through bounded depth"
+    },
+    {
+      "assumptions_used": [
+        "initial_synchronous_reset",
+        "tick_start_stability",
+        "event_stability",
+        "ingress_done_stability",
+        "valid_axon_range",
+        "representable_payload_range",
+        "representable_logical_tick_range",
+        "compiled_image_legality",
+        "supported_neuron_subset"
+      ],
+      "counterexample_path": null,
+      "depth": 56,
+      "engine": "smtbmc boolector",
+      "name": "tick_done implies no uncommitted neuron transaction",
+      "scope": "tick barrier",
+      "status": "PASS",
+      "summary": "all full-core assertions hold through bounded depth"
+    },
+    {
+      "assumptions_used": [
+        "initial_synchronous_reset",
+        "tick_start_stability",
+        "event_stability",
+        "ingress_done_stability",
+        "valid_axon_range",
+        "representable_payload_range",
+        "representable_logical_tick_range",
+        "compiled_image_legality",
+        "supported_neuron_subset"
+      ],
+      "counterexample_path": null,
+      "depth": 56,
+      "engine": "smtbmc boolector",
+      "name": "tick_done requires spike FIFO empty under frozen B2 scheduling",
+      "scope": "tick barrier",
+      "status": "PASS",
+      "summary": "all full-core assertions hold through bounded depth"
+    },
+    {
+      "assumptions_used": [
+        "initial_synchronous_reset",
+        "tick_start_stability",
+        "event_stability",
+        "ingress_done_stability",
+        "valid_axon_range",
+        "representable_payload_range",
+        "representable_logical_tick_range",
+        "compiled_image_legality",
+        "supported_neuron_subset"
+      ],
+      "counterexample_path": null,
+      "depth": 56,
+      "engine": "smtbmc boolector",
+      "name": "one tick_done handshake closes exactly one active tick",
+      "scope": "tick barrier",
+      "status": "PASS",
+      "summary": "all full-core assertions hold through bounded depth"
+    },
+    {
+      "assumptions_used": [
+        "initial_synchronous_reset",
+        "tick_start_stability",
+        "event_stability",
+        "ingress_done_stability",
+        "valid_axon_range",
+        "representable_payload_range",
+        "representable_logical_tick_range",
+        "compiled_image_legality",
+        "supported_neuron_subset"
+      ],
+      "counterexample_path": null,
+      "depth": 56,
+      "engine": "smtbmc boolector",
+      "name": "completed logical ticks never exceed accepted tick starts",
+      "scope": "tick barrier",
+      "status": "PASS",
+      "summary": "all full-core assertions hold through bounded depth"
+    },
+    {
+      "assumptions_used": [
+        "initial_synchronous_reset",
+        "tick_start_stability",
+        "event_stability",
+        "ingress_done_stability",
+        "valid_axon_range",
+        "representable_payload_range",
+        "representable_logical_tick_range",
+        "compiled_image_legality",
+        "supported_neuron_subset"
+      ],
+      "counterexample_path": null,
+      "depth": 56,
+      "engine": "smtbmc boolector",
+      "name": "logical tick ID changes only on an accepted tick start",
+      "scope": "tick barrier",
+      "status": "PASS",
+      "summary": "all full-core assertions hold through bounded depth"
+    },
+    {
+      "assumptions_used": [
+        "initial_synchronous_reset",
+        "tick_start_stability",
+        "event_stability",
+        "ingress_done_stability",
+        "valid_axon_range",
+        "representable_payload_range",
+        "representable_logical_tick_range",
+        "compiled_image_legality",
+        "supported_neuron_subset"
+      ],
+      "counterexample_path": null,
+      "depth": 56,
+      "engine": "smtbmc boolector",
+      "name": "reset clears pipeline and pending transaction ownership",
+      "scope": "reset",
+      "status": "PASS",
+      "summary": "all full-core assertions hold through bounded depth"
+    },
+    {
+      "assumptions_used": [
+        "initial_synchronous_reset",
+        "tick_start_stability",
+        "event_stability",
+        "ingress_done_stability",
+        "valid_axon_range",
+        "representable_payload_range",
+        "representable_logical_tick_range",
+        "compiled_image_legality",
+        "supported_neuron_subset"
+      ],
+      "counterexample_path": null,
+      "depth": 56,
+      "engine": "smtbmc boolector",
+      "name": "reset prevents pre-reset state writes and spike enqueues",
+      "scope": "reset",
+      "status": "PASS",
+      "summary": "all full-core assertions hold through bounded depth"
+    },
+    {
+      "assumptions_used": [
+        "initial_synchronous_reset",
+        "tick_start_stability",
+        "event_stability",
+        "ingress_done_stability",
+        "valid_axon_range",
+        "representable_payload_range",
+        "representable_logical_tick_range",
+        "compiled_image_legality",
+        "supported_neuron_subset"
+      ],
+      "counterexample_path": null,
+      "depth": 56,
+      "engine": "smtbmc boolector",
+      "name": "post-reset initialization restarts from a fresh formal state",
+      "scope": "reset",
+      "status": "PASS",
+      "summary": "all full-core assertions hold through bounded depth"
+    }
+  ],
+  "schema_version": "1.0",
+  "scope": "reduced-capacity production B2 core compiled with SYNTHESIS and FORMAL observability",
+  "tick_done_contract": "Frozen V7.1B2 requires the internal spike FIFO to be empty, so host spike backpressure may delay tick_done. The preferred stored-spike barrier is deferred because changing it would alter frozen scheduling semantics.",
+  "tool": {
+    "executable": "C:\\tool\\oss-cad-suite\\bin\\sby",
+    "fallback_used": false,
+    "messages": [
+      "SBY v0.67"
+    ],
+    "returncode": 0,
+    "status": "PASS",
+    "tool": "sby",
+    "version": "SBY v0.67"
+  },
+  "unknowns": [
+    {
+      "classification": "genuine unknown",
+      "name": "full-core temporal induction",
+      "status": "UNKNOWN",
+      "summary": "base case passes; induction does not converge because arbitrary induction states can contain scanner and ghost ownership combinations unreachable from reset",
+      "trace_path": "prove/full_core_prove/engine_0/trace_induct.vcd"
+    }
+  ]
+}
