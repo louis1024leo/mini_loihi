@@ -1,0 +1,133 @@
+{
+  "counters": {
+    "accumulator_saturations": 0,
+    "accumulator_stall_cycles": 0,
+    "drain_stall_cycles": 0,
+    "emitted_spikes": 4,
+    "external_events_admitted": 1,
+    "insertion_stall_cycles": 0,
+    "maximum_contributions_in_flight": 1,
+    "maximum_slot_occupancy": 1,
+    "membrane_saturations": 0,
+    "neuron_pipeline_stall_cycles": 0,
+    "neuron_updates": 4,
+    "recurrent_events_scheduled": 4,
+    "scanner_stall_cycles": 0,
+    "synaptic_operations": 5,
+    "ticks_processed": 5,
+    "total_cycles": 63,
+    "wheel_drains": 4,
+    "wheel_insertions": 5,
+    "wheel_wraps": 0
+  },
+  "cycle_trace_sha256": "8b28e18b2efdf5a84257c726ea88645b1d333be6830d1d4a11ecbcbdbb6ebe40",
+  "cycles_per_tick": [
+    [
+      0,
+      17
+    ],
+    [
+      1,
+      14
+    ],
+    [
+      2,
+      4
+    ],
+    [
+      3,
+      14
+    ],
+    [
+      4,
+      14
+    ]
+  ],
+  "final_state_digest": "65a1cddfac00fb047f151eacde47ec55927544dc3497304e540b4ed211f18e0e",
+  "last_update_tick": [
+    3,
+    4
+  ],
+  "logical_trace_sha256": "165930ecca226e7ef4167a4d47098dc352f2f6547e89a2a1371895316ca35b6e",
+  "membrane": [
+    0,
+    0
+  ],
+  "pending_contributions": [
+    {
+      "arrival_tick": 6,
+      "connection_id": "n1_to_n0",
+      "emission_tick": 4,
+      "event_id": 4,
+      "payload": 1,
+      "source_kind": "recurrent",
+      "synaptic_delay": 1,
+      "target_neuron_id": 0,
+      "value": 1,
+      "weight": 1
+    }
+  ],
+  "profile_identifier": "v8_0b_small_63",
+  "program_fingerprint": "18e548b65a55be7c224e2394e7ddfd7147274175df2f2ce694ae460dcdcf7464",
+  "routed_events": [
+    {
+      "arrival_tick": 1,
+      "connection_id": "n0_to_n1",
+      "emission_tick": 0,
+      "event_id": 1,
+      "source_neuron_id": 0,
+      "synaptic_delay": 0,
+      "target_neuron_id": 1,
+      "weight": 1
+    },
+    {
+      "arrival_tick": 3,
+      "connection_id": "n1_to_n0",
+      "emission_tick": 1,
+      "event_id": 2,
+      "source_neuron_id": 1,
+      "synaptic_delay": 1,
+      "target_neuron_id": 0,
+      "weight": 1
+    },
+    {
+      "arrival_tick": 4,
+      "connection_id": "n0_to_n1",
+      "emission_tick": 3,
+      "event_id": 3,
+      "source_neuron_id": 0,
+      "synaptic_delay": 0,
+      "target_neuron_id": 1,
+      "weight": 1
+    },
+    {
+      "arrival_tick": 6,
+      "connection_id": "n1_to_n0",
+      "emission_tick": 4,
+      "event_id": 4,
+      "source_neuron_id": 1,
+      "synaptic_delay": 1,
+      "target_neuron_id": 0,
+      "weight": 1
+    }
+  ],
+  "spikes": [
+    {
+      "neuron_id": 0,
+      "tick": 0
+    },
+    {
+      "neuron_id": 1,
+      "tick": 1
+    },
+    {
+      "neuron_id": 0,
+      "tick": 3
+    },
+    {
+      "neuron_id": 1,
+      "tick": 4
+    }
+  ],
+  "tick_horizon": 5
+}

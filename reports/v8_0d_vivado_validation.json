@@ -1,0 +1,68 @@
+{
+  "baseline": {
+    "frozen_rtl_tag": "v8.0c",
+    "program_fingerprint": "18e548b65a55be7c224e2394e7ddfd7147274175df2f2ce694ae460dcdcf7464",
+    "rtl_profile": "mini_loihi_v8_0c_small_delay_wheel_rtl"
+  },
+  "conclusion": {
+    "bram_inferred": false,
+    "highest_passing_internal_ooc_frequency_mhz": 100,
+    "recommendation": "V8.0E requires a RAM-friendly storage microarchitecture; no directive-only retry is recommended."
+  },
+  "implementation": {
+    "mode": "out_of_context",
+    "part": "xczu7ev-ffvc1156-2-e",
+    "top": "mini_loihi_v8_delay_wheel_image_top"
+  },
+  "schema_version": "1.0",
+  "storage_inference": {
+    "diagnosis": "V8.0C wheel/pool storage expanded into LUT/FF selection logic rather than inferring block RAM.",
+    "wheel_storage_synthesis": {
+      "bram18": 0,
+      "bram36": 0,
+      "ffs": 13584,
+      "lutrams": 0,
+      "luts": 47451,
+      "uram": 0
+    }
+  },
+  "timing": [
+    {
+      "critical_endpoint": "core/state_reg[1]/CE",
+      "critical_startpoint": "core/neuron_issue_index_reg[0]/C",
+      "frequency_mhz": 100,
+      "logic_levels": 30,
+      "status": "PASS",
+      "tns_ns": 0.0,
+      "worst_hold_slack_ns": 0.042,
+      "wns_ns": 1.181
+    },
+    {
+      "critical_endpoint": "core/state_reg[4]/CE",
+      "critical_startpoint": "core/neuron_issue_index_reg[0]_replica/C",
+      "frequency_mhz": 150,
+      "logic_levels": 30,
+      "status": "FAIL",
+      "tns_ns": -297.135,
+      "worst_hold_slack_ns": 0.025,
+      "wns_ns": -0.644
+    },
+    {
+      "critical_endpoint": "core/state_reg[1]/CE",
+      "critical_startpoint": "core/neuron_issue_index_reg[0]/C",
+      "frequency_mhz": 175,
+      "logic_levels": 30,
+      "status": "FAIL",
+      "tns_ns": -5228.13,
+      "worst_hold_slack_ns": 0.025,
+      "wns_ns": -1.15
+    }
+  ],
+  "utilization_synthesis_100mhz": {
+    "bram": 0,
+    "dsp": 2,
+    "ffs": 14730,
+    "luts": 47892,
+    "uram": 0
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "arrival_equations": {
+    "external": "arrival_tick = external_event_tick + base_synapse_delay",
+    "recurrent": "arrival_tick = emission_tick + 1 + synaptic_delay"
+  },
+  "counts": {
+    "axons": 1,
+    "base_synapses": 1,
+    "external_events": 1,
+    "neurons": 2,
+    "recurrent_synapses": 2
+  },
+  "files": {
+    "axon_len.mem": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "axon_ptr.mem": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "expected_v8_0a.json": "500b10df6f695ca5520e7abdc420666a7e533ccd0b4af212b84a861b4e5bc20d",
+    "expected_v8_0b.json": "9f3c2b91eafa47d626f4bb1259c262afd5986828387170df0db657271fe8bffc",
+    "external_events.json": "0c1b71e1b813163916762994565224b28ed7dbf75d474d1741431d9e74e92037",
+    "mini_loihi_v8_generated_pkg.sv": "6746ececbe3a7ba89aaedd1a258f1acd17bfcc40961b4243ff2b34b03eadeffe",
+    "neuron_leak.mem": "86b59daec6dbb138064b7b6801fe424dc3369a3199a6abd85d6ed2e98df6af01",
+    "neuron_reset.mem": "86b59daec6dbb138064b7b6801fe424dc3369a3199a6abd85d6ed2e98df6af01",
+    "neuron_threshold.mem": "f9da129ae7e46550485dc41c7e78f6a2a12cd14a10b8226f672965b407a54f8f",
+    "neuron_voltage.mem": "86b59daec6dbb138064b7b6801fe424dc3369a3199a6abd85d6ed2e98df6af01",
+    "recurrent_delay.mem": "fa1e5bc7c14e2ae86c5dc0c9e68e93889c01a663b38dea3e63fef127be316b05",
+    "recurrent_len.mem": "ad0fadf63cc7cd779ce475e345bf4063565b63a3c2efef1eebc89790aaa6acba",
+    "recurrent_ptr.mem": "82c1315e6c757f33c4a77ca58b2a184f5a88614470c05ec77f3d28918db6b8ae",
+    "recurrent_target.mem": "d6545866fd7e53b31511e16d513611475144fa5131dbf70668593393f6c19c4c",
+    "recurrent_weight.mem": "84503c5147e3eae4315d44f65f96ca97f28ef68de7be7b0f240d9b06b2383ac5",
+    "synapse_delay.mem": "8982b0e36eb1bacbb400dea0997b13cce756d7a48dbe0b05c560a13c1973afd0",
+    "synapse_target.mem": "d9b2aefb1febe2dd6e403f634e18917a8c0dd1a440c976e9fe126b465ae9fc8d",
+    "synapse_weight.mem": "43fd56f56bb9bb18bc9c33966325732b2d7e58bfe2504a2c5c164b071c1b8653",
+    "v8_hardware_ir.json": "cd6280bd31809927fb9ff698abc7013dc67cce203f85758ff007539e9ab4aa33"
+  },
+  "program_fingerprint": "18e548b65a55be7c224e2394e7ddfd7147274175df2f2ce694ae460dcdcf7464",
+  "rtl_contract_fingerprint": "6746ececbe3a7ba89aaedd1a258f1acd17bfcc40961b4243ff2b34b03eadeffe",
+  "rtl_profile": {
+    "accumulator_lanes": 1,
+    "drain_lanes": 2,
+    "expansion_capacity": 32,
+    "external_fifo_depth": 8,
+    "fanout_lanes": 2,
+    "fatal_overflow_state": true,
+    "insert_lanes": 2,
+    "max_delay_ticks": 63,
+    "memory_read_latency": 1,
+    "neuron_lanes": 1,
+    "per_target_capacity": 16,
+    "pipeline_latency": 3,
+    "pool_depth": 256,
+    "profile_id": "mini_loihi_v8_0c_small_delay_wheel_rtl",
+    "recurrent_spike_depth": 8,
+    "schema_version": "1.0-delay-wheel-rtl",
+    "slot_capacity": 16,
+    "wheel_slots": 64
+  },
+  "schema_version": "1.0",
+  "tick_horizon": 5
+}
