@@ -1,0 +1,42 @@
+[
+  {
+    "arrival_tick": 1,
+    "connection_id": "n0_to_n1",
+    "emission_tick": 0,
+    "event_id": 1,
+    "source_neuron_id": 0,
+    "synaptic_delay": 0,
+    "target_neuron_id": 1,
+    "weight": 1
+  },
+  {
+    "arrival_tick": 3,
+    "connection_id": "n1_to_n0",
+    "emission_tick": 1,
+    "event_id": 2,
+    "source_neuron_id": 1,
+    "synaptic_delay": 1,
+    "target_neuron_id": 0,
+    "weight": 1
+  },
+  {
+    "arrival_tick": 4,
+    "connection_id": "n0_to_n1",
+    "emission_tick": 3,
+    "event_id": 3,
+    "source_neuron_id": 0,
+    "synaptic_delay": 0,
+    "target_neuron_id": 1,
+    "weight": 1
+  },
+  {
+    "arrival_tick": 6,
+    "connection_id": "n1_to_n0",
+    "emission_tick": 4,
+    "event_id": 4,
+    "source_neuron_id": 1,
+    "synaptic_delay": 1,
+    "target_neuron_id": 0,
+    "weight": 1
+  }
+]

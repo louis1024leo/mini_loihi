@@ -1,0 +1,153 @@
+{
+  "base_program": {
+    "architecture_identifier": "mini_loihi_v6_ref",
+    "build_fingerprint": "c334773ff029c373f8eebe2e217a16bdf607b3b7e3b3c08c24f20ee01a0d8271",
+    "compilation_report": {
+      "per_core": [
+        {
+          "axons_capacity": 256,
+          "axons_used": 1,
+          "neurons_capacity": 256,
+          "neurons_used": 2,
+          "routing_entries_capacity": 1024,
+          "routing_entries_used": 1,
+          "synapses_capacity": 4096,
+          "synapses_used": 1
+        }
+      ],
+      "total_axons": 1,
+      "total_connections": 1,
+      "total_neurons": 2,
+      "total_routing_entries": 1
+    },
+    "cores": [
+      {
+        "axon_fanout_len": [
+          1
+        ],
+        "axon_fanout_ptr": [
+          0
+        ],
+        "core_id": 0,
+        "initial_neuron_state_banks": {
+          "adaptation": [
+            0,
+            0
+          ],
+          "voltage": [
+            0,
+            0
+          ]
+        },
+        "neuron_model_ids": [
+          0,
+          0
+        ],
+        "neuron_parameter_banks": {
+          "adaptation_decay": [
+            0,
+            0
+          ],
+          "adaptation_increment": [
+            0,
+            0
+          ],
+          "leak": [
+            0,
+            0
+          ],
+          "reset_voltage": [
+            0,
+            0
+          ],
+          "threshold": [
+            1,
+            1
+          ]
+        },
+        "resource_usage": {
+          "axons_capacity": 256,
+          "axons_used": 1,
+          "neurons_capacity": 256,
+          "neurons_used": 2,
+          "routing_entries_capacity": 1024,
+          "routing_entries_used": 1,
+          "synapses_capacity": 4096,
+          "synapses_used": 1
+        },
+        "routing_entries": [
+          {
+            "destination_axon_id": 0,
+            "destination_core_id": 0,
+            "source_core_id": 0,
+            "source_neuron_id": 0
+          }
+        ],
+        "synapse_delay": [
+          0
+        ],
+        "synapse_learning_rule": [
+          0
+        ],
+        "synapse_learning_tag": [
+          0
+        ],
+        "synapse_target": [
+          0
+        ],
+        "synapse_weight": [
+          1
+        ]
+      }
+    ],
+    "global_routing_image": [
+      {
+        "destination_axon_id": 0,
+        "destination_core_id": 0,
+        "source_core_id": 0,
+        "source_neuron_id": 0
+      }
+    ],
+    "schema_version": "1.0",
+    "source_model_metadata": {
+      "model_schema_version": "1.0",
+      "network_id": "v8_0a_demo_base",
+      "neuron_placements": [
+        {
+          "core_id": 0,
+          "local_neuron_id": 0,
+          "population_id": "neurons",
+          "population_index": 0
+        },
+        {
+          "core_id": 0,
+          "local_neuron_id": 1,
+          "population_id": "neurons",
+          "population_index": 1
+        }
+      ],
+      "num_cores": 1,
+      "placement_strategy": "block"
+    }
+  },
+  "build_fingerprint": "18e548b65a55be7c224e2394e7ddfd7147274175df2f2ce694ae460dcdcf7464",
+  "profile_identifier": "mini_loihi_v8_0a_recurrence_delay",
+  "recurrent_synapses": [
+    {
+      "connection_id": "n0_to_n1",
+      "source_neuron_id": 0,
+      "synaptic_delay": 0,
+      "target_neuron_id": 1,
+      "weight": 1
+    },
+    {
+      "connection_id": "n1_to_n0",
+      "source_neuron_id": 1,
+      "synaptic_delay": 1,
+      "target_neuron_id": 0,
+      "weight": 1
+    }
+  ],
+  "schema_version": "2.0-recurrence-delay",
+  "tick_horizon": 5
+}

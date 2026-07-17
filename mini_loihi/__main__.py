@@ -76,6 +76,9 @@ from mini_loihi.rtl_vectors import build_rtl_demo_fixture
 from mini_loihi.rtl_verify import run_rtl_demo, run_seeded_rtl_regression
 from mini_loihi.eda import run_full_core_formal, write_full_core_formal_reports
 from mini_loihi.validation import run_repeated_multicore_snapshot, run_single_partition_equivalence
+from mini_loihi.v8_artifacts import export_v8_artifacts
+from mini_loihi.v8_examples import build_v8_recurrence_demo
+from mini_loihi.v8_reports import build_v8_reference_report
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -275,6 +278,21 @@ def _build_parser() -> argparse.ArgumentParser:
         subparsers, "rtl-formal-report", _cmd_rtl_formal_report,
         "read the checked V7.1D1 formal report", output_parent,
     )
+    _add_command(
+        subparsers,
+        "v8-recurrence-demo",
+        _cmd_v8_recurrence_demo,
+        "execute the V8.0A recurrence and delay reference demo",
+        output_parent,
+    )
+    v8_export = _add_command(
+        subparsers,
+        "v8-recurrence-export-demo",
+        _cmd_v8_recurrence_export_demo,
+        "export deterministic V8.0A recurrence and delay artifacts",
+        output_parent,
+    )
+    v8_export.add_argument("--output-dir", required=True, help="V8.0A artifact output directory")
     return parser
 
 
@@ -300,6 +318,38 @@ def _emit_result(result: dict[str, Any], args: argparse.Namespace) -> None:
         print(dumps_json(result["data"]))
     elif not args.output or output_consumed:
         print(result["text"])
+
+
+def _cmd_v8_recurrence_demo(_args: argparse.Namespace) -> dict[str, Any]:
+    data = build_v8_reference_report()
+    return {
+        "data": data,
+        "text": (
+            "Mini-Loihi V8.0A recurrence and delay reference demo\n"
+            f"  profile: {data['profile']['profile_id']}\n"
+            f"  horizon: {data['tick_horizon']} ticks\n"
+            f"  spikes: {[(item['tick'], item['neuron_id']) for item in data['spikes']]}\n"
+            f"  routed arrivals: {[item['arrival_tick'] for item in data['routed_events']]}\n"
+            f"  pending contributions: {len(data['pending_contributions'])}\n"
+            f"  state digest: {data['final_state_digest']}"
+        ),
+    }
+
+
+def _cmd_v8_recurrence_export_demo(args: argparse.Namespace) -> dict[str, Any]:
+    network, program, events = build_v8_recurrence_demo()
+    exported = export_v8_artifacts(network, program, events, args.output_dir)
+    data = asdict(exported)
+    return {
+        "data": data,
+        "text": (
+            "Mini-Loihi V8.0A deterministic artifact export\n"
+            f"  output: {exported.output_directory}\n"
+            f"  files: {len(exported.exported_files)}\n"
+            f"  program fingerprint: {exported.program_fingerprint}\n"
+            f"  manifest SHA-256: {exported.manifest_sha256}"
+        ),
+    }
 
 
 def _cmd_toy(_args: argparse.Namespace) -> dict[str, Any]:

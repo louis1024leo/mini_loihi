@@ -1,0 +1,60 @@
+{
+  "base_network": {
+    "connections": [
+      {
+        "axonal_delay": 0,
+        "connection_id": "external_seed",
+        "learning_rule": "none",
+        "learning_tag": 0,
+        "priority_class": null,
+        "source_index": 0,
+        "source_population": "neurons",
+        "target_index": 0,
+        "target_population": "neurons",
+        "weight": 1
+      }
+    ],
+    "input_ports": [],
+    "network_id": "v8_0a_demo_base",
+    "output_ports": [],
+    "populations": [
+      {
+        "count": 2,
+        "deadline_ticks": null,
+        "model_kind": "lif",
+        "parameters": {
+          "initial_voltage": 0,
+          "leak": 0,
+          "reset_voltage": 0,
+          "threshold": 1
+        },
+        "population_id": "neurons",
+        "priority_class": null
+      }
+    ],
+    "schema_version": "1.0"
+  },
+  "network_id": "v8_0a_mixed_delay_demo",
+  "recurrent_connections": [
+    {
+      "connection_id": "n0_to_n1",
+      "source_index": 0,
+      "source_population": "neurons",
+      "synaptic_delay": 0,
+      "target_index": 1,
+      "target_population": "neurons",
+      "weight": 1
+    },
+    {
+      "connection_id": "n1_to_n0",
+      "source_index": 1,
+      "source_population": "neurons",
+      "synaptic_delay": 1,
+      "target_index": 0,
+      "target_population": "neurons",
+      "weight": 1
+    }
+  ],
+  "schema_version": "2.0-recurrence-delay",
+  "tick_horizon": 5
+}

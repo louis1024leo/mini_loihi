@@ -1,0 +1,28 @@
+{
+  "arrival_equation": "arrival_tick = emission_tick + 1 + synaptic_delay",
+  "base_program_fingerprint": "c334773ff029c373f8eebe2e217a16bdf607b3b7e3b3c08c24f20ee01a0d8271",
+  "delay_range": [
+    0,
+    65535
+  ],
+  "delay_width": 16,
+  "external_event_count": 1,
+  "files": {
+    "expected_result.json": "34e6c534a010e041a92ec442d5cc7774d671a2f678e38bb74a26d3403e0faef7",
+    "expected_routed_events.json": "c82d18f091b7a84e82a167332c1c3e3c1101a27962b46949ffb09a0551135123",
+    "expected_trace.jsonl": "165930ecca226e7ef4167a4d47098dc352f2f6547e89a2a1371895316ca35b6e",
+    "initial_external_events.json": "0c1b71e1b813163916762994565224b28ed7dbf75d474d1741431d9e74e92037",
+    "recurrent_delay.mem": "fa1e5bc7c14e2ae86c5dc0c9e68e93889c01a663b38dea3e63fef127be316b05",
+    "recurrent_source.mem": "1c105f9449b5ed4d254f42198751df280143b308454300cbc87d903050d1e11c",
+    "recurrent_target.mem": "d6545866fd7e53b31511e16d513611475144fa5131dbf70668593393f6c19c4c",
+    "recurrent_weight.mem": "84503c5147e3eae4315d44f65f96ca97f28ef68de7be7b0f240d9b06b2383ac5",
+    "v8_hardware_ir.json": "cd6280bd31809927fb9ff698abc7013dc67cce203f85758ff007539e9ab4aa33",
+    "v8_model.json": "710ead0ac6efc4715cc31ed5c657250fab30e8fb88aed3afefcc6118993bdfa9",
+    "v8_profile.json": "120c2e52f3d968702e7d51a4089e8e00e11e97ad8c5c1722b76ca1362d587878"
+  },
+  "profile_identifier": "mini_loihi_v8_0a_recurrence_delay",
+  "program_fingerprint": "18e548b65a55be7c224e2394e7ddfd7147274175df2f2ce694ae460dcdcf7464",
+  "recurrent_synapse_count": 2,
+  "schema_version": "1.0",
+  "tick_horizon": 5
+}

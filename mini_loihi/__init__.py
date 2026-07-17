@@ -330,6 +330,27 @@ from mini_loihi.validation import (
     run_single_partition_equivalence,
     snapshot_core,
 )
+from mini_loihi.v8_architecture import (
+    MINI_LOIHI_V8_0A_RECURRENCE_DELAY,
+    V8RecurrenceDelayProfile,
+    get_v8_recurrence_delay_profile,
+)
+from mini_loihi.v8_artifacts import V8ArtifactExportResult, export_v8_artifacts
+from mini_loihi.v8_compiler import compile_v8_network
+from mini_loihi.v8_examples import build_v8_recurrence_demo
+from mini_loihi.v8_hardware_ir import CompiledRecurrentSynapse, V8CompiledProgram
+from mini_loihi.v8_model_ir import RecurrentConnectionIR, V8NetworkIR
+from mini_loihi.v8_reference import (
+    V8ReferenceCounters,
+    V8ReferenceMachine,
+    V8ReferenceResult,
+    V8RoutedEvent,
+    V8ScheduledContribution,
+    V8Spike,
+    V8TraceRecord,
+    run_v8_reference,
+    v8_trace_json_lines,
+)
 
 __all__ = [
     "ALIFParameters",
@@ -626,4 +647,24 @@ __all__ = [
     "run_readycut_fixture",
     "run_seeded_readycut_regression",
     "write_readycut_trace",
+    "MINI_LOIHI_V8_0A_RECURRENCE_DELAY",
+    "V8RecurrenceDelayProfile",
+    "V8ArtifactExportResult",
+    "CompiledRecurrentSynapse",
+    "V8CompiledProgram",
+    "RecurrentConnectionIR",
+    "V8NetworkIR",
+    "V8ReferenceCounters",
+    "V8ReferenceMachine",
+    "V8ReferenceResult",
+    "V8RoutedEvent",
+    "V8ScheduledContribution",
+    "V8Spike",
+    "V8TraceRecord",
+    "build_v8_recurrence_demo",
+    "compile_v8_network",
+    "export_v8_artifacts",
+    "get_v8_recurrence_delay_profile",
+    "run_v8_reference",
+    "v8_trace_json_lines",
 ]

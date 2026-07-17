@@ -1,0 +1,10 @@
+{
+  "delay_width": 16,
+  "parent_architecture_id": "mini_loihi_v6_ref",
+  "profile_id": "mini_loihi_v8_0a_recurrence_delay",
+  "route_transport_ticks": 1,
+  "same_tick_recurrence": false,
+  "schema_version": "1.0",
+  "supported_core_count": 1,
+  "termination_policy": "bounded_tick_horizon"
+}
