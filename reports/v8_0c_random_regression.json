@@ -1,0 +1,8 @@
+{
+  "failed_seed": null,
+  "first_divergence": "",
+  "passed_seeds": 20,
+  "regression_fingerprint": "4a041cc17040f07a95ee0a21c941e727f8fbe4e8dcecdb2b28f69f88ce0e7300",
+  "requested_seeds": 20,
+  "schema_version": "1.0"
+}

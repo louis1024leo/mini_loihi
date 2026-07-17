@@ -382,6 +382,25 @@ from mini_loihi.v8_cycle_state import (
     V8CycleResult,
     V8CycleTraceRecord,
 )
+from mini_loihi.v8_rtl_artifacts import V8RTLExportResult, export_v8_rtl_fixture
+from mini_loihi.v8_rtl_config import MINI_LOIHI_V8_0C_RTL, V8RTLProfileSpec, get_v8_rtl_profile
+from mini_loihi.v8_rtl_eda import run_v8_rtl_eda
+from mini_loihi.v8_rtl_reports import (
+    FROZEN_V8_0C_BASELINE,
+    build_v8_rtl_demo_report,
+    build_v8_rtl_regression_report,
+    build_v8_rtl_resource_report,
+    write_v8_rtl_reports,
+)
+from mini_loihi.v8_rtl_vectors import build_seeded_v8_rtl_fixture, build_v8_rtl_regression_fixtures
+from mini_loihi.v8_rtl_verify import (
+    V8RTLRegressionResult,
+    V8RTLTraceRecord,
+    V8RTLVerificationResult,
+    compile_v8_rtl_production,
+    run_v8_rtl_fixture,
+    run_v8_rtl_regression,
+)
 
 __all__ = [
     "ALIFParameters",
@@ -721,4 +740,23 @@ __all__ = [
     "run_v8_cycle_model",
     "validate_v8_cycle_program",
     "v8_cycle_trace_json_lines",
+    "MINI_LOIHI_V8_0C_RTL",
+    "V8RTLExportResult",
+    "V8RTLProfileSpec",
+    "V8RTLRegressionResult",
+    "V8RTLTraceRecord",
+    "V8RTLVerificationResult",
+    "FROZEN_V8_0C_BASELINE",
+    "build_seeded_v8_rtl_fixture",
+    "build_v8_rtl_demo_report",
+    "build_v8_rtl_regression_fixtures",
+    "build_v8_rtl_regression_report",
+    "build_v8_rtl_resource_report",
+    "compile_v8_rtl_production",
+    "export_v8_rtl_fixture",
+    "get_v8_rtl_profile",
+    "run_v8_rtl_eda",
+    "run_v8_rtl_fixture",
+    "run_v8_rtl_regression",
+    "write_v8_rtl_reports",
 ]

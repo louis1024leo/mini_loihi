@@ -1,0 +1,92 @@
+{
+  "counters": {
+    "acc_sat": 0,
+    "consumed": 4,
+    "expansions": 4,
+    "external": 1,
+    "inserted": 5,
+    "mem_sat": 0,
+    "neurons": 4,
+    "spikes": 4,
+    "ticks": 5
+  },
+  "cycle_equivalent": true,
+  "cycles_per_tick": [
+    [
+      0,
+      17
+    ],
+    [
+      1,
+      14
+    ],
+    [
+      2,
+      4
+    ],
+    [
+      3,
+      14
+    ],
+    [
+      4,
+      14
+    ]
+  ],
+  "first_divergence": "",
+  "functional_equivalent": true,
+  "last_update_tick": [
+    3,
+    4
+  ],
+  "membrane": [
+    0,
+    0
+  ],
+  "passed": true,
+  "pending_contributions": true,
+  "pool_occupancy": 1,
+  "profile": {
+    "accumulator_lanes": 1,
+    "drain_lanes": 2,
+    "expansion_capacity": 32,
+    "external_fifo_depth": 8,
+    "fanout_lanes": 2,
+    "fatal_overflow_state": true,
+    "insert_lanes": 2,
+    "max_delay_ticks": 63,
+    "memory_read_latency": 1,
+    "neuron_lanes": 1,
+    "per_target_capacity": 16,
+    "pipeline_latency": 3,
+    "pool_depth": 256,
+    "profile_id": "mini_loihi_v8_0c_small_delay_wheel_rtl",
+    "recurrent_spike_depth": 8,
+    "schema_version": "1.0-delay-wheel-rtl",
+    "slot_capacity": 16,
+    "wheel_slots": 64
+  },
+  "program_fingerprint": "18e548b65a55be7c224e2394e7ddfd7147274175df2f2ce694ae460dcdcf7464",
+  "rtl_contract_fingerprint": "6746ececbe3a7ba89aaedd1a258f1acd17bfcc40961b4243ff2b34b03eadeffe",
+  "rtl_trace_sha256": "85c725a25a8103724093c78bbd583f29a6acc02841a3b4400c4ad62f0fea493e",
+  "schema_version": "1.0",
+  "spikes": [
+    [
+      0,
+      0
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      3,
+      0
+    ],
+    [
+      4,
+      1
+    ]
+  ],
+  "trace_equivalent": true
+}

@@ -1,0 +1,34 @@
+{
+  "balanced_status": "structurally parameterized; full implementation gates deferred",
+  "profiles": [
+    {
+      "contribution_pool_bits": 8704,
+      "estimated_storage_bits": 14208,
+      "free_stack_bits": 2304,
+      "max_delay_ticks": 63,
+      "name": "small_63",
+      "per_target_count_bits_for_demo_neurons": 640,
+      "pointer_width": 9,
+      "pool_depth": 256,
+      "storage_guidance": "metadata/free stack LUTRAM or registers; contribution arrays BRAM/LUTRAM candidates",
+      "wheel_metadata_bits": 2560,
+      "wheel_slots": 64
+    },
+    {
+      "contribution_pool_bits": 75776,
+      "estimated_storage_bits": 115712,
+      "free_stack_bits": 24576,
+      "max_delay_ticks": 255,
+      "name": "balanced_255",
+      "per_target_count_bits_for_demo_neurons": 3072,
+      "pointer_width": 12,
+      "pool_depth": 2048,
+      "storage_guidance": "metadata/free stack LUTRAM or registers; contribution arrays BRAM/LUTRAM candidates",
+      "wheel_metadata_bits": 12288,
+      "wheel_slots": 256
+    }
+  ],
+  "schema_version": "1.0",
+  "scope": "architecture storage estimates only; no device PPA claim",
+  "selected_full_gate_profile": "small_63"
+}

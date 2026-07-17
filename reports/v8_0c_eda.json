@@ -1,0 +1,304 @@
+{
+  "counterexample_classification": [
+    {
+      "cause": "non-sequential drain tick and out-of-profile insertion timing",
+      "rtl_defect": false,
+      "status": "RESOLVED_HARNESS_DEFECT"
+    },
+    {
+      "cause": "non-compact insert lane valid pattern 2'b10",
+      "rtl_defect": false,
+      "status": "RESOLVED_HARNESS_DEFECT"
+    },
+    {
+      "cause": "unguarded reset-history use of $past",
+      "rtl_defect": false,
+      "status": "RESOLVED_HARNESS_DEFECT"
+    },
+    {
+      "cause": "implicit property signal and non-canonical formal payload",
+      "rtl_defect": false,
+      "status": "RESOLVED_HARNESS_DEFECT"
+    },
+    {
+      "cause": "debug pulse assertion sampled at the wrong cycle boundary",
+      "rtl_defect": false,
+      "status": "RESOLVED_HARNESS_DEFECT"
+    }
+  ],
+  "formal_jobs": [
+    {
+      "depth": 16,
+      "engine": "smtbmc boolector",
+      "messages": [
+        "mode=bmc depth=16 status=PASS"
+      ],
+      "name": "v8c_fifo",
+      "returncode": 0,
+      "status": "PASS"
+    },
+    {
+      "depth": 24,
+      "engine": "smtbmc boolector",
+      "messages": [
+        "mode=bmc depth=24 status=PASS"
+      ],
+      "name": "v8c_storage",
+      "returncode": 0,
+      "status": "PASS"
+    },
+    {
+      "depth": 50,
+      "engine": "smtbmc boolector",
+      "messages": [
+        "mode=bmc depth=50 status=PASS"
+      ],
+      "name": "v8c_core",
+      "returncode": 0,
+      "status": "PASS"
+    },
+    {
+      "depth": 50,
+      "engine": "smtbmc boolector",
+      "messages": [
+        "mode=cover depth=50 status=PASS",
+        "reached_step=24"
+      ],
+      "name": "v8c_core_cover",
+      "returncode": 0,
+      "status": "PASS"
+    }
+  ],
+  "formal_properties": [
+    {
+      "evidence": "rv_fifo BMC depth 16",
+      "property": "FIFO no overflow or underflow",
+      "status": "PASS"
+    },
+    {
+      "evidence": "FIFO and wheel BMC",
+      "property": "stable valid payload while stalled",
+      "status": "PASS"
+    },
+    {
+      "evidence": "wheel BMC depth 24",
+      "property": "wheel ownership and capacity conservation",
+      "status": "PASS"
+    },
+    {
+      "evidence": "wheel BMC depth 24",
+      "property": "wheel drain has no legal underflow",
+      "status": "PASS"
+    },
+    {
+      "evidence": "formal invariant plus directed RTL reset",
+      "property": "reset clears wheel ownership",
+      "status": "PASS"
+    },
+    {
+      "evidence": "core BMC depth 50",
+      "property": "no same-tick recurrent insertion",
+      "status": "PASS"
+    },
+    {
+      "evidence": "core BMC depth 50",
+      "property": "wheel pointer changes only at legal tick start",
+      "status": "PASS"
+    },
+    {
+      "evidence": "core BMC depth 50",
+      "property": "overflow status remains sticky until reset",
+      "status": "PASS"
+    },
+    {
+      "evidence": "counter invariant at core BMC depth 50",
+      "property": "no duplicate contribution consumption",
+      "status": "PASS"
+    },
+    {
+      "evidence": "shared issue_fire and core BMC depth 50",
+      "property": "spike enqueue and state commit atomicity",
+      "status": "PASS"
+    },
+    {
+      "evidence": "core BMC depth 50",
+      "property": "tick_done implies pipeline empty",
+      "status": "PASS"
+    },
+    {
+      "evidence": "cover reached at step 24",
+      "property": "delay-zero recurrence reaches barrier",
+      "status": "PASS"
+    },
+    {
+      "evidence": "exact V8.0B phase trace differential",
+      "property": "in-order pipeline movement",
+      "status": "PASS"
+    },
+    {
+      "evidence": "bounded closure only",
+      "property": "unbounded liveness or induction",
+      "status": "UNSUPPORTED"
+    }
+  ],
+  "lint": {
+    "diagnostic_counts": {
+      "UNUSEDPARAM": 1,
+      "UNUSEDSIGNAL": 6,
+      "WIDTHEXPAND": 40,
+      "WIDTHTRUNC": 62
+    },
+    "hard_diagnostics": [],
+    "returncode": 0,
+    "status": "PASS"
+  },
+  "profile": "mini_loihi_v8_0c_small_delay_wheel_rtl",
+  "schema_version": "1.0",
+  "structural": {
+    "combinational_loops": 0,
+    "generic_post_map_cells": 104530,
+    "latches": 0,
+    "multiple_drivers": 0,
+    "returncode": 0,
+    "scope": "generic Yosys architecture estimate; no FPGA PPA claim",
+    "status": "PASS",
+    "undriven": 0
+  },
+  "tools": {
+    "boolector": {
+      "executable": "C:\\tool\\oss-cad-suite\\bin\\boolector",
+      "fallback_used": false,
+      "messages": [
+        "3.2.4"
+      ],
+      "returncode": 0,
+      "status": "PASS",
+      "tool": "boolector",
+      "version": "3.2.4"
+    },
+    "iverilog": {
+      "executable": "C:\\tool\\oss-cad-suite\\bin\\iverilog",
+      "fallback_used": false,
+      "messages": [
+        "Icarus Verilog version 14.0 (devel) (s20260301-295-g614607c13-dirty)",
+        "Copyright (c) 2000-2026 Stephen Williams (steve@icarus.com)",
+        "  This program is free software; you can redistribute it and/or modify",
+        "  it under the terms of the GNU General Public License as published by",
+        "  the Free Software Foundation; either version 2 of the License, or",
+        "  (at your option) any later version.",
+        "  This program is distributed in the hope that it will be useful,",
+        "  but WITHOUT ANY WARRANTY; without even the implied warranty of",
+        "  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the",
+        "  GNU General Public License for more details.",
+        "  You should have received a copy of the GNU General Public License along",
+        "  with this program; if not, write to the Free Software Foundation, Inc.,",
+        "  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.",
+        "Icarus Verilog Preprocessor version 14.0 (devel) (s20260301-295-g614607c13-dirty)",
+        "Copyright (c) 1999-2026 Stephen Williams (steve@icarus.com)",
+        "  This program is free software; you can redistribute it and/or modify",
+        "  it under the terms of the GNU General Public License as published by",
+        "  the Free Software Foundation; either version 2 of the License, or",
+        "  (at your option) any later version.",
+        "  This program is distributed in the hope that it will be useful,",
+        "  but WITHOUT ANY WARRANTY; without even the implied warranty of",
+        "  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the",
+        "  GNU General Public License for more details.",
+        "  You should have received a copy of the GNU General Public License along",
+        "  with this program; if not, write to the Free Software Foundation, Inc.,",
+        "  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.",
+        "Icarus Verilog Parser/Elaborator version 14.0 (devel) (s20260301-295-g614607c13-dirty)",
+        "Copyright (c) 1998-2026 Stephen Williams (steve@icarus.com)",
+        "  This program is free software; you can redistribute it and/or modify",
+        "  it under the terms of the GNU General Public License as published by",
+        "  the Free Software Foundation; either version 2 of the License, or",
+        "  (at your option) any later version.",
+        "  This program is distributed in the hope that it will be useful,",
+        "  but WITHOUT ANY WARRANTY; without even the implied warranty of",
+        "  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the",
+        "  GNU General Public License for more details.",
+        "  You should have received a copy of the GNU General Public License along",
+        "  with this program; if not, write to the Free Software Foundation, Inc.,",
+        "  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.",
+        " FLAGS DLL vvp.tgt",
+        "vvp.tgt: Icarus Verilog VVP Code Generator 14.0 (devel) (s20260301-295-g614607c13-dirty)",
+        "Copyright (c) 2001-2026 Stephen Williams (steve@icarus.com)",
+        "  This program is free software; you can redistribute it and/or modify",
+        "  it under the terms of the GNU General Public License as published by",
+        "  the Free Software Foundation; either version 2 of the License, or",
+        "  (at your option) any later version.",
+        "  This program is distributed in the hope that it will be useful,",
+        "  but WITHOUT ANY WARRANTY; without even the implied warranty of",
+        "  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the",
+        "  GNU General Public License for more details.",
+        "  You should have received a copy of the GNU General Public License along",
+        "  with this program; if not, write to the Free Software Foundation, Inc.,",
+        "  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA."
+      ],
+      "returncode": 0,
+      "status": "PASS",
+      "tool": "iverilog",
+      "version": "Icarus Verilog version 14.0 (devel) (s20260301-295-g614607c13-dirty)"
+    },
+    "sby": {
+      "executable": "C:\\tool\\oss-cad-suite\\bin\\sby",
+      "fallback_used": false,
+      "messages": [
+        "SBY v0.67"
+      ],
+      "returncode": 0,
+      "status": "PASS",
+      "tool": "sby",
+      "version": "SBY v0.67"
+    },
+    "verilator": {
+      "executable": "C:\\tool\\oss-cad-suite\\bin\\verilator_bin.exe",
+      "fallback_used": true,
+      "messages": [
+        "Program 'verilator' failed to run: Access is deniedAt C:\\Users\\\u7075\u800014air\\Documents\\info os\\scripts\\run_oss_cad.ps1:15 cha",
+        "r:1",
+        "+ & $Tool @arguments",
+        "+ ~~~~~~~~~~~~~~~~~~.",
+        "At C:\\Users\\\u7075\u800014air\\Documents\\info os\\scripts\\run_oss_cad.ps1:15 char:1",
+        "+ & $Tool @arguments",
+        "+ ~~~~~~~~~~~~~~~~~~",
+        "    + CategoryInfo          : ResourceUnavailable: (:) [], ApplicationFailedException",
+        "    + FullyQualifiedErrorId : NativeCommandFailed",
+        "Verilator 5.051 devel rev v5.050-65-g5ead758f2 (mod)"
+      ],
+      "returncode": 0,
+      "status": "PASS",
+      "tool": "verilator_bin.exe",
+      "version": "Verilator 5.051 devel rev v5.050-65-g5ead758f2 (mod)"
+    },
+    "yosys": {
+      "executable": "C:\\tool\\oss-cad-suite\\bin\\yosys",
+      "fallback_used": false,
+      "messages": [
+        "Yosys 0.67+34 (git sha1 d4f39588a, Release, GNU /usr/bin/x86_64-w64-mingw32-g++ 13.2.1)"
+      ],
+      "returncode": 0,
+      "status": "PASS",
+      "tool": "yosys",
+      "version": "Yosys 0.67+34 (git sha1 d4f39588a, Release, GNU /usr/bin/x86_64-w64-mingw32-g++ 13.2.1)"
+    },
+    "z3": {
+      "executable": "C:\\tool\\oss-cad-suite\\bin\\z3",
+      "fallback_used": false,
+      "messages": [
+        "Z3 version 4.15.5 - 64 bit"
+      ],
+      "returncode": 0,
+      "status": "PASS",
+      "tool": "z3",
+      "version": "Z3 version 4.15.5 - 64 bit"
+    }
+  },
+  "verilator_simulation": {
+    "executable_build": "PASS",
+    "execution_returncode": 3221225477,
+    "fallback": "Icarus executable simulation provides RTL differential evidence",
+    "frontend_generation": "PASS",
+    "reason": "available Verilator 5.051 runtime raises Windows 0xC0000005 in Verilated::commandArgs before model construction with the available GCC 9.5",
+    "status": "UNSUPPORTED"
+  }
+}

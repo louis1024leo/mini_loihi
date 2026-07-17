@@ -1,0 +1,86 @@
+{
+  "baseline_commit": "1630bd96ae1487ef373e8dc724e206a060819567",
+  "baseline_tag": "v8.0b",
+  "schema_version": "1.0",
+  "v8_0b": {
+    "baseline_commit": "fb8690739177098a51c47f0fd0a1b0d0b4c2a7aa",
+    "baseline_tag": "v8.0a",
+    "schema_version": "1.0",
+    "v6_v7": {
+      "commit": "1abf9e54ae401df63ca4f894d152e22c416dd452",
+      "cycles_per_logical_tick": {
+        "v7_0": [
+          [
+            0,
+            18
+          ],
+          [
+            3,
+            16
+          ]
+        ],
+        "v7_1b1": [
+          [
+            0,
+            24
+          ],
+          [
+            3,
+            18
+          ]
+        ],
+        "v7_1b2": [
+          [
+            0,
+            26
+          ],
+          [
+            3,
+            20
+          ]
+        ],
+        "v7_1d2": [
+          [
+            0,
+            27
+          ],
+          [
+            3,
+            21
+          ]
+        ]
+      },
+      "functional_state_digest": "a36f7b85cbbe2f51a9fa330949bbe17bc7c600316bbcbe9a4cbc8b13395418c6",
+      "program_fingerprint": "9d47e522e38eee9c7314dd00dd27780539b36798a9b4263445b73046c9827bed",
+      "report_sha256": {
+        "v7_1c_formal.json": "1ceab62b2aa2efc8545878b46c920779ed5e70896507d62fa171f589caf4979b",
+        "v7_1c_synthesis.json": "acc6f476936fad06ae874255c8f06af855888e19fb71b3c31705dafd8d285f99",
+        "v7_1c_throughput.json": "faad2972ab170443375c63437b1c4c34e56b465f64ac85dbfa381dd837fcf84f",
+        "v7_1d1_formal.json": "a13a2fdb11a508ed6ab09f5c45bfad694b6d1d779515a628b2f7ea900d922776",
+        "v7_1d2_formal.json": "c7ab1eee3d0f3b0405131c19e7df710204f5d31868ccef103ce7c86a5a9af513",
+        "v7_1d2_ready_path.json": "14e2406403efef30b5832023b5bc09ce9cdaa820fb6d81525c0c3269336b512e",
+        "v7_1d2_synthesis_comparison.json": "6ed15c6746a03acb91f0d20d0c6c7f06817795ca6859a7c803903f1b0be38bce",
+        "v7_1d2_throughput.json": "889ebcd095234546a740cb3c5da681049522cd12d8bf451ffac0b1971c8e6876"
+      },
+      "tag": "v7.1d2",
+      "traces": {
+        "v7_0": "141bf76307083a7c3f441642340f9c1c10f5eb903f9fd5bb3d966950665d373a",
+        "v7_1b1": "f6e0916370bfa5c8c3be370b835ea133a4c7063e9f36945fef5463e341ee8cb0",
+        "v7_1b2": "e1fed84f249496d9a720431389021ac34a341ebb7ed29a6d40a17063c9bca21d",
+        "v7_1d2": "c2a266bdb221f9d5efc27f0410231e6935c39d38cf8811b613343ea38f923b12"
+      }
+    },
+    "v8_0a_manifest_sha256": "14ed065d58e05dec701d2735464c0ac3fd11f1c539380315349e59179f4aec13",
+    "v8_0a_program_fingerprint": "18e548b65a55be7c224e2394e7ddfd7147274175df2f2ce694ae460dcdcf7464",
+    "v8_0a_reference_state_digest": "65a1cddfac00fb047f151eacde47ec55927544dc3497304e540b4ed211f18e0e",
+    "v8_0a_report_sha256": {
+      "v8_0a_frozen_baseline.json": "9721c2ef813cc1e848c12e73891a0c9427f1d9708b572e62c5bad91a8677e68b",
+      "v8_0a_reference.json": "a27e25cd4f2349e920d24c6d91055aab992a19791fb60e027947136627bd1761"
+    },
+    "v8_0a_trace_sha256": "165930ecca226e7ef4167a4d47098dc352f2f6547e89a2a1371895316ca35b6e"
+  },
+  "v8_0b_cycle_oracle_sha256": "ea83fd3ba45fe096787e1e3d94140e5f3f56b29568c8c459c8c8b029aa5068ed",
+  "v8_0b_demo_cycle_trace_sha256": "d22f5b2104d6baa839ca676718014d92d26bc7ed8608d40400c1e5cd1b340879",
+  "v8_0b_frozen_baseline_sha256": "12b70ab3df5f6e488f07cb4a7bd5b64b591da91408a3e8909dec7d7f4e96c3e4",
+  "v8_0b_profile_evaluation_sha256": "d700a61b33ae6fe6ad76e0351dc87892131db14463d7572648598b5e0ba8818e"
+}

@@ -992,6 +992,7 @@ def _run_sby_job(
     auxiliary_files: tuple[Path, ...] = (),
     timeout: int = 300,
     defer: bool = False,
+    memory_map: bool = False,
 ) -> FormalJobResult:
     directory.mkdir(parents=True, exist_ok=True)
     local_sources: list[Path] = []
@@ -1012,7 +1013,9 @@ def _run_sby_job(
         "smtbmc boolector\n\n"
         "[script]\n"
         f"read -formal {defer_argument}-sv -DSYNTHESIS {define_arguments} {source_names}\n"
-        f"prep -top {top}\n\n"
+        f"prep -top {top}\n"
+        + ("memory_map\nopt\n" if memory_map else "")
+        + "\n"
         "[files]\n"
         + "\n".join(path.name for path in local_sources)
         + "\n",

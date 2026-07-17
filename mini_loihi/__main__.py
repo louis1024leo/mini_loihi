@@ -82,6 +82,9 @@ from mini_loihi.v8_reports import build_v8_reference_report
 from mini_loihi.v8_cycle_backend import run_v8_cycle_differential
 from mini_loihi.v8_cycle_profile import V8_CYCLE_PROFILES, get_v8_cycle_profile
 from mini_loihi.v8_cycle_reports import write_v8_cycle_reports
+from mini_loihi.v8_rtl_eda import run_v8_rtl_eda
+from mini_loihi.v8_rtl_reports import write_v8_rtl_reports
+from mini_loihi.v8_rtl_verify import run_v8_rtl_fixture
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -316,6 +319,31 @@ def _build_parser() -> argparse.ArgumentParser:
         output_parent,
     )
     v8_cycle_report.add_argument("--output-dir", required=True, help="V8.0B report output directory")
+    _add_command(
+        subparsers,
+        "v8-rtl-demo",
+        _cmd_v8_rtl_demo,
+        "execute the V8.0C delay-wheel RTL differential demo",
+        output_parent,
+    )
+    v8_rtl_eda = _add_command(
+        subparsers,
+        "v8-rtl-eda",
+        _cmd_v8_rtl_eda,
+        "run V8.0C lint, structural checks, and bounded formal",
+        output_parent,
+    )
+    v8_rtl_eda.add_argument("--artifact-dir")
+    v8_rtl_report = _add_command(
+        subparsers,
+        "v8-rtl-report",
+        _cmd_v8_rtl_report,
+        "write deterministic V8.0C RTL reports",
+        output_parent,
+    )
+    v8_rtl_report.add_argument("--output-dir", required=True)
+    v8_rtl_report.add_argument("--seeds", type=int, default=20)
+    v8_rtl_report.add_argument("--skip-eda", action="store_true")
     return parser
 
 
@@ -413,6 +441,52 @@ def _cmd_v8_cycle_report(args: argparse.Namespace) -> dict[str, Any]:
         "data": data,
         "text": (
             "Mini-Loihi V8.0B deterministic reports\n"
+            f"  output: {args.output_dir}\n"
+            f"  files: {len(paths)}"
+        ),
+    }
+
+
+def _cmd_v8_rtl_demo(_args: argparse.Namespace) -> dict[str, Any]:
+    _network, program, events = build_v8_recurrence_demo()
+    result = run_v8_rtl_fixture(program, events)
+    data = asdict(result)
+    return {
+        "data": data,
+        "text": (
+            "Mini-Loihi V8.0C delay-wheel RTL differential\n"
+            f"  result: {'PASS' if result.passed else 'FAIL'}\n"
+            f"  V8.0A functional: {'PASS' if result.functional_equivalent else 'FAIL'}\n"
+            f"  V8.0B cycles/trace: {'PASS' if result.cycle_equivalent and result.trace_equivalent else 'FAIL'}\n"
+            f"  cycles per tick: {result.cycles_per_tick}\n"
+            f"  RTL trace SHA-256: {result.rtl_trace_sha256}"
+        ),
+    }
+
+
+def _cmd_v8_rtl_eda(args: argparse.Namespace) -> dict[str, Any]:
+    data = run_v8_rtl_eda(artifact_directory=args.artifact_dir)
+    jobs = data["formal_jobs"]
+    return {
+        "data": data,
+        "text": (
+            "Mini-Loihi V8.0C OSS CAD gates\n"
+            f"  lint: {data['lint']['status']}\n"
+            f"  structural: {data['structural']['status']}\n"
+            f"  formal: {[(item['name'], item['status']) for item in jobs]}"
+        ),
+    }
+
+
+def _cmd_v8_rtl_report(args: argparse.Namespace) -> dict[str, Any]:
+    paths = write_v8_rtl_reports(
+        args.output_dir, seed_count=args.seeds, include_eda=not args.skip_eda
+    )
+    data = {"output_directory": str(args.output_dir), "files": [path.name for path in paths]}
+    return {
+        "data": data,
+        "text": (
+            "Mini-Loihi V8.0C deterministic reports\n"
             f"  output: {args.output_dir}\n"
             f"  files: {len(paths)}"
         ),
