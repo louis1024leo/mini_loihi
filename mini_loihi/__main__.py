@@ -48,6 +48,7 @@ from mini_loihi.stability_audit import (
 from mini_loihi.rtl_artifacts import export_rtl_fixture
 from mini_loihi.mempipe_artifacts import export_mempipe_fixture
 from mini_loihi.lifpipe_artifacts import export_lifpipe_fixture
+from mini_loihi.readycut_artifacts import export_readycut_fixture
 from mini_loihi.mempipe_verify import (
     run_mempipe_demo,
     run_seeded_mempipe_regression,
@@ -57,6 +58,11 @@ from mini_loihi.lifpipe_verify import (
     run_lifpipe_demo,
     run_seeded_lifpipe_regression,
     write_lifpipe_trace,
+)
+from mini_loihi.readycut_verify import (
+    run_readycut_demo,
+    run_seeded_readycut_regression,
+    write_readycut_trace,
 )
 from mini_loihi.rtl_audit import (
     rtl_audit_report,
@@ -216,6 +222,27 @@ def _build_parser() -> argparse.ArgumentParser:
         _cmd_rtl_lifpipe_trace,
         "write the deterministic V7.1B2 physical pipeline trace",
         output_parent,
+    )
+    readycut_export = _add_command(
+        subparsers,
+        "rtl-readycut-export-demo",
+        _cmd_rtl_readycut_export_demo,
+        "export deterministic V7.1D2 registered-ready-cut artifacts",
+        output_parent,
+    )
+    readycut_export.add_argument("--output-dir", required=True, help="ready-cut artifact output directory")
+    _add_command(
+        subparsers, "rtl-readycut-verify-demo", _cmd_rtl_readycut_verify_demo,
+        "run V7.1D2 functional and independent cycle verification", output_parent,
+    )
+    readycut_regression = _add_command(
+        subparsers, "rtl-readycut-regression", _cmd_rtl_readycut_regression,
+        "run deterministic V7.1D2 seeded RTL regression", output_parent,
+    )
+    readycut_regression.add_argument("--seeds", type=int, default=100)
+    _add_command(
+        subparsers, "rtl-readycut-trace", _cmd_rtl_readycut_trace,
+        "write the deterministic V7.1D2 physical pipeline trace", output_parent,
     )
     _add_command(subparsers, "rtl-audit", _cmd_rtl_audit, "report V7.1A verification truth", output_parent)
     _add_command(
@@ -980,6 +1007,87 @@ def _cmd_rtl_lifpipe_trace(args: argparse.Namespace) -> dict[str, Any]:
         "output_consumed": True,
         "text": (
             "Mini-Loihi V7.1B2 lifpipe trace\n"
+            f"  records: {result.trace_record_count}\n"
+            f"  SHA-256: {result.trace_sha256}\n"
+            f"  output: {args.output}"
+        ),
+    }
+
+
+def _cmd_rtl_readycut_export_demo(args: argparse.Namespace) -> dict[str, Any]:
+    fixture = build_rtl_demo_fixture()
+    result = export_readycut_fixture(
+        fixture.program, fixture.events, args.output_dir, tick_ids=fixture.tick_ids
+    )
+    return {
+        "data": asdict(result),
+        "text": (
+            "Mini-Loihi V7.1D2 ready-cut export\n"
+            f"  RTL profile: {result.profile_identifier}\n"
+            f"  program fingerprint: {result.program_fingerprint}\n"
+            f"  contract fingerprint: {result.generated_contract_fingerprint}\n"
+            f"  exported files: {len(result.exported_files)}"
+        ),
+    }
+
+
+def _readycut_result_data(result: Any) -> dict[str, Any]:
+    data = _lifpipe_result_data(result)
+    data["v7_1d2_cycle_equivalent"] = data.pop("v7_1b2_cycle_equivalent")
+    data["cut"] = {
+        "full_cycles": result.cut_full_cycles,
+        "upstream_stall_cycles": result.cut_upstream_stall_cycles,
+        "maximum_occupancy": result.cut_maximum_occupancy,
+        "pre_accepts": result.cut_pre_accepts,
+        "post_transfers": result.cut_post_transfers,
+        "final_occupancy": result.cut_final_occupancy,
+    }
+    return data
+
+
+def _cmd_rtl_readycut_verify_demo(_args: argparse.Namespace) -> dict[str, Any]:
+    result = run_readycut_demo()
+    data = _readycut_result_data(result)
+    return {
+        "data": data,
+        "text": (
+            "Mini-Loihi V7.1D2 ready-cut verification\n"
+            f"  result: {data['status']}\n"
+            f"  V6.1 functional differential: {result.functional_equivalent}\n"
+            f"  V7.1D2 cycle differential: {result.cycle_equivalent}\n"
+            f"  cycles per logical tick: {result.cycles_per_logical_tick}\n"
+            f"  cut maximum occupancy: {result.cut_maximum_occupancy}\n"
+            f"  trace SHA-256: {result.trace_sha256}"
+        ),
+    }
+
+
+def _cmd_rtl_readycut_regression(args: argparse.Namespace) -> dict[str, Any]:
+    result = run_seeded_readycut_regression(args.seeds)
+    return {
+        "data": asdict(result),
+        "text": (
+            "Mini-Loihi V7.1D2 ready-cut regression\n"
+            f"  seeds: {result.total_seeds}\n"
+            f"  passed: {result.passed_seeds}\n"
+            f"  failed seed: {result.failed_seed}\n"
+            f"  fingerprint: {result.regression_fingerprint}"
+        ),
+    }
+
+
+def _cmd_rtl_readycut_trace(args: argparse.Namespace) -> dict[str, Any]:
+    if not args.output:
+        raise ValueError("rtl-readycut-trace requires --output")
+    result = run_readycut_demo()
+    write_readycut_trace(result, args.output)
+    data = _readycut_result_data(result)
+    data["output"] = args.output
+    return {
+        "data": data,
+        "output_consumed": True,
+        "text": (
+            "Mini-Loihi V7.1D2 ready-cut trace\n"
             f"  records: {result.trace_record_count}\n"
             f"  SHA-256: {result.trace_sha256}\n"
             f"  output: {args.output}"

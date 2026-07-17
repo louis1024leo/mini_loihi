@@ -10,6 +10,7 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 
 from mini_loihi.lifpipe_artifacts import export_lifpipe_fixture
+from mini_loihi.readycut_artifacts import export_readycut_fixture
 from mini_loihi.mempipe_artifacts import export_mempipe_fixture
 from mini_loihi.rtl_artifacts import export_rtl_fixture
 from mini_loihi.rtl_vectors import RTLFixture, build_rtl_demo_fixture
@@ -141,12 +142,26 @@ _PROFILE_SOURCES = {
         "rtl/core/mini_loihi_core_lifpipe.sv",
         "mini_loihi_lifpipe_image_top.sv",
     ),
+    "v7_1d2": (
+        "mini_loihi_generated_pkg.sv",
+        "rtl/include/mini_loihi_arith_pkg.sv",
+        "rtl/common/rv_fifo.sv",
+        "rtl/common/rv_registered_cut.sv",
+        "rtl/memory/sync_rom.sv",
+        "rtl/memory/sync_ram.sv",
+        "rtl/core/synapse_lane.sv",
+        "rtl/core/touched_neuron_scanner.sv",
+        "rtl/core/lif_pipeline_readycut.sv",
+        "rtl/core/mini_loihi_core_readycut.sv",
+        "mini_loihi_readycut_image_top.sv",
+    ),
 }
 
 _PROFILE_TOPS = {
     "v7_0": "mini_loihi_core",
     "v7_1b1": "mini_loihi_image_top",
     "v7_1b2": "mini_loihi_lifpipe_image_top",
+    "v7_1d2": "mini_loihi_readycut_image_top",
 }
 
 _LINT_ALLOWLIST = {
@@ -722,6 +737,7 @@ def _export_demo_images(root: Path) -> dict[str, Path]:
     )
     export_mempipe_fixture(fixture.program, fixture.events, paths["v7_1b1"], tick_ids=fixture.tick_ids)
     export_lifpipe_fixture(fixture.program, fixture.events, paths["v7_1b2"], tick_ids=fixture.tick_ids)
+    export_readycut_fixture(fixture.program, fixture.events, paths["v7_1d2"], tick_ids=fixture.tick_ids)
     return paths
 
 

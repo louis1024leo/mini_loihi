@@ -1,0 +1,78 @@
+{
+  "assumptions": "unchanged D1 legal-interface assumptions; downstream ready is unconstrained",
+  "counterexamples": [
+    {
+      "property": "D1 pipeline_empty equivalence omitted D2 cut occupancy",
+      "resolution": "D2-only property now includes debug_cut_occupancy; rerun passes depth 56",
+      "rtl_defect": false,
+      "status": "RESOLVED_HARNESS_DEFECT",
+      "step": 34
+    }
+  ],
+  "jobs": [
+    {
+      "depth": 16,
+      "engine": "smtbmc boolector",
+      "messages": [
+        "mode=bmc depth=16 status=PASS"
+      ],
+      "name": "readycut_local",
+      "returncode": 0,
+      "status": "PASS"
+    },
+    {
+      "depth": 16,
+      "engine": "smtbmc boolector",
+      "messages": [
+        "mode=bmc depth=16 status=PASS"
+      ],
+      "name": "readycut_pipeline",
+      "returncode": 0,
+      "status": "PASS"
+    },
+    {
+      "depth": 56,
+      "engine": "smtbmc boolector",
+      "messages": [
+        "mode=bmc depth=56 status=PASS"
+      ],
+      "name": "readycut_full_core_bmc",
+      "returncode": 0,
+      "status": "PASS"
+    }
+  ],
+  "profile": "mini_loihi_v7_1d2_readycut",
+  "properties": [
+    {
+      "evidence": "local cut BMC depth 16",
+      "property": "cut occupancy bounds and conservation",
+      "status": "PASS"
+    },
+    {
+      "evidence": "local cut BMC depth 16",
+      "property": "cut stable payload, no overwrite/loss/duplication",
+      "status": "PASS"
+    },
+    {
+      "evidence": "in_ready is a flip-flop output",
+      "property": "registered ready breaks downstream combinational influence",
+      "status": "PASS"
+    },
+    {
+      "evidence": "D2 pipeline BMC depth 16",
+      "property": "pipeline ordering and at most one commit per accept",
+      "status": "PASS"
+    },
+    {
+      "evidence": "production-view D2 BMC depth 56",
+      "property": "full-core ownership, atomicity, reset and tick barrier",
+      "status": "PASS"
+    },
+    {
+      "evidence": "bounded closure only; no convergence claim",
+      "property": "unbounded temporal induction",
+      "status": "UNSUPPORTED"
+    }
+  ],
+  "schema_version": "1.0"
+}

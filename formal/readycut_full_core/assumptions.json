@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.0",
+  "assumptions": [
+    {
+      "name": "initial_synchronous_reset",
+      "scope": "external reset",
+      "rule": "rst is asserted in the initial formal state",
+      "reason": "the production core requires a sampled synchronous reset before use"
+    },
+    {
+      "name": "tick_start_stability",
+      "scope": "tick-start ready/valid channel",
+      "rule": "tick_start_valid and tick_id remain stable while valid is backpressured",
+      "reason": "standard source-side ready/valid ownership"
+    },
+    {
+      "name": "event_stability",
+      "scope": "event ready/valid channel",
+      "rule": "event_valid, axon, payload, and priority remain stable while valid is backpressured",
+      "reason": "standard source-side ready/valid ownership"
+    },
+    {
+      "name": "ingress_done_stability",
+      "scope": "ingress-done ready/valid channel",
+      "rule": "ingress_done_valid remains asserted while backpressured",
+      "reason": "standard source-side ready/valid ownership"
+    },
+    {
+      "name": "valid_axon_range",
+      "scope": "event payload",
+      "rule": "event_axon is less than AXON_COUNT whenever event_valid is asserted",
+      "reason": "compiled image address contract"
+    },
+    {
+      "name": "representable_payload_range",
+      "scope": "event payload",
+      "rule": "all 8-bit event_payload values are legal; no narrower value assumption is made",
+      "reason": "the production payload contract is exactly the encoded unsigned field width"
+    },
+    {
+      "name": "representable_logical_tick_range",
+      "scope": "tick-start payload",
+      "rule": "all 16-bit tick_id values are legal; no monotonicity assumption is made",
+      "reason": "the production host owns logical tick values within the encoded field width"
+    },
+    {
+      "name": "compiled_image_legality",
+      "scope": "instance-local memories",
+      "rule": "ROM contents are the checked generated 8-neuron, 2-axon, 8-synapse image",
+      "reason": "the production top executes a compile-time image, not arbitrary malformed memories"
+    },
+    {
+      "name": "supported_neuron_subset",
+      "scope": "compiled image",
+      "rule": "all models are fixed-synapse LIF with non-negative leak, zero delay, and no learning metadata",
+      "reason": "frozen V7.1B2 supported subset"
+    }
+  ],
+  "explicitly_not_assumed": [
+    "spike_ready is always high",
+    "tick_done_ready is always high",
+    "the spike FIFO never fills",
+    "no neuron spikes",
+    "only one neuron is touched",
+    "the pipeline never stalls",
+    "tick_done eventually occurs",
+    "tick_id is monotonic",
+    "event_payload is nonzero",
+    "any asserted design output already satisfies a proved property"
+  ]
+}

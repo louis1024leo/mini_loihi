@@ -1,0 +1,821 @@
+{
+  "comparisons": [
+    {
+      "b2": {
+        "arithmetic_cells": 29,
+        "cells_by_module": [
+          [
+            "\\mini_loihi_lifpipe_image_top",
+            5949
+          ]
+        ],
+        "cells_by_type": [
+          [
+            "$_AND_",
+            2048
+          ],
+          [
+            "$_DFFE_PN_",
+            3
+          ],
+          [
+            "$_DFFE_PP_",
+            692
+          ],
+          [
+            "$_MUX_",
+            740
+          ],
+          [
+            "$_NOT_",
+            327
+          ],
+          [
+            "$_OR_",
+            860
+          ],
+          [
+            "$_SDFFCE_PP0P_",
+            15
+          ],
+          [
+            "$_SDFFCE_PP1P_",
+            38
+          ],
+          [
+            "$_SDFFE_PP0P_",
+            62
+          ],
+          [
+            "$_SDFF_PN0_",
+            96
+          ],
+          [
+            "$_XOR_",
+            1049
+          ],
+          [
+            "$scopeinfo",
+            19
+          ]
+        ],
+        "comparator_cells": 61,
+        "flip_flops": 906,
+        "memory_image_bits": 354,
+        "memory_images": [
+          "neuron_model.mem",
+          "neuron_threshold.mem",
+          "neuron_reset.mem",
+          "neuron_leak.mem",
+          "neuron_voltage.mem",
+          "axon_ptr.mem",
+          "axon_len.mem",
+          "synapse_target.mem",
+          "synapse_weight.mem",
+          "synapse_delay.mem",
+          "synapse_rule.mem",
+          "synapse_tag.mem"
+        ],
+        "muxes": 740,
+        "neurons": 3,
+        "post_memory_cells": 0,
+        "pre_memory_cells": 15,
+        "rtl_profile": "v7_1b2",
+        "scale_profile": "demo",
+        "status": "PASS",
+        "synapses": 2,
+        "total_cells": 5949,
+        "warning_count": 136,
+        "warnings": [
+          "post-memory_map out-of-range read mux bits have no driver (count=136)"
+        ]
+      },
+      "cut_buffer_cells": {
+        "capacity": 2,
+        "control": "two pointers, two-bit occupancy, registered input ready",
+        "payload_bits": 90,
+        "storage_bits": 180
+      },
+      "d2": {
+        "arithmetic_cells": 31,
+        "cells_by_module": [
+          [
+            "\\mini_loihi_readycut_image_top",
+            6367
+          ]
+        ],
+        "cells_by_type": [
+          [
+            "$_AND_",
+            2059
+          ],
+          [
+            "$_DFFE_PN_",
+            3
+          ],
+          [
+            "$_DFFE_PP_",
+            852
+          ],
+          [
+            "$_MUX_",
+            978
+          ],
+          [
+            "$_NOT_",
+            336
+          ],
+          [
+            "$_OR_",
+            868
+          ],
+          [
+            "$_SDFFCE_PN0P_",
+            1
+          ],
+          [
+            "$_SDFFCE_PN1P_",
+            23
+          ],
+          [
+            "$_SDFFCE_PP0P_",
+            13
+          ],
+          [
+            "$_SDFFE_PP0P_",
+            66
+          ],
+          [
+            "$_SDFF_PN0_",
+            96
+          ],
+          [
+            "$_SDFF_PP1_",
+            1
+          ],
+          [
+            "$_XOR_",
+            1051
+          ],
+          [
+            "$scopeinfo",
+            20
+          ]
+        ],
+        "comparator_cells": 67,
+        "flip_flops": 1055,
+        "memory_image_bits": 354,
+        "memory_images": [
+          "neuron_model.mem",
+          "neuron_threshold.mem",
+          "neuron_reset.mem",
+          "neuron_leak.mem",
+          "neuron_voltage.mem",
+          "axon_ptr.mem",
+          "axon_len.mem",
+          "synapse_target.mem",
+          "synapse_weight.mem",
+          "synapse_delay.mem",
+          "synapse_rule.mem",
+          "synapse_tag.mem"
+        ],
+        "muxes": 978,
+        "neurons": 3,
+        "post_memory_cells": 0,
+        "pre_memory_cells": 16,
+        "rtl_profile": "v7_1d2",
+        "scale_profile": "demo",
+        "status": "PASS",
+        "synapses": 2,
+        "total_cells": 6367,
+        "warning_count": 136,
+        "warnings": [
+          "post-memory_map out-of-range read mux bits have no driver (count=136)"
+        ]
+      },
+      "delta": {
+        "arithmetic_cells": 2,
+        "comparator_cells": 6,
+        "flip_flops": 149,
+        "muxes": 238,
+        "post_memory_cells": 0,
+        "pre_memory_cells": 1,
+        "total_cells": 418
+      },
+      "scale_profile": "demo"
+    },
+    {
+      "b2": {
+        "arithmetic_cells": 29,
+        "cells_by_module": [
+          [
+            "\\mini_loihi_lifpipe_image_top",
+            4219
+          ]
+        ],
+        "cells_by_type": [
+          [
+            "$_AND_",
+            920
+          ],
+          [
+            "$_DFFE_PN_",
+            32
+          ],
+          [
+            "$_DFFE_PP_",
+            854
+          ],
+          [
+            "$_MUX_",
+            1372
+          ],
+          [
+            "$_NOT_",
+            314
+          ],
+          [
+            "$_OR_",
+            377
+          ],
+          [
+            "$_SDFFCE_PP0P_",
+            31
+          ],
+          [
+            "$_SDFFCE_PP1P_",
+            16
+          ],
+          [
+            "$_SDFFE_PP0P_",
+            91
+          ],
+          [
+            "$_SDFF_PN0_",
+            16
+          ],
+          [
+            "$_XOR_",
+            177
+          ],
+          [
+            "$scopeinfo",
+            19
+          ]
+        ],
+        "comparator_cells": 61,
+        "flip_flops": 1040,
+        "memory_image_bits": 17056,
+        "memory_images": [
+          "neuron_model.mem",
+          "neuron_threshold.mem",
+          "neuron_reset.mem",
+          "neuron_leak.mem",
+          "neuron_voltage.mem",
+          "axon_ptr.mem",
+          "axon_len.mem",
+          "synapse_target.mem",
+          "synapse_weight.mem",
+          "synapse_delay.mem",
+          "synapse_rule.mem",
+          "synapse_tag.mem"
+        ],
+        "muxes": 1372,
+        "neurons": 32,
+        "post_memory_cells": 0,
+        "pre_memory_cells": 15,
+        "rtl_profile": "v7_1b2",
+        "scale_profile": "32/256",
+        "status": "PASS",
+        "synapses": 256,
+        "total_cells": 4219,
+        "warning_count": 0,
+        "warnings": []
+      },
+      "cut_buffer_cells": {
+        "capacity": 2,
+        "control": "two pointers, two-bit occupancy, registered input ready",
+        "payload_bits": 90,
+        "storage_bits": 180
+      },
+      "d2": {
+        "arithmetic_cells": 31,
+        "cells_by_module": [
+          [
+            "\\mini_loihi_readycut_image_top",
+            4520
+          ]
+        ],
+        "cells_by_type": [
+          [
+            "$_AND_",
+            949
+          ],
+          [
+            "$_DFFE_PN_",
+            32
+          ],
+          [
+            "$_DFFE_PP_",
+            969
+          ],
+          [
+            "$_MUX_",
+            1533
+          ],
+          [
+            "$_NOT_",
+            308
+          ],
+          [
+            "$_OR_",
+            387
+          ],
+          [
+            "$_SDFFCE_PN0P_",
+            1
+          ],
+          [
+            "$_SDFFCE_PN1P_",
+            1
+          ],
+          [
+            "$_SDFFCE_PP0P_",
+            13
+          ],
+          [
+            "$_SDFFE_PP0P_",
+            95
+          ],
+          [
+            "$_SDFF_PN0_",
+            16
+          ],
+          [
+            "$_SDFF_PP1_",
+            1
+          ],
+          [
+            "$_XOR_",
+            195
+          ],
+          [
+            "$scopeinfo",
+            20
+          ]
+        ],
+        "comparator_cells": 67,
+        "flip_flops": 1128,
+        "memory_image_bits": 17056,
+        "memory_images": [
+          "neuron_model.mem",
+          "neuron_threshold.mem",
+          "neuron_reset.mem",
+          "neuron_leak.mem",
+          "neuron_voltage.mem",
+          "axon_ptr.mem",
+          "axon_len.mem",
+          "synapse_target.mem",
+          "synapse_weight.mem",
+          "synapse_delay.mem",
+          "synapse_rule.mem",
+          "synapse_tag.mem"
+        ],
+        "muxes": 1533,
+        "neurons": 32,
+        "post_memory_cells": 0,
+        "pre_memory_cells": 16,
+        "rtl_profile": "v7_1d2",
+        "scale_profile": "32/256",
+        "status": "PASS",
+        "synapses": 256,
+        "total_cells": 4520,
+        "warning_count": 0,
+        "warnings": []
+      },
+      "delta": {
+        "arithmetic_cells": 2,
+        "comparator_cells": 6,
+        "flip_flops": 88,
+        "muxes": 161,
+        "post_memory_cells": 0,
+        "pre_memory_cells": 1,
+        "total_cells": 301
+      },
+      "scale_profile": "32/256"
+    },
+    {
+      "b2": {
+        "arithmetic_cells": 29,
+        "cells_by_module": [
+          [
+            "\\mini_loihi_lifpipe_image_top",
+            9712
+          ]
+        ],
+        "cells_by_type": [
+          [
+            "$_AND_",
+            1715
+          ],
+          [
+            "$_DFFE_PN_",
+            128
+          ],
+          [
+            "$_DFFE_PP_",
+            2390
+          ],
+          [
+            "$_MUX_",
+            4158
+          ],
+          [
+            "$_NOT_",
+            504
+          ],
+          [
+            "$_OR_",
+            375
+          ],
+          [
+            "$_SDFFCE_PP0P_",
+            31
+          ],
+          [
+            "$_SDFFCE_PP1P_",
+            16
+          ],
+          [
+            "$_SDFFE_PP0P_",
+            187
+          ],
+          [
+            "$_SDFF_PN0_",
+            16
+          ],
+          [
+            "$_XOR_",
+            173
+          ],
+          [
+            "$scopeinfo",
+            19
+          ]
+        ],
+        "comparator_cells": 61,
+        "flip_flops": 2768,
+        "memory_image_bits": 125568,
+        "memory_images": [
+          "neuron_model.mem",
+          "neuron_threshold.mem",
+          "neuron_reset.mem",
+          "neuron_leak.mem",
+          "neuron_voltage.mem",
+          "axon_ptr.mem",
+          "axon_len.mem",
+          "synapse_target.mem",
+          "synapse_weight.mem",
+          "synapse_delay.mem",
+          "synapse_rule.mem",
+          "synapse_tag.mem"
+        ],
+        "muxes": 4158,
+        "neurons": 128,
+        "post_memory_cells": 0,
+        "pre_memory_cells": 15,
+        "rtl_profile": "v7_1b2",
+        "scale_profile": "128/2048",
+        "status": "PASS",
+        "synapses": 2048,
+        "total_cells": 9712,
+        "warning_count": 0,
+        "warnings": []
+      },
+      "cut_buffer_cells": {
+        "capacity": 2,
+        "control": "two pointers, two-bit occupancy, registered input ready",
+        "payload_bits": 90,
+        "storage_bits": 180
+      },
+      "d2": {
+        "arithmetic_cells": 31,
+        "cells_by_module": [
+          [
+            "\\mini_loihi_readycut_image_top",
+            10013
+          ]
+        ],
+        "cells_by_type": [
+          [
+            "$_AND_",
+            1744
+          ],
+          [
+            "$_DFFE_PN_",
+            128
+          ],
+          [
+            "$_DFFE_PP_",
+            2505
+          ],
+          [
+            "$_MUX_",
+            4319
+          ],
+          [
+            "$_NOT_",
+            498
+          ],
+          [
+            "$_OR_",
+            385
+          ],
+          [
+            "$_SDFFCE_PN0P_",
+            1
+          ],
+          [
+            "$_SDFFCE_PN1P_",
+            1
+          ],
+          [
+            "$_SDFFCE_PP0P_",
+            13
+          ],
+          [
+            "$_SDFFE_PP0P_",
+            191
+          ],
+          [
+            "$_SDFF_PN0_",
+            16
+          ],
+          [
+            "$_SDFF_PP1_",
+            1
+          ],
+          [
+            "$_XOR_",
+            191
+          ],
+          [
+            "$scopeinfo",
+            20
+          ]
+        ],
+        "comparator_cells": 67,
+        "flip_flops": 2856,
+        "memory_image_bits": 125568,
+        "memory_images": [
+          "neuron_model.mem",
+          "neuron_threshold.mem",
+          "neuron_reset.mem",
+          "neuron_leak.mem",
+          "neuron_voltage.mem",
+          "axon_ptr.mem",
+          "axon_len.mem",
+          "synapse_target.mem",
+          "synapse_weight.mem",
+          "synapse_delay.mem",
+          "synapse_rule.mem",
+          "synapse_tag.mem"
+        ],
+        "muxes": 4319,
+        "neurons": 128,
+        "post_memory_cells": 0,
+        "pre_memory_cells": 16,
+        "rtl_profile": "v7_1d2",
+        "scale_profile": "128/2048",
+        "status": "PASS",
+        "synapses": 2048,
+        "total_cells": 10013,
+        "warning_count": 0,
+        "warnings": []
+      },
+      "delta": {
+        "arithmetic_cells": 2,
+        "comparator_cells": 6,
+        "flip_flops": 88,
+        "muxes": 161,
+        "post_memory_cells": 0,
+        "pre_memory_cells": 1,
+        "total_cells": 301
+      },
+      "scale_profile": "128/2048"
+    },
+    {
+      "b2": {
+        "arithmetic_cells": 29,
+        "cells_by_module": [
+          [
+            "\\mini_loihi_lifpipe_image_top",
+            18490
+          ]
+        ],
+        "cells_by_type": [
+          [
+            "$_AND_",
+            2903
+          ],
+          [
+            "$_DFFE_PN_",
+            256
+          ],
+          [
+            "$_DFFE_PP_",
+            4516
+          ],
+          [
+            "$_MUX_",
+            8928
+          ],
+          [
+            "$_NOT_",
+            795
+          ],
+          [
+            "$_OR_",
+            410
+          ],
+          [
+            "$_SDFFCE_PP0P_",
+            31
+          ],
+          [
+            "$_SDFFCE_PP1P_",
+            38
+          ],
+          [
+            "$_SDFFE_PP0P_",
+            393
+          ],
+          [
+            "$_SDFF_PN0_",
+            16
+          ],
+          [
+            "$_XOR_",
+            185
+          ],
+          [
+            "$scopeinfo",
+            19
+          ]
+        ],
+        "comparator_cells": 61,
+        "flip_flops": 5250,
+        "memory_image_bits": 251136,
+        "memory_images": [
+          "neuron_model.mem",
+          "neuron_threshold.mem",
+          "neuron_reset.mem",
+          "neuron_leak.mem",
+          "neuron_voltage.mem",
+          "axon_ptr.mem",
+          "axon_len.mem",
+          "synapse_target.mem",
+          "synapse_weight.mem",
+          "synapse_delay.mem",
+          "synapse_rule.mem",
+          "synapse_tag.mem"
+        ],
+        "muxes": 8928,
+        "neurons": 256,
+        "post_memory_cells": 0,
+        "pre_memory_cells": 15,
+        "rtl_profile": "v7_1b2",
+        "scale_profile": "256/4096",
+        "status": "PASS",
+        "synapses": 4096,
+        "total_cells": 18490,
+        "warning_count": 0,
+        "warnings": []
+      },
+      "cut_buffer_cells": {
+        "capacity": 2,
+        "control": "two pointers, two-bit occupancy, registered input ready",
+        "payload_bits": 90,
+        "storage_bits": 180
+      },
+      "d2": {
+        "arithmetic_cells": 31,
+        "cells_by_module": [
+          [
+            "\\mini_loihi_readycut_image_top",
+            18791
+          ]
+        ],
+        "cells_by_type": [
+          [
+            "$_AND_",
+            2932
+          ],
+          [
+            "$_DFFE_PN_",
+            256
+          ],
+          [
+            "$_DFFE_PP_",
+            4631
+          ],
+          [
+            "$_MUX_",
+            9089
+          ],
+          [
+            "$_NOT_",
+            789
+          ],
+          [
+            "$_OR_",
+            420
+          ],
+          [
+            "$_SDFFCE_PN0P_",
+            1
+          ],
+          [
+            "$_SDFFCE_PN1P_",
+            23
+          ],
+          [
+            "$_SDFFCE_PP0P_",
+            13
+          ],
+          [
+            "$_SDFFE_PP0P_",
+            397
+          ],
+          [
+            "$_SDFF_PN0_",
+            16
+          ],
+          [
+            "$_SDFF_PP1_",
+            1
+          ],
+          [
+            "$_XOR_",
+            203
+          ],
+          [
+            "$scopeinfo",
+            20
+          ]
+        ],
+        "comparator_cells": 67,
+        "flip_flops": 5338,
+        "memory_image_bits": 251136,
+        "memory_images": [
+          "neuron_model.mem",
+          "neuron_threshold.mem",
+          "neuron_reset.mem",
+          "neuron_leak.mem",
+          "neuron_voltage.mem",
+          "axon_ptr.mem",
+          "axon_len.mem",
+          "synapse_target.mem",
+          "synapse_weight.mem",
+          "synapse_delay.mem",
+          "synapse_rule.mem",
+          "synapse_tag.mem"
+        ],
+        "muxes": 9089,
+        "neurons": 256,
+        "post_memory_cells": 0,
+        "pre_memory_cells": 16,
+        "rtl_profile": "v7_1d2",
+        "scale_profile": "256/4096",
+        "status": "PASS",
+        "synapses": 4096,
+        "total_cells": 18791,
+        "warning_count": 0,
+        "warnings": []
+      },
+      "delta": {
+        "arithmetic_cells": 2,
+        "comparator_cells": 6,
+        "flip_flops": 88,
+        "muxes": 161,
+        "post_memory_cells": 0,
+        "pre_memory_cells": 1,
+        "total_cells": 301
+      },
+      "scale_profile": "256/4096"
+    }
+  ],
+  "schema_version": "1.0",
+  "scope": "generic Yosys cells only; not FPGA LUT, BRAM, timing, power, or PPA",
+  "tool": {
+    "executable": "C:\\tool\\oss-cad-suite\\bin\\yosys",
+    "fallback_used": false,
+    "messages": [
+      "Yosys 0.67+34 (git sha1 d4f39588a, Release, GNU /usr/bin/x86_64-w64-mingw32-g++ 13.2.1)"
+    ],
+    "returncode": 0,
+    "status": "PASS",
+    "tool": "yosys",
+    "version": "Yosys 0.67+34 (git sha1 d4f39588a, Release, GNU /usr/bin/x86_64-w64-mingw32-g++ 13.2.1)"
+  }
+}

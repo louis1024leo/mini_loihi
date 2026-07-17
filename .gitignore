@@ -10,6 +10,9 @@ dist/
 .v7_1c_baseline/
 .v7_1c_tmp/
 .v7_1d1_formal/
+.v7_1d2_tmp/
+.v7_1d2_formal/
+.v7_1d2_formal_local_reset/
 
 # Editors and local agent state
 .vscode/
