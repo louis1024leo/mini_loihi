@@ -1,0 +1,18 @@
+{
+  "baseline_commit": "f0a9fc4969487db714d27fcdf47646e4a473aafe",
+  "baseline_tag": "v8.0c",
+  "schema_version": "1.0",
+  "v8_0c_report_sha256": {
+    "v8_0c_demo_differential.json": "143477bcfcd08dca40105cd3c48844ae2cd6cbb78ce94dca2f192e388551a4aa",
+    "v8_0c_eda.json": "9e58a926514408a45a7d0f12eda44609661e5338d0850fe7b804e0a98de415ad",
+    "v8_0c_frozen_baseline.json": "d2cfb5a3e15baaeff72a65398cf127c3a5c366423afdc61f87f6cbe2614f3701",
+    "v8_0c_random_regression.json": "14ec16e2b11fd833cc590b58e01287597aef5f32d57cba4b777a7aa5c8236790",
+    "v8_0c_resource_estimate.json": "5aae87a9803dee420034172073bc143ba2f39e752219b524c551192e03e8e84d"
+  },
+  "v8_0c_rtl_sha256": {
+    "mini_loihi_v8_delay_wheel_core.sv": "076260eae1b7eaabeebfee41b40b4d21737727a988c7e00593dfdeb844792590",
+    "mini_loihi_v8_delay_wheel_image_top.sv": "908ccf17ec0f195e380086feeadc70902c9860e911f906f11e0e1a5802613d03",
+    "v8_delay_wheel_storage.sv": "34b661479084ae1c1162e45adf01e487bd5a40aa3474161b1c7f934d59baab6f",
+    "v8_lif_datapath.sv": "94c83b6481f7a4b5e4d0b230ce89b28aba29d9e42b063f195ba79ec074be56ac"
+  }
+}

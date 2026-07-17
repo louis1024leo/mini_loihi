@@ -401,6 +401,31 @@ from mini_loihi.v8_rtl_verify import (
     run_v8_rtl_fixture,
     run_v8_rtl_regression,
 )
+from mini_loihi.v8e_cycle_backend import (
+    V8E_RAM_CYCLE_PROFILE,
+    V8ERAMCycleDifferential,
+    V8ERAMDelayWheelMachine,
+    run_v8e_ram_cycle_differential,
+    run_v8e_ram_cycle_model,
+)
+from mini_loihi.v8e_eda import run_v8e_eda
+from mini_loihi.v8e_reports import (
+    FROZEN_V8_0E_BASELINE,
+    build_v8e_demo_report,
+    build_v8e_diagnosis_report,
+    build_v8e_regression_report,
+    build_v8e_resource_report,
+    frozen_v8c_files_match,
+    write_v8e_reports,
+)
+from mini_loihi.v8e_rtl_verify import (
+    V8ERTLResult,
+    compile_v8e_rtl_production,
+    run_v8e_rtl_expected_overflow,
+    run_v8e_rtl_fixture,
+    run_v8e_rtl_reset_check,
+    v8e_rtl_source_fingerprint,
+)
 
 __all__ = [
     "ALIFParameters",
@@ -759,4 +784,23 @@ __all__ = [
     "run_v8_rtl_fixture",
     "run_v8_rtl_regression",
     "write_v8_rtl_reports",
+    "V8E_RAM_CYCLE_PROFILE",
+    "V8ERAMCycleDifferential",
+    "V8ERAMDelayWheelMachine",
+    "V8ERTLResult",
+    "FROZEN_V8_0E_BASELINE",
+    "build_v8e_demo_report",
+    "build_v8e_diagnosis_report",
+    "build_v8e_regression_report",
+    "build_v8e_resource_report",
+    "compile_v8e_rtl_production",
+    "frozen_v8c_files_match",
+    "run_v8e_eda",
+    "run_v8e_ram_cycle_differential",
+    "run_v8e_ram_cycle_model",
+    "run_v8e_rtl_expected_overflow",
+    "run_v8e_rtl_fixture",
+    "run_v8e_rtl_reset_check",
+    "v8e_rtl_source_fingerprint",
+    "write_v8e_reports",
 ]

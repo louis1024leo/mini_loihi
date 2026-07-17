@@ -1,0 +1,62 @@
+{
+  "balanced_profile_status": "parameterized but not validated",
+  "canonical_cycles_per_tick": [
+    [
+      0,
+      34
+    ],
+    [
+      1,
+      24
+    ],
+    [
+      2,
+      4
+    ],
+    [
+      3,
+      24
+    ],
+    [
+      4,
+      24
+    ]
+  ],
+  "estimated_demo_storage_bits": 15488,
+  "profile": "small_63",
+  "schema_version": "1.0",
+  "scope": "architecture storage estimate only; no FPGA PPA claim",
+  "structures": {
+    "contribution_pool_ram": {
+      "bits": 8448,
+      "entries": 256,
+      "ports": "1R/1W",
+      "width": 33
+    },
+    "free_list_ram": {
+      "bits": 2304,
+      "entries": 256,
+      "ports": "1R/1W",
+      "width": 9
+    },
+    "slot_metadata_ram": {
+      "bits": 3008,
+      "entries": 64,
+      "ports": "1R/1W",
+      "width": 47
+    },
+    "slot_valid_bitmap": {
+      "bits": 64,
+      "entries": 64,
+      "ports": "register bitmap",
+      "width": 1
+    },
+    "target_count_ram_demo": {
+      "bits": 1664,
+      "entries": 128,
+      "ports": "1R/1W",
+      "width": 13
+    }
+  },
+  "validated_yosys_memory_cells": 4
+}

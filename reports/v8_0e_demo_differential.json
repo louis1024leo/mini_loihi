@@ -1,0 +1,93 @@
+{
+  "counters": {
+    "acc_sat": 0,
+    "consumed": 4,
+    "expansions": 4,
+    "external": 1,
+    "inserted": 5,
+    "mem_sat": 0,
+    "neurons": 4,
+    "spikes": 4,
+    "ticks": 5
+  },
+  "cycle_equivalent": true,
+  "cycle_state_digest": "65a1cddfac00fb047f151eacde47ec55927544dc3497304e540b4ed211f18e0e",
+  "cycle_trace_sha256": "52a9d8ac5384e7e01837ddc31f71ce9416fb2143dd603396fc5a0ad0103fee8e",
+  "cycles_per_tick": [
+    [
+      0,
+      34
+    ],
+    [
+      1,
+      24
+    ],
+    [
+      2,
+      4
+    ],
+    [
+      3,
+      24
+    ],
+    [
+      4,
+      24
+    ]
+  ],
+  "first_divergence": "",
+  "last_update_tick": [
+    3,
+    4
+  ],
+  "membrane": [
+    0,
+    0
+  ],
+  "passed": true,
+  "pending_contributions": true,
+  "pool_occupancy": 1,
+  "profile": {
+    "accumulator_lanes": 1,
+    "contributions_per_neuron_per_tick": 16,
+    "external_event_fifo_depth": 8,
+    "fanout_scan_lanes": 2,
+    "max_delay_ticks": 63,
+    "memory_read_latency": 1,
+    "neuron_lanes": 1,
+    "neuron_pipeline_latency": 3,
+    "profile_id": "v8_0e_ram_small_63",
+    "recurrent_expansions_per_tick": 32,
+    "recurrent_spike_fifo_depth": 8,
+    "recurrent_spikes_per_tick": 8,
+    "schema_version": "1.0-delay-wheel",
+    "total_contribution_capacity": 256,
+    "wheel_drain_lanes": 1,
+    "wheel_insert_lanes": 1,
+    "wheel_slot_capacity": 16
+  },
+  "program_fingerprint": "18e548b65a55be7c224e2394e7ddfd7147274175df2f2ce694ae460dcdcf7464",
+  "reference_state_digest": "65a1cddfac00fb047f151eacde47ec55927544dc3497304e540b4ed211f18e0e",
+  "rtl_equivalent": true,
+  "rtl_source_fingerprint": "ba0a3268a644e0b8220a443a0b15299b96c7bb1595d72f3cb30c672f30ed8bb7",
+  "rtl_trace_sha256": "20e19dbb77a12cd40f25d1d25e0032d4241b2596e2d318dc01215889e4f69577",
+  "schema_version": "1.0",
+  "spikes": [
+    [
+      0,
+      0
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      3,
+      0
+    ],
+    [
+      4,
+      1
+    ]
+  ]
+}

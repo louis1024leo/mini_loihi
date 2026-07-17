@@ -1,0 +1,32 @@
+{
+  "causes": [
+    "whole-array slot and per-target reset loops",
+    "variable-index combinational reads across slot, pool, and free arrays",
+    "two-lane combinational linked-pool traversal and decoded writes",
+    "full-population combinational active-neuron priority selection"
+  ],
+  "frozen_profile": "v8.0c Small",
+  "measured_v8_0d": {
+    "bram": 0,
+    "critical_path_levels": 30,
+    "design_ff": 14730,
+    "design_lut": 47892,
+    "dsp": 2,
+    "failed_setup_mhz": [
+      150,
+      175
+    ],
+    "passed_ooc_mhz": [
+      100
+    ],
+    "wheel_ff": 13584,
+    "wheel_lut": 47451
+  },
+  "schema_version": "1.0",
+  "v8e_replacement": [
+    "four synchronous one-read/one-write RAM structures",
+    "sequential free-list initialization and linked-list traversal",
+    "resettable slot-valid bitmap plus generation tags",
+    "one-neuron-per-cycle batch scan"
+  ]
+}

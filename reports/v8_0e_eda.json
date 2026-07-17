@@ -1,0 +1,247 @@
+{
+  "counterexample_classification": [
+    {
+      "cause": "unknown power-up slot epoch could alias the current epoch",
+      "resolution": "resettable slot-valid bitmap gates synchronous metadata",
+      "status": "FIXED_RTL_DEFECT"
+    },
+    {
+      "cause": "insert payload was not held through completion",
+      "status": "RESOLVED_HARNESS_DEFECT"
+    },
+    {
+      "cause": "slot was reopened at the same logical tick before advancing",
+      "status": "RESOLVED_HARNESS_DEFECT"
+    },
+    {
+      "cause": "drain tick changed during an active drain and clear sequence",
+      "status": "RESOLVED_HARNESS_DEFECT"
+    }
+  ],
+  "formal_jobs": [
+    {
+      "depth": 40,
+      "engine": "smtbmc boolector",
+      "messages": [
+        "mode=bmc depth=40 status=PASS"
+      ],
+      "name": "v8e_storage",
+      "returncode": 0,
+      "status": "PASS"
+    }
+  ],
+  "formal_properties": [
+    {
+      "evidence": "exact tagged-slot open and storage BMC depth 40",
+      "property": "no contribution consumed before its opened arrival tick",
+      "status": "PASS"
+    },
+    {
+      "evidence": "accepted/consumed conservation at storage BMC depth 40",
+      "property": "each accepted contribution consumed at most once",
+      "status": "PASS"
+    },
+    {
+      "evidence": "free_count + pool_occupancy invariant at depth 40",
+      "property": "pool allocation and free accounting conserved",
+      "status": "PASS"
+    },
+    {
+      "evidence": "drain valid/payload stability at depth 40",
+      "property": "stable drain payload while stalled",
+      "status": "PASS"
+    },
+    {
+      "evidence": "reset invalidation and slot-valid bitmap at depth 40",
+      "property": "slot generation and valid tags reject stale reset state",
+      "status": "PASS"
+    },
+    {
+      "evidence": "storage error state and reason stability at depth 40",
+      "property": "overflow remains sticky",
+      "status": "PASS"
+    },
+    {
+      "evidence": "post-reset occupancy and pending assertions at depth 40",
+      "property": "reset logically invalidates pending ownership",
+      "status": "PASS"
+    },
+    {
+      "evidence": "Yosys check and zero logic-loop diagnostics",
+      "property": "no combinational ready/valid loop",
+      "status": "PASS"
+    },
+    {
+      "evidence": "core-level property; covered by V8A/cycle/RTL differential tests",
+      "property": "no same-tick recurrent feedback",
+      "status": "UNSUPPORTED"
+    },
+    {
+      "evidence": "bounded count/ownership proven; pointer-identity induction deferred",
+      "property": "linked-list pointer identity is globally acyclic",
+      "status": "UNSUPPORTED"
+    },
+    {
+      "evidence": "core-level property; production assertion and differential tests only",
+      "property": "tick advances only after barrier",
+      "status": "UNSUPPORTED"
+    }
+  ],
+  "lint": {
+    "diagnostic_counts": {
+      "PROCASSINIT": 2,
+      "UNUSEDPARAM": 1,
+      "UNUSEDSIGNAL": 7,
+      "WIDTHEXPAND": 32,
+      "WIDTHTRUNC": 63
+    },
+    "hard_diagnostics": [],
+    "returncode": 0,
+    "status": "PASS"
+  },
+  "profile": "mini_loihi_v8_0e_ram_wheel_small_63",
+  "schema_version": "1.0",
+  "structural": {
+    "combinational_loops": 0,
+    "expected_storage_memory_cells": 4,
+    "generic_post_map_cells": 46501,
+    "latches": 0,
+    "memory_cell_type": "$mem_v2",
+    "multiple_drivers": 0,
+    "returncode": 0,
+    "scope": "generic Yosys structural evidence; no FPGA PPA claim",
+    "status": "PASS",
+    "storage_memory_cells": 4,
+    "undriven": 0,
+    "whole_memory_reset_loops": 0
+  },
+  "tools": {
+    "boolector": {
+      "executable": "C:\\tool\\oss-cad-suite\\bin\\boolector",
+      "fallback_used": false,
+      "messages": [
+        "3.2.4"
+      ],
+      "returncode": 0,
+      "status": "PASS",
+      "tool": "boolector",
+      "version": "3.2.4"
+    },
+    "iverilog": {
+      "executable": "C:\\tool\\oss-cad-suite\\bin\\iverilog",
+      "fallback_used": false,
+      "messages": [
+        "Icarus Verilog version 14.0 (devel) (s20260301-295-g614607c13-dirty)",
+        "Copyright (c) 2000-2026 Stephen Williams (steve@icarus.com)",
+        "  This program is free software; you can redistribute it and/or modify",
+        "  it under the terms of the GNU General Public License as published by",
+        "  the Free Software Foundation; either version 2 of the License, or",
+        "  (at your option) any later version.",
+        "  This program is distributed in the hope that it will be useful,",
+        "  but WITHOUT ANY WARRANTY; without even the implied warranty of",
+        "  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the",
+        "  GNU General Public License for more details.",
+        "  You should have received a copy of the GNU General Public License along",
+        "  with this program; if not, write to the Free Software Foundation, Inc.,",
+        "  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.",
+        "Icarus Verilog Preprocessor version 14.0 (devel) (s20260301-295-g614607c13-dirty)",
+        "Copyright (c) 1999-2026 Stephen Williams (steve@icarus.com)",
+        "  This program is free software; you can redistribute it and/or modify",
+        "  it under the terms of the GNU General Public License as published by",
+        "  the Free Software Foundation; either version 2 of the License, or",
+        "  (at your option) any later version.",
+        "  This program is distributed in the hope that it will be useful,",
+        "  but WITHOUT ANY WARRANTY; without even the implied warranty of",
+        "  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the",
+        "  GNU General Public License for more details.",
+        "  You should have received a copy of the GNU General Public License along",
+        "  with this program; if not, write to the Free Software Foundation, Inc.,",
+        "  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.",
+        "Icarus Verilog Parser/Elaborator version 14.0 (devel) (s20260301-295-g614607c13-dirty)",
+        "Copyright (c) 1998-2026 Stephen Williams (steve@icarus.com)",
+        "  This program is free software; you can redistribute it and/or modify",
+        "  it under the terms of the GNU General Public License as published by",
+        "  the Free Software Foundation; either version 2 of the License, or",
+        "  (at your option) any later version.",
+        "  This program is distributed in the hope that it will be useful,",
+        "  but WITHOUT ANY WARRANTY; without even the implied warranty of",
+        "  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the",
+        "  GNU General Public License for more details.",
+        "  You should have received a copy of the GNU General Public License along",
+        "  with this program; if not, write to the Free Software Foundation, Inc.,",
+        "  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.",
+        " FLAGS DLL vvp.tgt",
+        "vvp.tgt: Icarus Verilog VVP Code Generator 14.0 (devel) (s20260301-295-g614607c13-dirty)",
+        "Copyright (c) 2001-2026 Stephen Williams (steve@icarus.com)",
+        "  This program is free software; you can redistribute it and/or modify",
+        "  it under the terms of the GNU General Public License as published by",
+        "  the Free Software Foundation; either version 2 of the License, or",
+        "  (at your option) any later version.",
+        "  This program is distributed in the hope that it will be useful,",
+        "  but WITHOUT ANY WARRANTY; without even the implied warranty of",
+        "  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the",
+        "  GNU General Public License for more details.",
+        "  You should have received a copy of the GNU General Public License along",
+        "  with this program; if not, write to the Free Software Foundation, Inc.,",
+        "  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA."
+      ],
+      "returncode": 0,
+      "status": "PASS",
+      "tool": "iverilog",
+      "version": "Icarus Verilog version 14.0 (devel) (s20260301-295-g614607c13-dirty)"
+    },
+    "sby": {
+      "executable": "C:\\tool\\oss-cad-suite\\bin\\sby",
+      "fallback_used": false,
+      "messages": [
+        "SBY v0.67"
+      ],
+      "returncode": 0,
+      "status": "PASS",
+      "tool": "sby",
+      "version": "SBY v0.67"
+    },
+    "verilator": {
+      "executable": "C:\\tool\\oss-cad-suite\\bin\\verilator_bin.exe",
+      "fallback_used": true,
+      "messages": [
+        "Program 'verilator' failed to run: Access is deniedAt C:\\Users\\\u7075\u800014air\\Documents\\info os\\scripts\\run_oss_cad.ps1:15 cha",
+        "r:1",
+        "+ & $Tool @arguments",
+        "+ ~~~~~~~~~~~~~~~~~~.",
+        "At C:\\Users\\\u7075\u800014air\\Documents\\info os\\scripts\\run_oss_cad.ps1:15 char:1",
+        "+ & $Tool @arguments",
+        "+ ~~~~~~~~~~~~~~~~~~",
+        "    + CategoryInfo          : ResourceUnavailable: (:) [], ApplicationFailedException",
+        "    + FullyQualifiedErrorId : NativeCommandFailed",
+        "Verilator 5.051 devel rev v5.050-65-g5ead758f2 (mod)"
+      ],
+      "returncode": 0,
+      "status": "PASS",
+      "tool": "verilator_bin.exe",
+      "version": "Verilator 5.051 devel rev v5.050-65-g5ead758f2 (mod)"
+    },
+    "yosys": {
+      "executable": "C:\\tool\\oss-cad-suite\\bin\\yosys",
+      "fallback_used": false,
+      "messages": [
+        "Yosys 0.67+34 (git sha1 d4f39588a, Release, GNU /usr/bin/x86_64-w64-mingw32-g++ 13.2.1)"
+      ],
+      "returncode": 0,
+      "status": "PASS",
+      "tool": "yosys",
+      "version": "Yosys 0.67+34 (git sha1 d4f39588a, Release, GNU /usr/bin/x86_64-w64-mingw32-g++ 13.2.1)"
+    },
+    "z3": {
+      "executable": "C:\\tool\\oss-cad-suite\\bin\\z3",
+      "fallback_used": false,
+      "messages": [
+        "Z3 version 4.15.5 - 64 bit"
+      ],
+      "returncode": 0,
+      "status": "PASS",
+      "tool": "z3",
+      "version": "Z3 version 4.15.5 - 64 bit"
+    }
+  }
+}
