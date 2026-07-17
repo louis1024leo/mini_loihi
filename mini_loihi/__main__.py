@@ -79,6 +79,9 @@ from mini_loihi.validation import run_repeated_multicore_snapshot, run_single_pa
 from mini_loihi.v8_artifacts import export_v8_artifacts
 from mini_loihi.v8_examples import build_v8_recurrence_demo
 from mini_loihi.v8_reports import build_v8_reference_report
+from mini_loihi.v8_cycle_backend import run_v8_cycle_differential
+from mini_loihi.v8_cycle_profile import V8_CYCLE_PROFILES, get_v8_cycle_profile
+from mini_loihi.v8_cycle_reports import write_v8_cycle_reports
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -293,6 +296,26 @@ def _build_parser() -> argparse.ArgumentParser:
         output_parent,
     )
     v8_export.add_argument("--output-dir", required=True, help="V8.0A artifact output directory")
+    v8_cycle = _add_command(
+        subparsers,
+        "v8-cycle-demo",
+        _cmd_v8_cycle_demo,
+        "execute the V8.0B finite delay-wheel cycle oracle",
+        output_parent,
+    )
+    v8_cycle.add_argument(
+        "--profile",
+        choices=tuple(V8_CYCLE_PROFILES),
+        default="v8_0b_balanced_255",
+    )
+    v8_cycle_report = _add_command(
+        subparsers,
+        "v8-cycle-report",
+        _cmd_v8_cycle_report,
+        "write deterministic V8.0B cycle and resource reports",
+        output_parent,
+    )
+    v8_cycle_report.add_argument("--output-dir", required=True, help="V8.0B report output directory")
     return parser
 
 
@@ -348,6 +371,50 @@ def _cmd_v8_recurrence_export_demo(args: argparse.Namespace) -> dict[str, Any]:
             f"  files: {len(exported.exported_files)}\n"
             f"  program fingerprint: {exported.program_fingerprint}\n"
             f"  manifest SHA-256: {exported.manifest_sha256}"
+        ),
+    }
+
+
+def _cmd_v8_cycle_demo(args: argparse.Namespace) -> dict[str, Any]:
+    _network, program, events = build_v8_recurrence_demo()
+    profile = get_v8_cycle_profile(args.profile)
+    differential = run_v8_cycle_differential(program, events, profile)
+    cycle = differential.cycle_result
+    data = {
+        "profile": profile.profile_id,
+        "max_delay_ticks": profile.max_delay_ticks,
+        "equivalent": differential.equivalent,
+        "first_divergence": differential.first_divergence,
+        "cycles_per_tick": cycle.cycles_per_tick,
+        "total_cycles": cycle.counters.total_cycles,
+        "functional_state_digest": cycle.final_state_digest,
+        "logical_trace_sha256": cycle.logical_trace_sha256,
+        "cycle_trace_sha256": cycle.cycle_trace_sha256,
+        "pending_contributions": len(cycle.pending_contributions),
+        "counters": asdict(cycle.counters),
+    }
+    return {
+        "data": data,
+        "text": (
+            "Mini-Loihi V8.0B delay-wheel cycle oracle\n"
+            f"  profile: {profile.profile_id} MAX_DELAY_TICKS={profile.max_delay_ticks}\n"
+            f"  V8.0A differential: {'PASS' if differential.equivalent else 'FAIL'}\n"
+            f"  cycles per tick: {cycle.cycles_per_tick}\n"
+            f"  total cycles: {cycle.counters.total_cycles}\n"
+            f"  cycle trace SHA-256: {cycle.cycle_trace_sha256}"
+        ),
+    }
+
+
+def _cmd_v8_cycle_report(args: argparse.Namespace) -> dict[str, Any]:
+    paths = write_v8_cycle_reports(args.output_dir)
+    data = {"output_directory": str(args.output_dir), "files": tuple(path.name for path in paths)}
+    return {
+        "data": data,
+        "text": (
+            "Mini-Loihi V8.0B deterministic reports\n"
+            f"  output: {args.output_dir}\n"
+            f"  files: {len(paths)}"
         ),
     }
 

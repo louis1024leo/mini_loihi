@@ -351,6 +351,37 @@ from mini_loihi.v8_reference import (
     run_v8_reference,
     v8_trace_json_lines,
 )
+from mini_loihi.v8_cycle_backend import (
+    V8DelayWheelMachine,
+    compile_v8_cycle_network,
+    run_v8_cycle_differential,
+    run_v8_cycle_model,
+    validate_v8_cycle_program,
+    v8_cycle_trace_json_lines,
+)
+from mini_loihi.v8_cycle_profile import (
+    DEFAULT_V8_CYCLE_PROFILE,
+    V8_CYCLE_BALANCED_255,
+    V8_CYCLE_EXTENDED_1023,
+    V8_CYCLE_PROFILES,
+    V8_CYCLE_SMALL_63,
+    V8CycleProfile,
+    get_v8_cycle_profile,
+)
+from mini_loihi.v8_cycle_resources import (
+    V8CycleResourceEstimate,
+    V8CycleThroughputEstimate,
+    build_v8_profile_evaluation,
+    estimate_v8_cycle_resources,
+    estimate_v8_cycle_throughput,
+)
+from mini_loihi.v8_cycle_state import (
+    V8CycleCapacityError,
+    V8CycleCounters,
+    V8CycleDifferentialResult,
+    V8CycleResult,
+    V8CycleTraceRecord,
+)
 
 __all__ = [
     "ALIFParameters",
@@ -667,4 +698,27 @@ __all__ = [
     "get_v8_recurrence_delay_profile",
     "run_v8_reference",
     "v8_trace_json_lines",
+    "DEFAULT_V8_CYCLE_PROFILE",
+    "V8_CYCLE_BALANCED_255",
+    "V8_CYCLE_EXTENDED_1023",
+    "V8_CYCLE_PROFILES",
+    "V8_CYCLE_SMALL_63",
+    "V8CycleProfile",
+    "V8CycleCapacityError",
+    "V8CycleCounters",
+    "V8CycleDifferentialResult",
+    "V8CycleResourceEstimate",
+    "V8CycleResult",
+    "V8CycleThroughputEstimate",
+    "V8CycleTraceRecord",
+    "V8DelayWheelMachine",
+    "build_v8_profile_evaluation",
+    "compile_v8_cycle_network",
+    "estimate_v8_cycle_resources",
+    "estimate_v8_cycle_throughput",
+    "get_v8_cycle_profile",
+    "run_v8_cycle_differential",
+    "run_v8_cycle_model",
+    "validate_v8_cycle_program",
+    "v8_cycle_trace_json_lines",
 ]
