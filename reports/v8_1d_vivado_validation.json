@@ -1,0 +1,18 @@
+{
+  "baseline": {"commit": "2ef511146b0255d270b34228641aaf838af3d9ec", "tag": "v8.1c"},
+  "comparison_v8_0e": {"bram_tiles": 2.5, "dsp": 2, "ff": 1376, "lut": 1294},
+  "image": {"manifest_sha256": "5d1c4974d82d7713beedef6a7e21d2ca861b14efbdb0b4f0336e4e7b83720cf6", "profile": "v8_1c_dual_multiplier_63", "program_fingerprint": "b0359062433d7263c01a153f27ed040a539ea21c252b136171782deeeae02775"},
+  "memory_inference": {
+    "state": {"adaptation": "LUTRAM: RAM32M16 and RAM32X1D", "accumulator_40": "LUTRAM: RAM32M16", "timestamp": "LUTRAM: RAM32M16 and RAM32X1D", "voltage": "LUTRAM: RAM32M16 and RAM32X1D"},
+    "parameters": {"adaptation_decay": "RAMB18E2", "adaptation_increment": "optimized away in canonical fixture", "leak": "optimized away in canonical fixture", "model": "optimized away in canonical fixture", "reset": "RAMB18E2", "threshold": "RAMB18E2", "type": "optimized away in canonical fixture"}
+  },
+  "part": "xczu7ev-ffvc1156-2-e",
+  "pipeline": {"active_dsp48e2_paths": ["stage3 adaptation_product", "stage3 leak_product"], "atomic_writeback": "N9 commit gates voltage, adaptation, timestamp, accumulator clear, spike, and scoreboard release", "elastic_stages": 10, "scoreboard_bits": 256},
+  "timing": [
+    {"critical_endpoint": "core/neuron_pipeline/accumulator_ram/memory_reg_r2_0_1_28_39/RAMB_D1/I", "critical_startpoint": "core/overflow_sticky_reg/C", "datapath_delay_ns": 4.207, "frequency_mhz": 100, "logic_levels": 6, "status": "PASS", "tns_ns": 0.0, "wns_ns": 5.692, "worst_hold_slack_ns": 0.024},
+    {"critical_endpoint": "core/wheel_storage/free_list_ram_reg_bram_0/ADDRBWRADDR[10]", "critical_startpoint": "core/state_reg[3]/C", "datapath_delay_ns": 3.219, "frequency_mhz": 150, "logic_levels": 6, "status": "PASS", "tns_ns": 0.0, "wns_ns": 3.121, "worst_hold_slack_ns": 0.019},
+    {"critical_endpoint": "core/neuron_pipeline/adaptation_decay_rom/read_data_reg/ENARDEN", "critical_startpoint": "core/overflow_sticky_reg/C", "datapath_delay_ns": 3.492, "frequency_mhz": 175, "logic_levels": 5, "status": "PASS", "tns_ns": 0.0, "wns_ns": 1.855, "worst_hold_slack_ns": 0.019}
+  ],
+  "top": "mini_loihi_v81c_alif_image_top",
+  "utilization_synth_100mhz": {"bram_tiles": 4.0, "dsp": 2, "ff": 2164, "lut": 1885, "lutram": 154, "ramb18": 6, "ramb36": 1, "uram": 0}
+}
