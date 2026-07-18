@@ -1,0 +1,17 @@
+[options]
+mode bmc
+depth 24
+
+[engines]
+smtbmc boolector
+
+[script]
+read -formal -D FORMAL v9_0c_learning_state.sv v9_0c1_learning_state_formal.sv
+prep -top v9_0c1_learning_state_formal
+memory_map
+opt
+
+[files]
+rtl/v9_0c/v9_0c_learning_state.sv
+formal/v9_0c1_learning_state_formal.sv
+formal/initial_weight_formal.mem

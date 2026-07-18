@@ -1,0 +1,158 @@
+{
+  "counterexample_classification": [
+    {
+      "cause": "tick-clear ready-low input was captured by the internal ingress FIFO",
+      "depth": 16,
+      "property": "committed_spike_at_most_one_pre_and_post_trace",
+      "status": "RTL_DEFECT_FIXED",
+      "witness": "external_valid=1, external_ready=0 on P8-to-P0 transition"
+    }
+  ],
+  "engine": "smtbmc_boolector",
+  "jobs": {
+    "active_table": {
+      "depth": 30,
+      "job": "formal/v9_0c1_active_table_bmc.sby",
+      "status": "PASS"
+    },
+    "ingress": {
+      "depth": 40,
+      "job": "formal/v9_0c1_ingress_bmc.sby",
+      "status": "PASS"
+    },
+    "learning_state": {
+      "depth": 24,
+      "job": "formal/v9_0c1_learning_state_bmc.sby",
+      "status": "PASS"
+    },
+    "pair_table": {
+      "depth": 30,
+      "job": "formal/v9_0c_pair_table_bmc.sby",
+      "status": "PASS"
+    },
+    "pipelines": {
+      "depth": 30,
+      "job": "formal/v9_0c1_pipeline_bmc.sby",
+      "status": "PASS"
+    }
+  },
+  "passed": 7,
+  "properties": [
+    {
+      "depth": 40,
+      "property": "committed_spike_at_most_one_pre_and_post_trace",
+      "rationale": "stable identity deduplication",
+      "scope": "formal/v9_0c1_ingress_bmc.sby",
+      "status": "PASS"
+    },
+    {
+      "depth": null,
+      "property": "invalid_killed_or_uncommitted_transaction_no_learning_event",
+      "rationale": "no killed-transaction integration harness",
+      "scope": "no_complete_formal_harness",
+      "status": "UNSUPPORTED"
+    },
+    {
+      "depth": 30,
+      "property": "at_most_one_live_pair_entry_per_synapse_id",
+      "rationale": "pair-table uniqueness assertion",
+      "scope": "formal/v9_0c_pair_table_bmc.sby",
+      "status": "PASS"
+    },
+    {
+      "depth": null,
+      "property": "scanner_ordering_cannot_change_final_pair_sum",
+      "rationale": "no permutation-equivalence formal harness",
+      "scope": "no_complete_formal_harness",
+      "status": "UNSUPPORTED"
+    },
+    {
+      "depth": null,
+      "property": "eligibility_timestamp_and_active_effect_commit_atomically",
+      "rationale": "pipeline proof does not include active membership",
+      "scope": "no_complete_formal_harness",
+      "status": "UNSUPPORTED"
+    },
+    {
+      "depth": 30,
+      "property": "active_insertion_no_duplicate_reverse_membership",
+      "rationale": "active and reverse membership assertions",
+      "scope": "formal/v9_0c1_active_table_bmc.sby",
+      "status": "PASS"
+    },
+    {
+      "depth": 30,
+      "property": "reclaim_clears_active_and_reverse_membership_atomically",
+      "rationale": "post-reclaim atomic assertions",
+      "scope": "formal/v9_0c1_active_table_bmc.sby",
+      "status": "PASS"
+    },
+    {
+      "depth": null,
+      "property": "stale_generation_cannot_update_another_synapse",
+      "rationale": "no active-to-weight integrated generation harness",
+      "scope": "no_complete_formal_harness",
+      "status": "UNSUPPORTED"
+    },
+    {
+      "depth": null,
+      "property": "weight_transaction_cannot_commit_twice",
+      "rationale": "conservation alone does not identify individual transactions",
+      "scope": "no_complete_formal_harness",
+      "status": "UNSUPPORTED"
+    },
+    {
+      "depth": null,
+      "property": "tick_t_weight_commit_not_sampled_by_tick_t_emission",
+      "rationale": "no neural-learning sampling formal harness",
+      "scope": "no_complete_formal_harness",
+      "status": "UNSUPPORTED"
+    },
+    {
+      "depth": null,
+      "property": "pending_delayed_contribution_unchanged_by_weight_write",
+      "rationale": "no wheel-learning formal harness",
+      "scope": "no_complete_formal_harness",
+      "status": "UNSUPPORTED"
+    },
+    {
+      "depth": null,
+      "property": "tick_advance_implies_all_current_tick_work_complete",
+      "rationale": "no full production barrier formal harness",
+      "scope": "no_complete_formal_harness",
+      "status": "UNSUPPORTED"
+    },
+    {
+      "depth": 24,
+      "property": "state_reset_preserves_current_weights",
+      "rationale": "state-reset scrub assertions",
+      "scope": "formal/v9_0c1_learning_state_bmc.sby",
+      "status": "PASS"
+    },
+    {
+      "depth": 24,
+      "property": "cold_reset_restores_initial_weights",
+      "rationale": "cold-reset scrub assertions",
+      "scope": "formal/v9_0c1_learning_state_bmc.sby",
+      "status": "PASS"
+    },
+    {
+      "depth": null,
+      "property": "sticky_fatal_until_defined_reset",
+      "rationale": "no integrated sticky-error formal harness",
+      "scope": "no_complete_formal_harness",
+      "status": "UNSUPPORTED"
+    },
+    {
+      "depth": 30,
+      "property": "stalled_valid_transactions_preserve_payload",
+      "rationale": "eligibility and weight payload stability assertions",
+      "scope": "formal/v9_0c1_pipeline_bmc.sby",
+      "status": "PASS"
+    }
+  ],
+  "release_gate_status": "FAIL",
+  "required": 16,
+  "schema_version": "1.1-plasticity-integration-formal",
+  "unbounded_liveness": "UNSUPPORTED"
+}

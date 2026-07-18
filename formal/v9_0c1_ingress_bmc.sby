@@ -1,0 +1,25 @@
+[options]
+mode bmc
+depth 40
+
+[engines]
+smtbmc boolector
+
+[script]
+read -formal -D FORMAL v9_0c_profile_pkg.sv v9_0c_fifo.sv v9_0c_sync_rom.sv v9_0c_pair_expander.sv v9_0c_learning_ingress.sv v9_0c1_ingress_formal.sv
+prep -top v9_0c1_ingress_formal
+memory_map
+opt
+
+[files]
+rtl/v9_0c/v9_0c_profile_pkg.sv
+rtl/v9_0c/v9_0c_fifo.sv
+rtl/v9_0c/v9_0c_sync_rom.sv
+rtl/v9_0c/v9_0c_pair_expander.sv
+rtl/v9_0c/v9_0c_learning_ingress.sv
+formal/v9_0c1_ingress_formal.sv
+formal/ingress_ptr.mem
+formal/ingress_len.mem
+formal/ingress_adj.mem
+formal/ingress_decay.mem
+formal/ingress_increment.mem

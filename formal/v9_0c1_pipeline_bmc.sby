@@ -1,0 +1,15 @@
+[options]
+mode bmc
+depth 30
+
+[engines]
+smtbmc boolector
+
+[script]
+read -formal -D FORMAL v9_0c_eligibility_engine.sv v9_0c_weight_update_engine.sv v9_0c1_pipeline_formal.sv
+prep -top v9_0c1_pipeline_formal
+
+[files]
+rtl/v9_0c/v9_0c_eligibility_engine.sv
+rtl/v9_0c/v9_0c_weight_update_engine.sv
+formal/v9_0c1_pipeline_formal.sv

@@ -1,0 +1,15 @@
+{
+  "first_divergence": "raw_cycle_capture",
+  "functional_equivalent": true,
+  "integrated_learning_top_output": "V9C_LEARNING_TOP_PASS cycles=1306 eligibility=1 weight=2",
+  "integrated_learning_top_status": "PASS",
+  "profile": "v9_0b_balanced",
+  "raw_cycle_equivalent": false,
+  "raw_cycle_status": "FAIL_NOT_CYCLE_EXACT",
+  "rtl_captured_total_cycles": 0,
+  "rtl_transaction_equivalent": true,
+  "rtl_transaction_trace_sha256": "a1a772dff0de56bc415b6c6f7b58b61022b4b7d767af6b4e75aa8eede4898247",
+  "schema_version": "1.0-plasticity-rtl",
+  "v9_0b_cycle_trace_sha256": "4455084ab757602e6d9659d5d0a2ea9bac8476d3f358dd96b6e3470cfbef1afb",
+  "v9_0b_total_cycles": 42
+}

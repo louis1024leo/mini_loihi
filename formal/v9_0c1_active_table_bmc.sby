@@ -1,0 +1,16 @@
+[options]
+mode bmc
+depth 30
+
+[engines]
+smtbmc boolector
+
+[script]
+read -formal -D FORMAL v9_0c_active_table.sv v9_0c1_active_table_formal.sv
+prep -top v9_0c1_active_table_formal
+memory_map
+opt
+
+[files]
+rtl/v9_0c/v9_0c_active_table.sv
+formal/v9_0c1_active_table_formal.sv

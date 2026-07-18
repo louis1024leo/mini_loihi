@@ -514,6 +514,10 @@ from mini_loihi.v9_cycle_random import build_v9_cycle_random_report
 from mini_loihi.v9_cycle_reports import build_v9_cycle_demo_report, write_v9_cycle_reports
 from mini_loihi.v9_cycle_resources import V9CycleResourceEstimate, build_v9_cycle_resource_report, estimate_v9_cycle_resources, estimate_v9_workload
 from mini_loihi.v9_cycle_state import V9CycleCapacityError, V9CycleCounters, V9CycleResult, V9CycleTraceRecord, V9ThreeWayDifferentialResult
+from mini_loihi.v9c_rtl_artifacts import V9CRTLArtifacts, export_v9c_rtl_artifacts, pack_v9c_parameters
+from mini_loihi.v9c_rtl_reports import build_v9c_cycle_contract_report, build_v9c_demo_report, build_v9c_executable_matrix_report, build_v9c_formal_report, build_v9c_integrated_random_report, build_v9c_random_report, build_v9c_resource_report, write_v9c_reports
+from mini_loihi.v9c_rtl_state import V9CFourWayResult, V9CRTLToolStatus, V9CRTLTransactionResult
+from mini_loihi.v9c_rtl_verify import compile_v9c_rtl_production, run_v9c_arithmetic_transactions, run_v9c_four_way_differential, run_v9c_ingress_reset_boundary_fixture, run_v9c_learning_top_fixture, run_v9c_production_integration_fixture
 
 __all__ = [
     "ALIFParameters",
@@ -1005,4 +1009,24 @@ __all__ = [
     "v9_cycle_trace_json_lines",
     "v9_cycle_trace_sha256",
     "write_v9_cycle_reports",
+    "V9CFourWayResult",
+    "V9CRTLArtifacts",
+    "V9CRTLToolStatus",
+    "V9CRTLTransactionResult",
+    "build_v9c_demo_report",
+    "build_v9c_executable_matrix_report",
+    "build_v9c_cycle_contract_report",
+    "build_v9c_formal_report",
+    "build_v9c_integrated_random_report",
+    "build_v9c_random_report",
+    "build_v9c_resource_report",
+    "compile_v9c_rtl_production",
+    "export_v9c_rtl_artifacts",
+    "pack_v9c_parameters",
+    "run_v9c_arithmetic_transactions",
+    "run_v9c_four_way_differential",
+    "run_v9c_ingress_reset_boundary_fixture",
+    "run_v9c_learning_top_fixture",
+    "run_v9c_production_integration_fixture",
+    "write_v9c_reports",
 ]

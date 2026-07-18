@@ -101,6 +101,7 @@ from mini_loihi.v9_cycle_backend import run_v9_cycle_model, run_v9_three_way_dif
 from mini_loihi.v9_cycle_profile import V9_CYCLE_PROFILES, get_v9_cycle_profile
 from mini_loihi.v9_cycle_random import build_v9_cycle_random_report
 from mini_loihi.v9_cycle_reports import build_v9_cycle_demo_report, write_v9_cycle_reports
+from mini_loihi.v9c_rtl_reports import build_v9c_demo_report, build_v9c_random_report, write_v9c_reports
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -432,6 +433,12 @@ def _build_parser() -> argparse.ArgumentParser:
     v9_cycle_report.add_argument("--output-dir", required=True)
     v9_cycle_report.add_argument("--seeds", type=int, default=100)
     _add_command(subparsers, "v9-cycle-learning-trace", _cmd_v9_cycle_learning_trace, "write deterministic V9.0B cycle trace", output_parent)
+    _add_command(subparsers, "v9-rtl-learning-demo", _cmd_v9c_rtl_demo, "run the V9.0C RTL transaction differential", output_parent)
+    v9c_random = _add_command(subparsers, "v9-rtl-learning-random", _cmd_v9c_rtl_random, "run V9.0C four-way randomized differential", output_parent)
+    v9c_random.add_argument("--seeds", type=int, default=100)
+    v9c_report = _add_command(subparsers, "v9-rtl-learning-report", _cmd_v9c_rtl_report, "write deterministic V9.0C RTL reports", output_parent)
+    v9c_report.add_argument("--output-dir", required=True)
+    v9c_report.add_argument("--seeds", type=int, default=100)
     return parser
 
 
@@ -1660,6 +1667,19 @@ def _cmd_v9_cycle_learning_trace(args: argparse.Namespace) -> dict[str, Any]:
     result = run_v9_cycle_model(program, events, modulation)
     Path(args.output).write_text(v9_cycle_trace_json_lines(result.cycle_trace), encoding="ascii", newline="\n")
     return {"data": {"output": args.output, "records": len(result.cycle_trace), "sha256": result.cycle_trace_sha256}, "output_consumed": True, "text": f"Mini-Loihi V9.0B cycle trace\n  records: {len(result.cycle_trace)}\n  output: {args.output}"}
+
+
+def _cmd_v9c_rtl_demo(_args: argparse.Namespace) -> dict[str, Any]:
+    return _report_command("Mini-Loihi V9.0C RTL differential", build_v9c_demo_report())
+
+
+def _cmd_v9c_rtl_random(args: argparse.Namespace) -> dict[str, Any]:
+    return _report_command("Mini-Loihi V9.0C random differential", build_v9c_random_report(args.seeds))
+
+
+def _cmd_v9c_rtl_report(args: argparse.Namespace) -> dict[str, Any]:
+    paths = write_v9c_reports(args.output_dir, args.seeds)
+    return _report_command("Mini-Loihi V9.0C RTL reports", {"files": [str(path) for path in paths]})
 
 
 def _cmd_rtl_audit(_args: argparse.Namespace) -> dict[str, Any]:

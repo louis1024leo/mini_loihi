@@ -1,0 +1,610 @@
+{
+  "cases": [
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "static_learning_idle",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-01",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "plastic_no_spike",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-02",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "pair_zero_modulation",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-03",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "empty_active_modulation",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-04",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "causal_pair",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-05",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "anti_causal_pair",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-06",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "simultaneous_pair",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-07",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "dual_scanner_same_synapse",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-08",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "duplicate_plastic_synapses",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-09",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "plastic_recurrent_self_loop",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-10",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "delay_zero_self_loop",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-11",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "multiple_outgoing",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-12",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "multiple_incoming",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-13",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "pair_merge",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-14",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "pair_backpressure",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-15",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "pair_exact_capacity",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-16",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "pair_overflow",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-17",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "trace_raw",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-18",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "eligibility_raw",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-19",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "weight_raw",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-20",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "active_insert",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-21",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "duplicate_insert_suppression",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-22",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "stale_reclaim",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-23",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "generation_mismatch",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-24",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "generation_wrap",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-25",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "active_exact_capacity",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-26",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "active_overflow",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-27",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "positive_modulation",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-28",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "negative_modulation",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-29",
+      "scenario_specific_status": "PASS",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "multi_event_aggregation",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-30",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "channel_isolation",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-31",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "weight_lower_clamp",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-32",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "weight_upper_clamp",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-33",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "custom_cross_zero",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-34",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "next_tick_weight_visibility",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-35",
+      "scenario_specific_status": "PASS",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "delayed_sampled_weight",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-36",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "tick_barrier",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-37",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "modulation_fifo_backpressure",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-38",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "weight_fifo_backpressure",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-39",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "cold_reset",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-40",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "state_reset",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-41",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "reset_inflight",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-42",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "long_lazy_decay",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-43",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "input_permutation",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-44",
+      "scenario_specific_status": "PASS",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "sticky_hard_error",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-45",
+      "scenario_specific_status": "UNSUPPORTED",
+      "simulator": "iverilog/vvp"
+    },
+    {
+      "assertions_executed": [
+        "production_fixture_completed",
+        "full_functional_state_matches_software_oracles",
+        "sticky_error_matches_software_oracles"
+      ],
+      "execution_status": "PASS",
+      "name": "deterministic_reports",
+      "report_artifact": "reports/v9_0c1_executable_matrix.json",
+      "scenario_id": "V9C1-46",
+      "scenario_specific_status": "PASS",
+      "simulator": "iverilog/vvp"
+    }
+  ],
+  "evidence": "tests/test_v9_0c_plasticity_rtl.py: 61 tests including 46 parameterized RTL invocations; full suite 688 passed",
+  "executed": 46,
+  "execution_gate_status": "PASS",
+  "execution_passed": 46,
+  "release_gate_status": "FAIL",
+  "scenario_specific_passed": 4,
+  "scenario_specific_required": 46,
+  "schema_version": "1.1-plasticity-executable-matrix"
+}

@@ -1,0 +1,90 @@
+{
+  "classification": "V9_0B_OMITS_INTEGRATED_NEURAL_AND_SERIAL_RTL_TRANSACTIONS",
+  "first_divergence": {
+    "tick": 0,
+    "v9_0b_cycles": 11,
+    "v9_0c_rtl_cycles": 94
+  },
+  "functional_state_status": "PASS",
+  "omitted_transactions": [
+    "V8.1C neuron pipeline and tick handshakes",
+    "serial plastic-weight RAM sampling",
+    "P0/P1 neural-to-learning handoff",
+    "16-channel modulation cursor",
+    "256-slot active-table scan"
+  ],
+  "schema_version": "1.1-plasticity-cycle-contract-audit",
+  "standardized_trace_status": "INCOMPLETE_TICK_COUNTS_ONLY",
+  "status": "FAIL_NOT_CYCLE_EXACT",
+  "v9_0b_contract_changed": false,
+  "v9_0b_cycles_per_tick": [
+    [
+      0,
+      11
+    ],
+    [
+      1,
+      14
+    ],
+    [
+      2,
+      2
+    ],
+    [
+      3,
+      2
+    ],
+    [
+      4,
+      7
+    ],
+    [
+      5,
+      2
+    ],
+    [
+      6,
+      2
+    ],
+    [
+      7,
+      2
+    ]
+  ],
+  "v9_0b_total_cycles": 42,
+  "v9_0c_rtl_cycles_per_tick": [
+    [
+      0,
+      94
+    ],
+    [
+      1,
+      106
+    ],
+    [
+      2,
+      45
+    ],
+    [
+      3,
+      45
+    ],
+    [
+      4,
+      314
+    ],
+    [
+      5,
+      45
+    ],
+    [
+      6,
+      45
+    ],
+    [
+      7,
+      45
+    ]
+  ],
+  "v9_0c_rtl_total_cycles": 739
+}
