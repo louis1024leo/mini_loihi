@@ -1,0 +1,81 @@
+{
+  "first_divergence": "",
+  "functional_equivalent": true,
+  "oracle_contract_trace_sha256": "e5bb1bf2a4ea9711193418c2efabc1b69bf9fb71712ff5ca40408d42988b127a",
+  "oracle_cycles_per_tick": [
+    [
+      0,
+      55
+    ],
+    [
+      1,
+      61
+    ],
+    [
+      2,
+      61
+    ],
+    [
+      3,
+      51
+    ],
+    [
+      4,
+      55
+    ],
+    [
+      5,
+      51
+    ],
+    [
+      6,
+      3
+    ],
+    [
+      7,
+      3
+    ]
+  ],
+  "oracle_total_cycles": 340,
+  "per_tick_cycle_equivalent": true,
+  "raw_trace_equivalent": true,
+  "rtl_contract_trace_sha256": "e5bb1bf2a4ea9711193418c2efabc1b69bf9fb71712ff5ca40408d42988b127a",
+  "rtl_cycles_per_tick": [
+    [
+      0,
+      55
+    ],
+    [
+      1,
+      61
+    ],
+    [
+      2,
+      61
+    ],
+    [
+      3,
+      51
+    ],
+    [
+      4,
+      55
+    ],
+    [
+      5,
+      51
+    ],
+    [
+      6,
+      3
+    ],
+    [
+      7,
+      3
+    ]
+  ],
+  "rtl_total_cycles": 340,
+  "schema_version": "1.0-cycle-contract-closure",
+  "status": "PASS_CYCLE_CONTRACT",
+  "total_cycle_equivalent": true
+}

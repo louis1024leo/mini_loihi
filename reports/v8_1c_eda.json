@@ -1,0 +1,28 @@
+{
+  "icarus": {
+    "directed_matrix": "PASS",
+    "production_elaboration": "PASS",
+    "simulator": "Icarus Verilog 14.0"
+  },
+  "schema_version": "1.0-alif-rtl",
+  "verilator": {
+    "cpp_files_generated": 6,
+    "cpp_model_generation": "PASS",
+    "hard_lint_warnings": [],
+    "lint": "PASS",
+    "runtime": "UNSUPPORTED",
+    "runtime_reason": "known Windows Verilator 5.051 generated-model access violation; Icarus remains executable evidence"
+  },
+  "yosys": {
+    "combinational_scc": 0,
+    "latches": 0,
+    "memory_cells_before_lowering": 36,
+    "multiple_drivers": 0,
+    "active_pipeline_multipliers": 2,
+    "post_synthesis_cells_small_fixture": 46777,
+    "pre_lowering_check_problems": 0,
+    "production_undriven_signals": 0,
+    "status": "PASS",
+    "tool": "Yosys 0.67+34"
+  }
+}

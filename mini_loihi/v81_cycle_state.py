@@ -37,6 +37,34 @@ class V81CycleTraceRecord:
 
 
 @dataclass(frozen=True)
+class V81CycleContractRecord:
+    cycle: int
+    tick: int
+    tick_cycle: int
+    controller_state: int
+    wheel_state: int
+    recurrence_state: int
+    ingress_queue_occupancy: int
+    recurrence_queue_occupancy: int
+    pipeline_valid: int
+    scoreboard_occupancy: int
+    pool_occupancy: int
+    fanout_index: int
+    wheel_slot: int
+    allocator_free: int
+
+
+@dataclass(frozen=True)
+class V81CycleContractResult:
+    cycles_per_tick: tuple[tuple[int, int], ...]
+    trace: tuple[V81CycleContractRecord, ...]
+    total_cycles: int
+    wheel_transaction_cycles: int
+    maximum_pipeline_occupancy: int
+    maximum_contributions_in_flight: int
+
+
+@dataclass(frozen=True)
 class V81CycleNeuronUpdate:
     tick: int
     neuron_id: int
@@ -97,6 +125,8 @@ class V81CycleResult:
     cycles_per_tick: tuple[tuple[int, int], ...]
     cycle_trace: tuple[V81CycleTraceRecord, ...]
     cycle_trace_sha256: str
+    contract_trace: tuple[V81CycleContractRecord, ...]
+    contract_trace_sha256: str
     logical_trace: tuple[V81TraceRecord, ...]
     logical_trace_sha256: str
     final_state_digest: str

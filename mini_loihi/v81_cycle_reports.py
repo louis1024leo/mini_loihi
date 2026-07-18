@@ -47,6 +47,7 @@ def build_v81_cycle_demo_report() -> dict[str, object]:
         "reference_trace_sha256": differential.reference_trace_sha256,
         "cycle_logical_trace_sha256": differential.cycle_logical_trace_sha256,
         "cycle_trace_sha256": result.cycle_trace_sha256,
+        "contract_trace_sha256": result.contract_trace_sha256,
         "cycles_per_tick": [list(item) for item in result.cycles_per_tick],
         "counters": asdict(result.counters),
         "spikes": [asdict(item) for item in result.spikes],
@@ -64,7 +65,7 @@ def build_v81_cycle_regression_report(seed_count: int = 50) -> dict[str, object]
     for seed in range(seed_count):
         _network, program, events = build_seeded_v81_cycle_case(seed)
         result = run_v81_cycle_differential(program, events)
-        fingerprints.append(result.cycle_result.cycle_trace_sha256)
+        fingerprints.append(result.cycle_result.contract_trace_sha256)
         if not result.equivalent:
             failed_seed = seed
             first_divergence = result.first_divergence
@@ -75,7 +76,7 @@ def build_v81_cycle_regression_report(seed_count: int = 50) -> dict[str, object]
         "passed_seeds": len(fingerprints) if failed_seed is None else failed_seed,
         "failed_seed": failed_seed,
         "first_divergence": first_divergence,
-        "cycle_trace_sha256": fingerprints,
+        "contract_trace_sha256": fingerprints,
     }
 
 

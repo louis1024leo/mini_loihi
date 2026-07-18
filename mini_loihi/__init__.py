@@ -482,8 +482,15 @@ from mini_loihi.v81_cycle_resources import (
     estimate_v81_cycle_resources,
     estimate_v81_workload,
 )
+from mini_loihi.v81_cycle_contract import (
+    run_v81_cycle_contract,
+    v81_contract_trace_sha256,
+    v81_wheel_lane_fsm_states,
+)
 from mini_loihi.v81_cycle_state import (
     V81CycleCapacityError,
+    V81CycleContractRecord,
+    V81CycleContractResult,
     V81CycleCounters,
     V81CycleDifferentialResult,
     V81CycleNeuronUpdate,
@@ -896,6 +903,8 @@ __all__ = [
     "V81ArithmeticEstimate",
     "V81CycleCapacityError",
     "V81CycleCounters",
+    "V81CycleContractRecord",
+    "V81CycleContractResult",
     "V81CycleDifferentialResult",
     "V81CycleMemorySpec",
     "V81CycleNeuronUpdate",
@@ -919,8 +928,11 @@ __all__ = [
     "estimate_v81_workload",
     "get_v81_cycle_profile",
     "run_v81_cycle_differential",
+    "run_v81_cycle_contract",
     "run_v81_cycle_model",
     "validate_v81_cycle_program",
     "v81_cycle_trace_json_lines",
+    "v81_contract_trace_sha256",
+    "v81_wheel_lane_fsm_states",
     "write_v81_cycle_reports",
 ]

@@ -18,6 +18,10 @@ from mini_loihi.model_ir import NeuronModelKind
 from mini_loihi.reference_state import ReferenceEventType, ReferenceInputEvent
 from mini_loihi.v8_reference import V8RoutedEvent, V8ScheduledContribution, V8Spike
 from mini_loihi.v81_cycle_profile import DEFAULT_V81_CYCLE_PROFILE, V81CycleProfile
+from mini_loihi.v81_cycle_contract import (
+    run_v81_cycle_contract,
+    v81_contract_trace_sha256,
+)
 from mini_loihi.v81_cycle_state import (
     V81_CYCLE_TRACE_SCHEMA_VERSION,
     V81CycleCapacityError,
@@ -163,8 +167,14 @@ class V81NeuronCycleMachine:
             self._threshold_saturations,
             self._adaptation_saturations,
         )
+        contract = run_v81_cycle_contract(
+            self.program,
+            self._initial_events,
+            tuple(self.spikes),
+            self.profile,
+        )
         counters = V81CycleCounters(
-            self._cycle,
+            contract.total_cycles,
             self.program.tick_horizon,
             self._external_admitted,
             self._synaptic_operations,
@@ -183,11 +193,11 @@ class V81NeuronCycleMachine:
             self._issue_queue_stalls,
             self._spike_queue_stalls,
             self._handoff_stalls,
-            self._wheel_transaction_cycles,
-            self._maximum_pipeline,
+            contract.wheel_transaction_cycles,
+            contract.maximum_pipeline_occupancy,
             self._maximum_issue_queue,
             self._maximum_spike_queue,
-            self._maximum_in_flight,
+            contract.maximum_contributions_in_flight,
         )
         logical_trace = tuple(self.logical_trace)
         cycle_trace = tuple(self.cycle_trace)
@@ -220,9 +230,11 @@ class V81NeuronCycleMachine:
             pending,
             tuple(self.neuron_history),
             counters,
-            tuple(self._cycles_per_tick),
+            contract.cycles_per_tick,
             cycle_trace,
             hashlib.sha256(cycle_text.encode("ascii")).hexdigest(),
+            contract.trace,
+            v81_contract_trace_sha256(contract.trace),
             logical_trace,
             hashlib.sha256(logical_text.encode("ascii")).hexdigest(),
             hashlib.sha256(canonical.encode("ascii")).hexdigest(),

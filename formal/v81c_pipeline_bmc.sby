@@ -1,0 +1,19 @@
+[options]
+mode bmc
+depth 32
+
+[engines]
+smtbmc boolector
+
+[script]
+read -formal -D FORMAL v81c_sync_state_ram.sv
+read -formal -D FORMAL v81c_sync_param_rom.sv
+read -formal -D FORMAL v81c_lif_alif_pipeline.sv
+read -formal -D FORMAL v81c_pipeline_formal.sv
+prep -top v81c_pipeline_formal
+
+[files]
+rtl/v8_1c/v81c_sync_state_ram.sv
+rtl/v8_1c/v81c_sync_param_rom.sv
+rtl/v8_1c/v81c_lif_alif_pipeline.sv
+formal/v81c_pipeline_formal.sv

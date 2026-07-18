@@ -1,0 +1,22 @@
+{
+  "depth": 32,
+  "engine": "smtbmc boolector",
+  "cover_reached_step": 15,
+  "properties": {
+    "alif_increment_after_comparison": "SKIPPED",
+    "atomic_state_write_enable": "PASS",
+    "fatal_error_sticky_full_core": "UNSUPPORTED",
+    "lif_adaptation_bypass": "PASS",
+    "no_combinational_ready_valid_loop": "PASS_STRUCTURAL",
+    "no_duplicate_commit": "PASS",
+    "no_spike_without_commit": "UNSUPPORTED",
+    "pipeline_identity_order": "SKIPPED",
+    "reset_clears_pipeline_and_scoreboard": "PASS",
+    "scoreboard_eventual_release": "SKIPPED",
+    "scoreboard_prevents_duplicate_live_neuron": "PASS",
+    "stalled_payload_stable": "PASS",
+    "tick_barrier_full_core": "UNSUPPORTED"
+  },
+  "schema_version": "1.0-alif-rtl",
+  "status": "PASS_MODULE_BMC"
+}
