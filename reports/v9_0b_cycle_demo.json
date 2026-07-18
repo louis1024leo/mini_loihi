@@ -1,0 +1,523 @@
+{
+  "active_membership": [],
+  "counters": {
+    "active_duplicate_suppressions": 0,
+    "active_entries_scanned": 1,
+    "active_insertions": 1,
+    "active_removals": 0,
+    "active_scan_stall_cycles": 0,
+    "eligibility_commits": 2,
+    "expansion_stall_cycles": 0,
+    "hard_error": null,
+    "hazard_stall_cycles": 1,
+    "maximum_active_occupancy": 1,
+    "maximum_incoming_queue_occupancy": 1,
+    "maximum_modulation_fifo_occupancy": 1,
+    "maximum_outgoing_queue_occupancy": 1,
+    "maximum_pair_table_occupancy": 1,
+    "maximum_spike_queue_occupancy": 3,
+    "maximum_weight_queue_occupancy": 1,
+    "memory_read_cycles": 8,
+    "memory_write_cycles": 3,
+    "modulation_events_admitted": 1,
+    "multiplier_busy_cycles": 9,
+    "pair_expansions": 3,
+    "pair_queue_stall_cycles": 0,
+    "pair_updates_processed": 2,
+    "stale_reclaims": 0,
+    "ticks_processed": 8,
+    "total_cycles": 42,
+    "weight_queue_stall_cycles": 0,
+    "weight_updates_committed": 1
+  },
+  "cycle_state_digest": "6cb54512e58839ba2b94137f275e514790937e52d3abe53d65fbf94027c7c5d2",
+  "cycle_trace_sha256": "4455084ab757602e6d9659d5d0a2ea9bac8476d3f358dd96b6e3470cfbef1afb",
+  "cycles_per_tick": [
+    [
+      0,
+      11
+    ],
+    [
+      1,
+      14
+    ],
+    [
+      2,
+      2
+    ],
+    [
+      3,
+      2
+    ],
+    [
+      4,
+      7
+    ],
+    [
+      5,
+      2
+    ],
+    [
+      6,
+      2
+    ],
+    [
+      7,
+      2
+    ]
+  ],
+  "dense_state_digest": "6cb54512e58839ba2b94137f275e514790937e52d3abe53d65fbf94027c7c5d2",
+  "event_state_digest": "6cb54512e58839ba2b94137f275e514790937e52d3abe53d65fbf94027c7c5d2",
+  "first_divergence": "",
+  "physical_active_entries": [
+    [
+      0,
+      "plastic_input_to_output",
+      0,
+      0
+    ]
+  ],
+  "profile_id": "v9_0b_balanced",
+  "program_fingerprint": "e7d5854faf65e542819c3e0309c68b48e920c055180c516422ca5216a6add851",
+  "schema_version": "1.0-three-factor-cycle",
+  "three_way_equivalent": true,
+  "workloads": [
+    {
+      "active_entries_scanned": 0,
+      "cycles_per_tick": [
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          5,
+          2
+        ],
+        [
+          6,
+          2
+        ],
+        [
+          7,
+          2
+        ]
+      ],
+      "eligibility_commits": 0,
+      "hard_error": null,
+      "name": "no_learning_work",
+      "pair_updates": 0,
+      "queue_high_water": {
+        "active": 0,
+        "incoming": 0,
+        "modulation": 0,
+        "outgoing": 0,
+        "pair": 0,
+        "spike": 0,
+        "weight": 0
+      },
+      "stalls": {
+        "active_scan": 0,
+        "expansion": 0,
+        "hazard": 0,
+        "pair_queue": 0,
+        "weight_queue": 0
+      },
+      "total_cycles": 16,
+      "weight_updates": 0
+    },
+    {
+      "active_entries_scanned": 1,
+      "cycles_per_tick": [
+        [
+          0,
+          11
+        ],
+        [
+          1,
+          14
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          4,
+          7
+        ],
+        [
+          5,
+          2
+        ],
+        [
+          6,
+          2
+        ],
+        [
+          7,
+          2
+        ]
+      ],
+      "eligibility_commits": 2,
+      "hard_error": null,
+      "name": "sparse_delayed_reward",
+      "pair_updates": 2,
+      "queue_high_water": {
+        "active": 1,
+        "incoming": 1,
+        "modulation": 1,
+        "outgoing": 1,
+        "pair": 1,
+        "spike": 3,
+        "weight": 1
+      },
+      "stalls": {
+        "active_scan": 0,
+        "expansion": 0,
+        "hazard": 1,
+        "pair_queue": 0,
+        "weight_queue": 0
+      },
+      "total_cycles": 42,
+      "weight_updates": 1
+    },
+    {
+      "active_entries_scanned": 1,
+      "cycles_per_tick": [
+        [
+          0,
+          11
+        ],
+        [
+          1,
+          14
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          4,
+          10
+        ],
+        [
+          5,
+          2
+        ],
+        [
+          6,
+          2
+        ],
+        [
+          7,
+          2
+        ]
+      ],
+      "eligibility_commits": 2,
+      "hard_error": null,
+      "name": "one_channel_modulation_burst",
+      "pair_updates": 2,
+      "queue_high_water": {
+        "active": 1,
+        "incoming": 1,
+        "modulation": 4,
+        "outgoing": 1,
+        "pair": 1,
+        "spike": 3,
+        "weight": 1
+      },
+      "stalls": {
+        "active_scan": 0,
+        "expansion": 0,
+        "hazard": 1,
+        "pair_queue": 0,
+        "weight_queue": 0
+      },
+      "total_cycles": 45,
+      "weight_updates": 1
+    },
+    {
+      "active_entries_scanned": 1,
+      "cycles_per_tick": [
+        [
+          0,
+          9
+        ],
+        [
+          1,
+          28
+        ],
+        [
+          2,
+          11
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          11
+        ],
+        [
+          5,
+          10
+        ],
+        [
+          6,
+          27
+        ],
+        [
+          7,
+          7
+        ],
+        [
+          8,
+          4
+        ],
+        [
+          9,
+          3
+        ]
+      ],
+      "eligibility_commits": 12,
+      "hard_error": null,
+      "name": "dense_pair_update",
+      "pair_updates": 12,
+      "queue_high_water": {
+        "active": 1,
+        "incoming": 3,
+        "modulation": 1,
+        "outgoing": 3,
+        "pair": 4,
+        "spike": 2,
+        "weight": 1
+      },
+      "stalls": {
+        "active_scan": 0,
+        "expansion": 0,
+        "hazard": 6,
+        "pair_queue": 0,
+        "weight_queue": 0
+      },
+      "total_cycles": 114,
+      "weight_updates": 1
+    },
+    {
+      "active_entries_scanned": 3,
+      "cycles_per_tick": [
+        [
+          0,
+          9
+        ],
+        [
+          1,
+          12
+        ],
+        [
+          2,
+          20
+        ],
+        [
+          3,
+          9
+        ],
+        [
+          4,
+          18
+        ],
+        [
+          5,
+          37
+        ],
+        [
+          6,
+          2
+        ],
+        [
+          7,
+          4
+        ],
+        [
+          8,
+          2
+        ],
+        [
+          9,
+          2
+        ]
+      ],
+      "eligibility_commits": 12,
+      "hard_error": null,
+      "name": "multiple_channel_modulation",
+      "pair_updates": 12,
+      "queue_high_water": {
+        "active": 4,
+        "incoming": 3,
+        "modulation": 1,
+        "outgoing": 3,
+        "pair": 4,
+        "spike": 2,
+        "weight": 2
+      },
+      "stalls": {
+        "active_scan": 0,
+        "expansion": 0,
+        "hazard": 5,
+        "pair_queue": 0,
+        "weight_queue": 0
+      },
+      "total_cycles": 115,
+      "weight_updates": 2
+    },
+    {
+      "active_entries_scanned": 1,
+      "cycles_per_tick": [
+        [
+          0,
+          9
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          18
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          4,
+          10
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          6,
+          32
+        ],
+        [
+          7,
+          29
+        ],
+        [
+          8,
+          4
+        ],
+        [
+          9,
+          29
+        ]
+      ],
+      "eligibility_commits": 18,
+      "hard_error": null,
+      "name": "active_set_pressure",
+      "pair_updates": 18,
+      "queue_high_water": {
+        "active": 3,
+        "incoming": 3,
+        "modulation": 1,
+        "outgoing": 3,
+        "pair": 4,
+        "spike": 2,
+        "weight": 1
+      },
+      "stalls": {
+        "active_scan": 0,
+        "expansion": 0,
+        "hazard": 9,
+        "pair_queue": 0,
+        "weight_queue": 0
+      },
+      "total_cycles": 147,
+      "weight_updates": 1
+    },
+    {
+      "active_entries_scanned": 1,
+      "cycles_per_tick": [
+        [
+          0,
+          15
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          14
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          4,
+          14
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          6,
+          14
+        ],
+        [
+          7,
+          2
+        ]
+      ],
+      "eligibility_commits": 4,
+      "hard_error": null,
+      "name": "recurrent_alif_learning",
+      "pair_updates": 4,
+      "queue_high_water": {
+        "active": 1,
+        "incoming": 1,
+        "modulation": 1,
+        "outgoing": 1,
+        "pair": 1,
+        "spike": 3,
+        "weight": 1
+      },
+      "stalls": {
+        "active_scan": 0,
+        "expansion": 0,
+        "hazard": 8,
+        "pair_queue": 0,
+        "weight_queue": 0
+      },
+      "total_cycles": 70,
+      "weight_updates": 1
+    }
+  ]
+}

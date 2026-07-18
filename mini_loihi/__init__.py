@@ -508,6 +508,12 @@ from mini_loihi.v9_model_ir import V9ModulationEvent, V9NetworkIR, V9PlasticityR
 from mini_loihi.v9_reference import V9LearningTraceRecord, V9ReferenceMachine, V9ReferenceResult, run_v9_reference, v9_learning_trace_json_lines
 from mini_loihi.v9_reports import build_v9_demo_report, write_v9_reports
 from mini_loihi.v9_random import build_seeded_v9_learning_case, build_v9_random_differential_report
+from mini_loihi.v9_cycle_backend import V9LearningCycleMachine, run_v9_cycle_model, run_v9_three_way_differential, validate_v9_cycle_program, v9_cycle_trace_json_lines, v9_cycle_trace_sha256
+from mini_loihi.v9_cycle_profile import DEFAULT_V9_CYCLE_PROFILE, V9_CYCLE_BALANCED, V9_CYCLE_COMPACT, V9_CYCLE_PROFILES, V9_CYCLE_THROUGHPUT, V9CycleMemorySpec, V9CycleProfile, build_v9_cycle_memory_specs, get_v9_cycle_profile
+from mini_loihi.v9_cycle_random import build_v9_cycle_random_report
+from mini_loihi.v9_cycle_reports import build_v9_cycle_demo_report, write_v9_cycle_reports
+from mini_loihi.v9_cycle_resources import V9CycleResourceEstimate, build_v9_cycle_resource_report, estimate_v9_cycle_resources, estimate_v9_workload
+from mini_loihi.v9_cycle_state import V9CycleCapacityError, V9CycleCounters, V9CycleResult, V9CycleTraceRecord, V9ThreeWayDifferentialResult
 
 __all__ = [
     "ALIFParameters",
@@ -972,4 +978,31 @@ __all__ = [
     "write_v9_reports",
     "build_seeded_v9_learning_case",
     "build_v9_random_differential_report",
+    "DEFAULT_V9_CYCLE_PROFILE",
+    "V9_CYCLE_BALANCED",
+    "V9_CYCLE_COMPACT",
+    "V9_CYCLE_PROFILES",
+    "V9_CYCLE_THROUGHPUT",
+    "V9CycleCapacityError",
+    "V9CycleCounters",
+    "V9CycleMemorySpec",
+    "V9CycleProfile",
+    "V9CycleResourceEstimate",
+    "V9CycleResult",
+    "V9CycleTraceRecord",
+    "V9LearningCycleMachine",
+    "V9ThreeWayDifferentialResult",
+    "build_v9_cycle_demo_report",
+    "build_v9_cycle_memory_specs",
+    "build_v9_cycle_random_report",
+    "build_v9_cycle_resource_report",
+    "estimate_v9_cycle_resources",
+    "estimate_v9_workload",
+    "get_v9_cycle_profile",
+    "run_v9_cycle_model",
+    "run_v9_three_way_differential",
+    "validate_v9_cycle_program",
+    "v9_cycle_trace_json_lines",
+    "v9_cycle_trace_sha256",
+    "write_v9_cycle_reports",
 ]

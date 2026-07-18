@@ -97,6 +97,10 @@ from mini_loihi.v9_dense_oracle import compare_v9_backends
 from mini_loihi.v9_examples import build_v9_delayed_reward_demo
 from mini_loihi.v9_reference import V9ReferenceMachine, run_v9_reference, v9_learning_trace_json_lines
 from mini_loihi.v9_reports import build_v9_demo_report, write_v9_reports
+from mini_loihi.v9_cycle_backend import run_v9_cycle_model, run_v9_three_way_differential, v9_cycle_trace_json_lines
+from mini_loihi.v9_cycle_profile import V9_CYCLE_PROFILES, get_v9_cycle_profile
+from mini_loihi.v9_cycle_random import build_v9_cycle_random_report
+from mini_loihi.v9_cycle_reports import build_v9_cycle_demo_report, write_v9_cycle_reports
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -420,6 +424,14 @@ def _build_parser() -> argparse.ArgumentParser:
     v9_report = _add_command(subparsers, "v9-learning-report", _cmd_v9_learning_report, "write V9.0A learning reports", output_parent)
     v9_report.add_argument("--output-dir", required=True)
     _add_command(subparsers, "v9-reset-demo", _cmd_v9_reset_demo, "demonstrate V9.0A cold and episode reset", output_parent)
+    v9_cycle = _add_command(subparsers, "v9-cycle-learning-demo", _cmd_v9_cycle_learning_demo, "run the V9.0B finite-resource learning cycle oracle", output_parent)
+    v9_cycle.add_argument("--profile", choices=tuple(V9_CYCLE_PROFILES), default="v9_0b_balanced")
+    v9_cycle_random = _add_command(subparsers, "v9-cycle-learning-random", _cmd_v9_cycle_learning_random, "run V9.0B three-way randomized differential", output_parent)
+    v9_cycle_random.add_argument("--seeds", type=int, default=100)
+    v9_cycle_report = _add_command(subparsers, "v9-cycle-learning-report", _cmd_v9_cycle_learning_report, "write deterministic V9.0B cycle reports", output_parent)
+    v9_cycle_report.add_argument("--output-dir", required=True)
+    v9_cycle_report.add_argument("--seeds", type=int, default=100)
+    _add_command(subparsers, "v9-cycle-learning-trace", _cmd_v9_cycle_learning_trace, "write deterministic V9.0B cycle trace", output_parent)
     return parser
 
 
@@ -1614,6 +1626,40 @@ def _cmd_v9_reset_demo(_args: argparse.Namespace) -> dict[str, Any]:
     machine.cold_reset()
     restored = tuple(sorted(machine.weights.items()))
     return _report_command("Mini-Loihi V9.0A reset semantics", {"learned": learned, "state_reset": preserved, "cold_reset": restored})
+
+
+def _cmd_v9_cycle_learning_demo(args: argparse.Namespace) -> dict[str, Any]:
+    _network, program, events, modulation = build_v9_delayed_reward_demo()
+    profile = get_v9_cycle_profile(args.profile)
+    differential = run_v9_three_way_differential(program, events, modulation, profile)
+    data = {
+        "profile_id": profile.profile_id,
+        "three_way_equivalent": differential.equivalent,
+        "first_divergence": differential.first_divergence,
+        "cycles_per_tick": [list(item) for item in differential.cycle_result.cycles_per_tick],
+        "counters": asdict(differential.cycle_result.counters),
+        "cycle_trace_sha256": differential.cycle_result.cycle_trace_sha256,
+        "weights": [list(item) for item in differential.cycle_result.weights],
+    }
+    return _report_command("Mini-Loihi V9.0B learning cycle", data)
+
+
+def _cmd_v9_cycle_learning_random(args: argparse.Namespace) -> dict[str, Any]:
+    return _report_command("Mini-Loihi V9.0B random differential", build_v9_cycle_random_report(args.seeds))
+
+
+def _cmd_v9_cycle_learning_report(args: argparse.Namespace) -> dict[str, Any]:
+    paths = write_v9_cycle_reports(args.output_dir, args.seeds)
+    return _report_command("Mini-Loihi V9.0B cycle reports", {"files": [str(path) for path in paths]})
+
+
+def _cmd_v9_cycle_learning_trace(args: argparse.Namespace) -> dict[str, Any]:
+    if not args.output:
+        raise ValueError("v9-cycle-learning-trace requires --output")
+    _network, program, events, modulation = build_v9_delayed_reward_demo()
+    result = run_v9_cycle_model(program, events, modulation)
+    Path(args.output).write_text(v9_cycle_trace_json_lines(result.cycle_trace), encoding="ascii", newline="\n")
+    return {"data": {"output": args.output, "records": len(result.cycle_trace), "sha256": result.cycle_trace_sha256}, "output_consumed": True, "text": f"Mini-Loihi V9.0B cycle trace\n  records: {len(result.cycle_trace)}\n  output: {args.output}"}
 
 
 def _cmd_rtl_audit(_args: argparse.Namespace) -> dict[str, Any]:
