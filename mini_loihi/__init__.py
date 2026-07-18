@@ -498,6 +498,16 @@ from mini_loihi.v81_cycle_state import (
     V81CycleTraceRecord,
 )
 from mini_loihi.v81_cycle_vectors import build_seeded_v81_cycle_case
+from mini_loihi.v9_architecture import MINI_LOIHI_V9_0A_THREE_FACTOR, V9_PROFILE_IDENTIFIER
+from mini_loihi.v9_artifacts import V9ArtifactExportResult, export_v9_artifacts
+from mini_loihi.v9_compiler import compile_v9_network
+from mini_loihi.v9_dense_oracle import V9DenseOracle, V9DifferentialResult, compare_v9_backends, run_v9_dense_oracle
+from mini_loihi.v9_examples import build_v9_alif_recurrence_demo, build_v9_delayed_reward_demo, build_v9_reward_sign_demo
+from mini_loihi.v9_hardware_ir import V9CompiledProgram, V9CompiledSynapse
+from mini_loihi.v9_model_ir import V9ModulationEvent, V9NetworkIR, V9PlasticityRuleIR, V9ResetPolicy
+from mini_loihi.v9_reference import V9LearningTraceRecord, V9ReferenceMachine, V9ReferenceResult, run_v9_reference, v9_learning_trace_json_lines
+from mini_loihi.v9_reports import build_v9_demo_report, write_v9_reports
+from mini_loihi.v9_random import build_seeded_v9_learning_case, build_v9_random_differential_report
 
 __all__ = [
     "ALIFParameters",
@@ -935,4 +945,31 @@ __all__ = [
     "v81_contract_trace_sha256",
     "v81_wheel_lane_fsm_states",
     "write_v81_cycle_reports",
+    "MINI_LOIHI_V9_0A_THREE_FACTOR",
+    "V9_PROFILE_IDENTIFIER",
+    "V9ArtifactExportResult",
+    "V9CompiledProgram",
+    "V9CompiledSynapse",
+    "V9DenseOracle",
+    "V9DifferentialResult",
+    "V9LearningTraceRecord",
+    "V9ModulationEvent",
+    "V9NetworkIR",
+    "V9PlasticityRuleIR",
+    "V9ReferenceMachine",
+    "V9ReferenceResult",
+    "V9ResetPolicy",
+    "build_v9_alif_recurrence_demo",
+    "build_v9_delayed_reward_demo",
+    "build_v9_demo_report",
+    "build_v9_reward_sign_demo",
+    "compare_v9_backends",
+    "compile_v9_network",
+    "export_v9_artifacts",
+    "run_v9_dense_oracle",
+    "run_v9_reference",
+    "v9_learning_trace_json_lines",
+    "write_v9_reports",
+    "build_seeded_v9_learning_case",
+    "build_v9_random_differential_report",
 ]

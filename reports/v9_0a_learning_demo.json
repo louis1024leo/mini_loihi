@@ -1,0 +1,235 @@
+{
+  "alif_recurrence": {
+    "eligibility": [
+      [
+        "plastic_adaptive_self",
+        7
+      ]
+    ],
+    "final_state_digest": "6a5aa344e3d5b8cf844cc5201b986894371a6445d09223348908b1a8b6020407",
+    "modulation_history": [
+      [
+        5,
+        0,
+        2
+      ]
+    ],
+    "pending_contributions": [
+      {
+        "arrival_tick": 8,
+        "connection_id": "adaptive_self",
+        "delay": 1,
+        "emission_tick": 6,
+        "event_id": 4,
+        "payload": 1,
+        "sampled_weight": 4,
+        "source_kind": "recurrent",
+        "synapse_id": "plastic_adaptive_self",
+        "target_neuron_id": 0,
+        "value": 4
+      }
+    ],
+    "spikes": [
+      {
+        "neuron_id": 0,
+        "tick": 0
+      },
+      {
+        "neuron_id": 0,
+        "tick": 2
+      },
+      {
+        "neuron_id": 0,
+        "tick": 4
+      },
+      {
+        "neuron_id": 0,
+        "tick": 6
+      }
+    ],
+    "weights": [
+      [
+        "plastic_adaptive_self",
+        4
+      ],
+      [
+        "static:drive",
+        1
+      ]
+    ]
+  },
+  "delayed_reward": {
+    "eligibility": [
+      [
+        "plastic_input_to_output",
+        0
+      ]
+    ],
+    "final_state_digest": "6cb54512e58839ba2b94137f275e514790937e52d3abe53d65fbf94027c7c5d2",
+    "modulation_history": [
+      [
+        4,
+        0,
+        2
+      ]
+    ],
+    "pending_contributions": [],
+    "spikes": [
+      {
+        "neuron_id": 1,
+        "tick": 1
+      }
+    ],
+    "weights": [
+      [
+        "plastic_input_to_output",
+        2
+      ]
+    ]
+  },
+  "dense_differential": {
+    "dense_digest": "6cb54512e58839ba2b94137f275e514790937e52d3abe53d65fbf94027c7c5d2",
+    "event_digest": "6cb54512e58839ba2b94137f275e514790937e52d3abe53d65fbf94027c7c5d2",
+    "first_difference": null,
+    "matched": true
+  },
+  "network": {
+    "base_network": {
+      "connections": [
+        {
+          "axonal_delay": 0,
+          "connection_id": "input_to_output",
+          "source_index": 0,
+          "source_population": "p",
+          "synapse_type": "excitatory",
+          "target_index": 1,
+          "target_population": "p",
+          "weight": 1
+        }
+      ],
+      "network_id": "v9_delayed_reward_base",
+      "override_precedence": "population parameters override the complete selected template",
+      "populations": [
+        {
+          "count": 2,
+          "neuron_type": "custom",
+          "parameters_override": {
+            "initial_voltage": 0,
+            "leak": 0,
+            "reset_voltage": 0,
+            "threshold": 2
+          },
+          "population_id": "p",
+          "template_id": "custom_lif"
+        }
+      ],
+      "recurrent_connections": [],
+      "schema_version": "3.0-alif-types",
+      "templates": [
+        {
+          "model_kind": "lif",
+          "neuron_type": "custom",
+          "parameters": {
+            "initial_voltage": 0,
+            "leak": 0,
+            "reset_voltage": 0,
+            "threshold": 10
+          },
+          "template_id": "custom_lif"
+        },
+        {
+          "model_kind": "alif",
+          "neuron_type": "excitatory",
+          "parameters": {
+            "adaptation_decay": 1,
+            "adaptation_increment": 3,
+            "initial_adaptation": 0,
+            "initial_voltage": 0,
+            "leak": 1,
+            "reset_voltage": 0,
+            "threshold": 10
+          },
+          "template_id": "excitatory_alif"
+        },
+        {
+          "model_kind": "lif",
+          "neuron_type": "excitatory",
+          "parameters": {
+            "initial_voltage": 0,
+            "leak": 1,
+            "reset_voltage": 0,
+            "threshold": 10
+          },
+          "template_id": "excitatory_lif"
+        },
+        {
+          "model_kind": "alif",
+          "neuron_type": "inhibitory",
+          "parameters": {
+            "adaptation_decay": 1,
+            "adaptation_increment": 2,
+            "initial_adaptation": 0,
+            "initial_voltage": 0,
+            "leak": 1,
+            "reset_voltage": 0,
+            "threshold": 8
+          },
+          "template_id": "inhibitory_alif"
+        },
+        {
+          "model_kind": "lif",
+          "neuron_type": "inhibitory",
+          "parameters": {
+            "initial_voltage": 0,
+            "leak": 1,
+            "reset_voltage": 0,
+            "threshold": 8
+          },
+          "template_id": "inhibitory_lif"
+        }
+      ],
+      "tick_horizon": 8
+    },
+    "modulation_channel_count": 1,
+    "network_id": "v9_delayed_reward",
+    "plasticity_rules": [
+      {
+        "a_minus": 1,
+        "a_plus": 2,
+        "connection_id": "input_to_output",
+        "eligibility_decay": 1,
+        "enabled": true,
+        "initial_eligibility": 0,
+        "initial_post_trace": 0,
+        "initial_pre_trace": 0,
+        "learning_rate": 1,
+        "modulation_channel": 0,
+        "post_trace_decay": 0,
+        "post_trace_increment": 2,
+        "pre_trace_decay": 0,
+        "pre_trace_increment": 2,
+        "reset_policy": "cold_restore_episode_preserve",
+        "synapse_id": "plastic_input_to_output",
+        "update_shift": 1,
+        "weight_maximum": 8,
+        "weight_minimum": 0
+      }
+    ],
+    "schema_version": "4.0-three-factor"
+  },
+  "reward_sign_reversal": {
+    "negative": [
+      [
+        "plastic_input_to_output",
+        0
+      ]
+    ],
+    "positive": [
+      [
+        "plastic_input_to_output",
+        2
+      ]
+    ]
+  },
+  "schema_version": "1.0-three-factor"
+}

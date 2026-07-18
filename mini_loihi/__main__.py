@@ -92,6 +92,11 @@ from mini_loihi.v81_reports import build_v81_reference_report
 from mini_loihi.v81_cycle_backend import run_v81_cycle_differential, v81_cycle_trace_json_lines
 from mini_loihi.v81_cycle_profile import V81_CYCLE_PROFILES, get_v81_cycle_profile
 from mini_loihi.v81_cycle_reports import write_v81_cycle_reports
+from mini_loihi.v9_artifacts import export_v9_artifacts
+from mini_loihi.v9_dense_oracle import compare_v9_backends
+from mini_loihi.v9_examples import build_v9_delayed_reward_demo
+from mini_loihi.v9_reference import V9ReferenceMachine, run_v9_reference, v9_learning_trace_json_lines
+from mini_loihi.v9_reports import build_v9_demo_report, write_v9_reports
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -407,6 +412,14 @@ def _build_parser() -> argparse.ArgumentParser:
         "write the deterministic V8.1B physical cycle trace",
         output_parent,
     )
+    _add_command(subparsers, "v9-learning-demo", _cmd_v9_learning_demo, "run the V9.0A delayed-reward demo", output_parent)
+    _add_command(subparsers, "v9-learning-differential", _cmd_v9_learning_differential, "compare dense and event V9.0A backends", output_parent)
+    v9_export = _add_command(subparsers, "v9-learning-export", _cmd_v9_learning_export, "export deterministic V9.0A artifacts", output_parent)
+    v9_export.add_argument("--output-dir", required=True)
+    _add_command(subparsers, "v9-learning-trace", _cmd_v9_learning_trace, "write the V9.0A learning trace", output_parent)
+    v9_report = _add_command(subparsers, "v9-learning-report", _cmd_v9_learning_report, "write V9.0A learning reports", output_parent)
+    v9_report.add_argument("--output-dir", required=True)
+    _add_command(subparsers, "v9-reset-demo", _cmd_v9_reset_demo, "demonstrate V9.0A cold and episode reset", output_parent)
     return parser
 
 
@@ -1561,6 +1574,46 @@ def _cmd_rtl_mempipe_trace(args: argparse.Namespace) -> dict[str, Any]:
 
 def _report_command(title: str, data: dict[str, Any]) -> dict[str, Any]:
     return {"data": data, "text": f"{title}\n{dumps_json(data)}"}
+
+
+def _cmd_v9_learning_demo(_args: argparse.Namespace) -> dict[str, Any]:
+    return _report_command("Mini-Loihi V9.0A three-factor learning", build_v9_demo_report())
+
+
+def _cmd_v9_learning_differential(_args: argparse.Namespace) -> dict[str, Any]:
+    _network, program, events, modulation = build_v9_delayed_reward_demo()
+    return _report_command("Mini-Loihi V9.0A dense differential", asdict(compare_v9_backends(program, events, modulation)))
+
+
+def _cmd_v9_learning_export(args: argparse.Namespace) -> dict[str, Any]:
+    network, program, events, modulation = build_v9_delayed_reward_demo()
+    result = export_v9_artifacts(network, program, events, modulation, args.output_dir)
+    return _report_command("Mini-Loihi V9.0A artifact export", asdict(result))
+
+
+def _cmd_v9_learning_trace(args: argparse.Namespace) -> dict[str, Any]:
+    if not args.output:
+        raise ValueError("v9-learning-trace requires --output")
+    _network, program, events, modulation = build_v9_delayed_reward_demo()
+    result = run_v9_reference(program, events, modulation)
+    Path(args.output).write_text(v9_learning_trace_json_lines(result.learning_trace), encoding="ascii", newline="\n")
+    return {"data": {"output": args.output, "records": len(result.learning_trace)}, "output_consumed": True, "text": f"Mini-Loihi V9.0A learning trace\n  records: {len(result.learning_trace)}\n  output: {args.output}"}
+
+
+def _cmd_v9_learning_report(args: argparse.Namespace) -> dict[str, Any]:
+    paths = write_v9_reports(args.output_dir)
+    return _report_command("Mini-Loihi V9.0A reports", {"files": [str(path) for path in paths]})
+
+
+def _cmd_v9_reset_demo(_args: argparse.Namespace) -> dict[str, Any]:
+    _network, program, events, modulation = build_v9_delayed_reward_demo()
+    machine = V9ReferenceMachine(program, events, modulation)
+    learned = machine.run().weights
+    machine.state_reset()
+    preserved = tuple(sorted(machine.weights.items()))
+    machine.cold_reset()
+    restored = tuple(sorted(machine.weights.items()))
+    return _report_command("Mini-Loihi V9.0A reset semantics", {"learned": learned, "state_reset": preserved, "cold_reset": restored})
 
 
 def _cmd_rtl_audit(_args: argparse.Namespace) -> dict[str, Any]:
