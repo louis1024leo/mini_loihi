@@ -1,0 +1,11 @@
+{
+  "classification": "UNCHANGED_PRODUCTION_RTL",
+  "files": {
+    "mini_loihi_v81c_alif_core.sv": "19d0997803d884c8ba845569e4ab79aba71b8aec84fd99d84c990e45c3d4b185",
+    "mini_loihi_v81c_alif_image_top.sv": "3c2cd5bd7c36d356f9fac863b6515e84fa954a3fc93d3e6db1dda44a0a8d7196",
+    "v81c_lif_alif_pipeline.sv": "ae9d1050021efd54e91c1b3ba30e2d221a886ce17f2131a6371e3a71b8a2ba35",
+    "v81c_sync_param_rom.sv": "8ef061587deef559795840317378ae68cdba981f80aaf175529ddb08b77c9286",
+    "v81c_sync_state_ram.sv": "1b43583ecc4cda9276705e0fda1bfba530d59a0c0a518fec9c908f95558e8a32"
+  },
+  "schema_version": "1.0-cycle-contract-closure"
+}

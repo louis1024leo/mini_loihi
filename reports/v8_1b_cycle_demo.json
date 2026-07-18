@@ -8,6 +8,7 @@
     "spikes": true,
     "state": true
   },
+  "contract_trace_sha256": "e5bb1bf2a4ea9711193418c2efabc1b69bf9fb71712ff5ca40408d42988b127a",
   "counters": {
     "accumulator_saturations": 0,
     "adaptation_saturations": 0,
@@ -31,8 +32,8 @@
     "synaptic_operations": 16,
     "threshold_saturations": 0,
     "ticks_processed": 8,
-    "total_cycles": 286,
-    "wheel_transaction_cycles": 158
+    "total_cycles": 340,
+    "wheel_transaction_cycles": 140
   },
   "cycle_logical_trace_sha256": "f046fc9bd82de4eee8afc25b2ec506e36e164ca22532f69a3c675050bf52c9f9",
   "cycle_state_digest": "ddffa0fe1c3ec5732e77a5703d7ba2b833f7aa3a541288cdc035d01e22cc6ef4",
@@ -40,27 +41,27 @@
   "cycles_per_tick": [
     [
       0,
-      43
+      55
     ],
     [
       1,
-      49
+      61
     ],
     [
       2,
-      49
+      61
     ],
     [
       3,
-      48
+      51
     ],
     [
       4,
-      43
+      55
     ],
     [
       5,
-      48
+      51
     ],
     [
       6,
