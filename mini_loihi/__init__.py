@@ -449,6 +449,48 @@ from mini_loihi.v81_reference import (
     v81_trace_json_lines,
 )
 from mini_loihi.v81_reports import FROZEN_V8_1A_BASELINE, build_v81_reference_report, write_v81_reports
+from mini_loihi.v81_cycle_backend import (
+    V81NeuronCycleMachine,
+    run_v81_cycle_differential,
+    run_v81_cycle_model,
+    validate_v81_cycle_program,
+    v81_cycle_trace_json_lines,
+)
+from mini_loihi.v81_cycle_profile import (
+    DEFAULT_V81_CYCLE_PROFILE,
+    V81_CYCLE_DUAL,
+    V81_CYCLE_PROFILES,
+    V81_CYCLE_SHARED,
+    V81_CYCLE_SHIFT_ADD,
+    V81CycleMemorySpec,
+    V81CycleProfile,
+    build_v81_memory_specs,
+    get_v81_cycle_profile,
+)
+from mini_loihi.v81_cycle_reports import (
+    FROZEN_V8_1B_BASELINE,
+    build_v81_cycle_demo_report,
+    build_v81_cycle_regression_report,
+    write_v81_cycle_reports,
+)
+from mini_loihi.v81_cycle_resources import (
+    V81ArithmeticEstimate,
+    V81CycleResourceEstimate,
+    V81WorkloadEstimate,
+    build_v81_resource_report,
+    estimate_v81_arithmetic,
+    estimate_v81_cycle_resources,
+    estimate_v81_workload,
+)
+from mini_loihi.v81_cycle_state import (
+    V81CycleCapacityError,
+    V81CycleCounters,
+    V81CycleDifferentialResult,
+    V81CycleNeuronUpdate,
+    V81CycleResult,
+    V81CycleTraceRecord,
+)
+from mini_loihi.v81_cycle_vectors import build_seeded_v81_cycle_case
 
 __all__ = [
     "ALIFParameters",
@@ -849,4 +891,36 @@ __all__ = [
     "run_v81_reference",
     "v81_trace_json_lines",
     "write_v81_reports",
+    "DEFAULT_V81_CYCLE_PROFILE",
+    "FROZEN_V8_1B_BASELINE",
+    "V81ArithmeticEstimate",
+    "V81CycleCapacityError",
+    "V81CycleCounters",
+    "V81CycleDifferentialResult",
+    "V81CycleMemorySpec",
+    "V81CycleNeuronUpdate",
+    "V81CycleProfile",
+    "V81CycleResourceEstimate",
+    "V81CycleResult",
+    "V81CycleTraceRecord",
+    "V81NeuronCycleMachine",
+    "V81WorkloadEstimate",
+    "V81_CYCLE_DUAL",
+    "V81_CYCLE_PROFILES",
+    "V81_CYCLE_SHARED",
+    "V81_CYCLE_SHIFT_ADD",
+    "build_seeded_v81_cycle_case",
+    "build_v81_cycle_demo_report",
+    "build_v81_cycle_regression_report",
+    "build_v81_memory_specs",
+    "build_v81_resource_report",
+    "estimate_v81_arithmetic",
+    "estimate_v81_cycle_resources",
+    "estimate_v81_workload",
+    "get_v81_cycle_profile",
+    "run_v81_cycle_differential",
+    "run_v81_cycle_model",
+    "validate_v81_cycle_program",
+    "v81_cycle_trace_json_lines",
+    "write_v81_cycle_reports",
 ]

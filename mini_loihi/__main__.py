@@ -89,6 +89,9 @@ from mini_loihi.v81_artifacts import export_v81_artifacts
 from mini_loihi.v81_examples import build_v81_alif_demo
 from mini_loihi.v81_reference import run_v81_reference, v81_trace_json_lines
 from mini_loihi.v81_reports import build_v81_reference_report
+from mini_loihi.v81_cycle_backend import run_v81_cycle_differential, v81_cycle_trace_json_lines
+from mini_loihi.v81_cycle_profile import V81_CYCLE_PROFILES, get_v81_cycle_profile
+from mini_loihi.v81_cycle_reports import write_v81_cycle_reports
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -377,6 +380,33 @@ def _build_parser() -> argparse.ArgumentParser:
         "report V8.1A spike-frequency adaptation",
         output_parent,
     )
+    v81_cycle = _add_command(
+        subparsers,
+        "v81-cycle-demo",
+        _cmd_v81_cycle_demo,
+        "execute the V8.1B finite-resource LIF/ALIF cycle oracle",
+        output_parent,
+    )
+    v81_cycle.add_argument(
+        "--profile", choices=tuple(V81_CYCLE_PROFILES),
+        default="v8_1b_dual_multiplier_63",
+    )
+    v81_cycle_report = _add_command(
+        subparsers,
+        "v81-cycle-report",
+        _cmd_v81_cycle_report,
+        "write deterministic V8.1B cycle and resource reports",
+        output_parent,
+    )
+    v81_cycle_report.add_argument("--output-dir", required=True)
+    v81_cycle_report.add_argument("--seeds", type=int, default=50)
+    _add_command(
+        subparsers,
+        "v81-cycle-trace",
+        _cmd_v81_cycle_trace,
+        "write the deterministic V8.1B physical cycle trace",
+        output_parent,
+    )
     return parser
 
 
@@ -596,6 +626,72 @@ def _cmd_v81_adaptation_report(_args: argparse.Namespace) -> dict[str, Any]:
         "adaptation_saturations": report["counters"]["adaptation_saturations"],
     }
     return _report_command("Mini-Loihi V8.1A spike-frequency adaptation", data)
+
+
+def _cmd_v81_cycle_demo(args: argparse.Namespace) -> dict[str, Any]:
+    _network, program, events = build_v81_alif_demo()
+    profile = get_v81_cycle_profile(args.profile)
+    differential = run_v81_cycle_differential(program, events, profile)
+    cycle = differential.cycle_result
+    data = {
+        "profile": profile.profile_id,
+        "equivalent": differential.equivalent,
+        "first_divergence": differential.first_divergence,
+        "cycles_per_tick": cycle.cycles_per_tick,
+        "total_cycles": cycle.counters.total_cycles,
+        "maximum_pipeline_occupancy": cycle.counters.maximum_pipeline_occupancy,
+        "cycle_trace_sha256": cycle.cycle_trace_sha256,
+        "logical_trace_sha256": cycle.logical_trace_sha256,
+    }
+    return {
+        "data": data,
+        "text": (
+            "Mini-Loihi V8.1B finite-resource neuron cycle oracle\n"
+            f"  profile: {profile.profile_id}\n"
+            f"  V8.1A differential: {'PASS' if differential.equivalent else 'FAIL'}\n"
+            f"  cycles per tick: {cycle.cycles_per_tick}\n"
+            f"  maximum pipeline occupancy: {cycle.counters.maximum_pipeline_occupancy}\n"
+            f"  cycle trace SHA-256: {cycle.cycle_trace_sha256}"
+        ),
+    }
+
+
+def _cmd_v81_cycle_report(args: argparse.Namespace) -> dict[str, Any]:
+    paths = write_v81_cycle_reports(args.output_dir, seed_count=args.seeds)
+    data = {"output_directory": str(args.output_dir), "files": [item.name for item in paths]}
+    return {
+        "data": data,
+        "text": (
+            "Mini-Loihi V8.1B deterministic reports\n"
+            f"  output: {args.output_dir}\n"
+            f"  files: {len(paths)}\n"
+            f"  randomized seeds: {args.seeds}"
+        ),
+    }
+
+
+def _cmd_v81_cycle_trace(args: argparse.Namespace) -> dict[str, Any]:
+    if not args.output:
+        raise ValueError("v81-cycle-trace requires --output")
+    _network, program, events = build_v81_alif_demo()
+    result = run_v81_cycle_differential(program, events).cycle_result
+    Path(args.output).write_text(
+        v81_cycle_trace_json_lines(result.cycle_trace), encoding="ascii", newline="\n"
+    )
+    return {
+        "data": {
+            "records": len(result.cycle_trace),
+            "cycle_trace_sha256": result.cycle_trace_sha256,
+            "output": str(args.output),
+        },
+        "output_consumed": True,
+        "text": (
+            "Mini-Loihi V8.1B physical cycle trace\n"
+            f"  records: {len(result.cycle_trace)}\n"
+            f"  SHA-256: {result.cycle_trace_sha256}\n"
+            f"  output: {args.output}"
+        ),
+    }
 
 
 def _cmd_toy(_args: argparse.Namespace) -> dict[str, Any]:

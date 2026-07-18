@@ -1,0 +1,10 @@
+{
+  "baseline_commit": "9ae1478b10bfcea6b32b6f5a089ac8316a05086c",
+  "baseline_tag": "v8.1a",
+  "compatibility_policy": "independent cycle layer; no frozen semantic or RTL mutation",
+  "schema_version": "1.0-alif-cycle",
+  "v8_1a_report_sha256": {
+    "v8_1a_frozen_baseline.json": "6b63db758cc96716616b14959048d099d4be11edfa94d83bc964489539e49a06",
+    "v8_1a_reference.json": "081124e337c629fc4ebc17e1b1f350ff73686d8a5c3a64bd8bfeab6bfa69b022"
+  }
+}
