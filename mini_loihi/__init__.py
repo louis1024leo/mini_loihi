@@ -426,6 +426,29 @@ from mini_loihi.v8e_rtl_verify import (
     run_v8e_rtl_reset_check,
     v8e_rtl_source_fingerprint,
 )
+from mini_loihi.v81_artifacts import V81ArtifactExportResult, export_v81_artifacts
+from mini_loihi.v81_compiler import compile_v81_network
+from mini_loihi.v81_examples import build_v81_alif_demo
+from mini_loihi.v81_hardware_ir import V81CompiledProgram, V81CompiledRecurrentSynapse
+from mini_loihi.v81_model_ir import (
+    CANONICAL_V81_TEMPLATES,
+    NeuronTypeKind,
+    SynapseTypeKind,
+    V81ConnectionIR,
+    V81NetworkIR,
+    V81NeuronPopulationIR,
+    V81NeuronTemplate,
+    V81RecurrentConnectionIR,
+)
+from mini_loihi.v81_reference import (
+    V81ReferenceCounters,
+    V81ReferenceMachine,
+    V81ReferenceResult,
+    V81TraceRecord,
+    run_v81_reference,
+    v81_trace_json_lines,
+)
+from mini_loihi.v81_reports import FROZEN_V8_1A_BASELINE, build_v81_reference_report, write_v81_reports
 
 __all__ = [
     "ALIFParameters",
@@ -803,4 +826,27 @@ __all__ = [
     "run_v8e_rtl_reset_check",
     "v8e_rtl_source_fingerprint",
     "write_v8e_reports",
+    "CANONICAL_V81_TEMPLATES",
+    "FROZEN_V8_1A_BASELINE",
+    "NeuronTypeKind",
+    "SynapseTypeKind",
+    "V81ArtifactExportResult",
+    "V81CompiledProgram",
+    "V81CompiledRecurrentSynapse",
+    "V81ConnectionIR",
+    "V81NetworkIR",
+    "V81NeuronPopulationIR",
+    "V81NeuronTemplate",
+    "V81RecurrentConnectionIR",
+    "V81ReferenceCounters",
+    "V81ReferenceMachine",
+    "V81ReferenceResult",
+    "V81TraceRecord",
+    "build_v81_alif_demo",
+    "build_v81_reference_report",
+    "compile_v81_network",
+    "export_v81_artifacts",
+    "run_v81_reference",
+    "v81_trace_json_lines",
+    "write_v81_reports",
 ]

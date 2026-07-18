@@ -1,0 +1,88 @@
+{
+  "baseline_commit": "9520170e033cd838edfc5d8777afb430f7032891",
+  "baseline_tag": "v8.0e",
+  "compatibility_policy": "new versioned semantic layer; no frozen object reinterpretation",
+  "frozen_v8_0a": {
+    "commit": "1abf9e54ae401df63ca4f894d152e22c416dd452",
+    "cycles_per_logical_tick": {
+      "v7_0": [
+        [
+          0,
+          18
+        ],
+        [
+          3,
+          16
+        ]
+      ],
+      "v7_1b1": [
+        [
+          0,
+          24
+        ],
+        [
+          3,
+          18
+        ]
+      ],
+      "v7_1b2": [
+        [
+          0,
+          26
+        ],
+        [
+          3,
+          20
+        ]
+      ],
+      "v7_1d2": [
+        [
+          0,
+          27
+        ],
+        [
+          3,
+          21
+        ]
+      ]
+    },
+    "functional_state_digest": "a36f7b85cbbe2f51a9fa330949bbe17bc7c600316bbcbe9a4cbc8b13395418c6",
+    "program_fingerprint": "9d47e522e38eee9c7314dd00dd27780539b36798a9b4263445b73046c9827bed",
+    "report_sha256": {
+      "v7_1c_formal.json": "1ceab62b2aa2efc8545878b46c920779ed5e70896507d62fa171f589caf4979b",
+      "v7_1c_synthesis.json": "acc6f476936fad06ae874255c8f06af855888e19fb71b3c31705dafd8d285f99",
+      "v7_1c_throughput.json": "faad2972ab170443375c63437b1c4c34e56b465f64ac85dbfa381dd837fcf84f",
+      "v7_1d1_formal.json": "a13a2fdb11a508ed6ab09f5c45bfad694b6d1d779515a628b2f7ea900d922776",
+      "v7_1d2_formal.json": "c7ab1eee3d0f3b0405131c19e7df710204f5d31868ccef103ce7c86a5a9af513",
+      "v7_1d2_ready_path.json": "14e2406403efef30b5832023b5bc09ce9cdaa820fb6d81525c0c3269336b512e",
+      "v7_1d2_synthesis_comparison.json": "6ed15c6746a03acb91f0d20d0c6c7f06817795ca6859a7c803903f1b0be38bce",
+      "v7_1d2_throughput.json": "889ebcd095234546a740cb3c5da681049522cd12d8bf451ffac0b1971c8e6876"
+    },
+    "tag": "v7.1d2",
+    "traces": {
+      "v7_0": "141bf76307083a7c3f441642340f9c1c10f5eb903f9fd5bb3d966950665d373a",
+      "v7_1b1": "f6e0916370bfa5c8c3be370b835ea133a4c7063e9f36945fef5463e341ee8cb0",
+      "v7_1b2": "e1fed84f249496d9a720431389021ac34a341ebb7ed29a6d40a17063c9bca21d",
+      "v7_1d2": "c2a266bdb221f9d5efc27f0410231e6935c39d38cf8811b613343ea38f923b12"
+    }
+  },
+  "frozen_v8_0e": {
+    "baseline_commit": "f0a9fc4969487db714d27fcdf47646e4a473aafe",
+    "baseline_tag": "v8.0c",
+    "schema_version": "1.0",
+    "v8_0c_report_sha256": {
+      "v8_0c_demo_differential.json": "143477bcfcd08dca40105cd3c48844ae2cd6cbb78ce94dca2f192e388551a4aa",
+      "v8_0c_eda.json": "9e58a926514408a45a7d0f12eda44609661e5338d0850fe7b804e0a98de415ad",
+      "v8_0c_frozen_baseline.json": "d2cfb5a3e15baaeff72a65398cf127c3a5c366423afdc61f87f6cbe2614f3701",
+      "v8_0c_random_regression.json": "14ec16e2b11fd833cc590b58e01287597aef5f32d57cba4b777a7aa5c8236790",
+      "v8_0c_resource_estimate.json": "5aae87a9803dee420034172073bc143ba2f39e752219b524c551192e03e8e84d"
+    },
+    "v8_0c_rtl_sha256": {
+      "mini_loihi_v8_delay_wheel_core.sv": "076260eae1b7eaabeebfee41b40b4d21737727a988c7e00593dfdeb844792590",
+      "mini_loihi_v8_delay_wheel_image_top.sv": "908ccf17ec0f195e380086feeadc70902c9860e911f906f11e0e1a5802613d03",
+      "v8_delay_wheel_storage.sv": "34b661479084ae1c1162e45adf01e487bd5a40aa3474161b1c7f934d59baab6f",
+      "v8_lif_datapath.sv": "94c83b6481f7a4b5e4d0b230ce89b28aba29d9e42b063f195ba79ec074be56ac"
+    }
+  },
+  "schema_version": "1.0-alif-types"
+}

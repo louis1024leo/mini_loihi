@@ -85,6 +85,10 @@ from mini_loihi.v8_cycle_reports import write_v8_cycle_reports
 from mini_loihi.v8_rtl_eda import run_v8_rtl_eda
 from mini_loihi.v8_rtl_reports import write_v8_rtl_reports
 from mini_loihi.v8_rtl_verify import run_v8_rtl_fixture
+from mini_loihi.v81_artifacts import export_v81_artifacts
+from mini_loihi.v81_examples import build_v81_alif_demo
+from mini_loihi.v81_reference import run_v81_reference, v81_trace_json_lines
+from mini_loihi.v81_reports import build_v81_reference_report
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -344,6 +348,35 @@ def _build_parser() -> argparse.ArgumentParser:
     v8_rtl_report.add_argument("--output-dir", required=True)
     v8_rtl_report.add_argument("--seeds", type=int, default=20)
     v8_rtl_report.add_argument("--skip-eda", action="store_true")
+    _add_command(
+        subparsers,
+        "v81-alif-demo",
+        _cmd_v81_alif_demo,
+        "execute the V8.1A mixed LIF and ALIF reference demo",
+        output_parent,
+    )
+    v81_export = _add_command(
+        subparsers,
+        "v81-alif-export-demo",
+        _cmd_v81_alif_export_demo,
+        "export deterministic V8.1A neuron-dynamics artifacts",
+        output_parent,
+    )
+    v81_export.add_argument("--output-dir", required=True, help="V8.1A artifact output directory")
+    _add_command(
+        subparsers,
+        "v81-neuron-trace",
+        _cmd_v81_neuron_trace,
+        "write the deterministic V8.1A neuron-state trace",
+        output_parent,
+    )
+    _add_command(
+        subparsers,
+        "v81-adaptation-report",
+        _cmd_v81_adaptation_report,
+        "report V8.1A spike-frequency adaptation",
+        output_parent,
+    )
     return parser
 
 
@@ -491,6 +524,78 @@ def _cmd_v8_rtl_report(args: argparse.Namespace) -> dict[str, Any]:
             f"  files: {len(paths)}"
         ),
     }
+
+
+def _cmd_v81_alif_demo(_args: argparse.Namespace) -> dict[str, Any]:
+    data = build_v81_reference_report()
+    return {
+        "data": data,
+        "text": (
+            "Mini-Loihi V8.1A mixed LIF and ALIF reference demo\n"
+            f"  program fingerprint: {data['program_fingerprint']}\n"
+            f"  spikes: {[(item['tick'], item['neuron_id']) for item in data['spikes']]}\n"
+            f"  ALIF spike ticks: {data['alif_spike_ticks']}\n"
+            f"  final adaptation: {data['adaptation']}\n"
+            f"  state digest: {data['final_state_digest']}"
+        ),
+    }
+
+
+def _cmd_v81_alif_export_demo(args: argparse.Namespace) -> dict[str, Any]:
+    network, program, events = build_v81_alif_demo()
+    exported = export_v81_artifacts(network, program, events, args.output_dir)
+    data = asdict(exported)
+    return {
+        "data": data,
+        "text": (
+            "Mini-Loihi V8.1A deterministic artifact export\n"
+            f"  output: {exported.output_directory}\n"
+            f"  files: {len(exported.exported_files)}\n"
+            f"  program fingerprint: {exported.program_fingerprint}\n"
+            f"  manifest SHA-256: {exported.manifest_sha256}"
+        ),
+    }
+
+
+def _cmd_v81_neuron_trace(args: argparse.Namespace) -> dict[str, Any]:
+    if not args.output:
+        raise ValueError("v81-neuron-trace requires --output")
+    _network, program, events = build_v81_alif_demo()
+    result = run_v81_reference(program, events)
+    Path(args.output).write_text(
+        v81_trace_json_lines(result.trace_records), encoding="ascii", newline="\n"
+    )
+    data = {
+        "trace_schema_version": result.trace_records[0].schema_version,
+        "trace_record_count": len(result.trace_records),
+        "trace_sha256": result.trace_sha256,
+        "output": str(args.output),
+    }
+    return {
+        "data": data,
+        "output_consumed": True,
+        "text": (
+            "Mini-Loihi V8.1A neuron-state trace\n"
+            f"  records: {len(result.trace_records)}\n"
+            f"  SHA-256: {result.trace_sha256}\n"
+            f"  output: {args.output}"
+        ),
+    }
+
+
+def _cmd_v81_adaptation_report(_args: argparse.Namespace) -> dict[str, Any]:
+    report = build_v81_reference_report()
+    data = {
+        "schema_version": report["schema_version"],
+        "alif_spike_ticks": report["alif_spike_ticks"],
+        "neuron_history": [
+            item for item in report["neuron_history"] if item["model"] == "alif"
+        ],
+        "final_adaptation": report["adaptation"],
+        "threshold_saturations": report["counters"]["threshold_saturations"],
+        "adaptation_saturations": report["counters"]["adaptation_saturations"],
+    }
+    return _report_command("Mini-Loihi V8.1A spike-frequency adaptation", data)
 
 
 def _cmd_toy(_args: argparse.Namespace) -> dict[str, Any]:

@@ -1,0 +1,327 @@
+{
+  "adaptation": [
+    7,
+    0
+  ],
+  "alif_spike_ticks": [
+    0,
+    1,
+    2,
+    4
+  ],
+  "counters": {
+    "accumulator_saturations": 0,
+    "adaptation_saturations": 0,
+    "emitted_spikes": 10,
+    "external_events_admitted": 6,
+    "membrane_saturations": 0,
+    "neuron_updates": 12,
+    "recurrent_events_scheduled": 4,
+    "synaptic_operations": 16,
+    "threshold_saturations": 0,
+    "ticks_processed": 8
+  },
+  "final_state_digest": "ddffa0fe1c3ec5732e77a5703d7ba2b833f7aa3a541288cdc035d01e22cc6ef4",
+  "membrane": [
+    8,
+    0
+  ],
+  "network": {
+    "connections": [
+      {
+        "axonal_delay": 0,
+        "connection_id": "external_alif",
+        "source_index": 0,
+        "source_population": "lif",
+        "synapse_type": "excitatory",
+        "target_index": 0,
+        "target_population": "alif",
+        "weight": 4
+      },
+      {
+        "axonal_delay": 0,
+        "connection_id": "external_lif",
+        "source_index": 0,
+        "source_population": "lif",
+        "synapse_type": "excitatory",
+        "target_index": 0,
+        "target_population": "lif",
+        "weight": 4
+      }
+    ],
+    "network_id": "v8_1a_mixed_demo",
+    "override_precedence": "population parameters override the complete selected template",
+    "populations": [
+      {
+        "count": 1,
+        "neuron_type": "excitatory",
+        "parameters_override": {
+          "adaptation_decay": 1,
+          "adaptation_increment": 3,
+          "initial_adaptation": 0,
+          "initial_voltage": 0,
+          "leak": 0,
+          "reset_voltage": 0,
+          "threshold": 4
+        },
+        "population_id": "alif",
+        "template_id": "excitatory_alif"
+      },
+      {
+        "count": 1,
+        "neuron_type": "excitatory",
+        "parameters_override": {
+          "initial_voltage": 0,
+          "leak": 0,
+          "reset_voltage": 0,
+          "threshold": 4
+        },
+        "population_id": "lif",
+        "template_id": "excitatory_lif"
+      }
+    ],
+    "recurrent_connections": [
+      {
+        "connection_id": "alif_self",
+        "source_index": 0,
+        "source_population": "alif",
+        "synapse_type": "excitatory",
+        "synaptic_delay": 0,
+        "target_index": 0,
+        "target_population": "alif",
+        "weight": 4
+      }
+    ],
+    "schema_version": "3.0-alif-types",
+    "templates": [
+      {
+        "model_kind": "lif",
+        "neuron_type": "custom",
+        "parameters": {
+          "initial_voltage": 0,
+          "leak": 0,
+          "reset_voltage": 0,
+          "threshold": 10
+        },
+        "template_id": "custom_lif"
+      },
+      {
+        "model_kind": "alif",
+        "neuron_type": "excitatory",
+        "parameters": {
+          "adaptation_decay": 1,
+          "adaptation_increment": 3,
+          "initial_adaptation": 0,
+          "initial_voltage": 0,
+          "leak": 1,
+          "reset_voltage": 0,
+          "threshold": 10
+        },
+        "template_id": "excitatory_alif"
+      },
+      {
+        "model_kind": "lif",
+        "neuron_type": "excitatory",
+        "parameters": {
+          "initial_voltage": 0,
+          "leak": 1,
+          "reset_voltage": 0,
+          "threshold": 10
+        },
+        "template_id": "excitatory_lif"
+      },
+      {
+        "model_kind": "alif",
+        "neuron_type": "inhibitory",
+        "parameters": {
+          "adaptation_decay": 1,
+          "adaptation_increment": 2,
+          "initial_adaptation": 0,
+          "initial_voltage": 0,
+          "leak": 1,
+          "reset_voltage": 0,
+          "threshold": 8
+        },
+        "template_id": "inhibitory_alif"
+      },
+      {
+        "model_kind": "lif",
+        "neuron_type": "inhibitory",
+        "parameters": {
+          "initial_voltage": 0,
+          "leak": 1,
+          "reset_voltage": 0,
+          "threshold": 8
+        },
+        "template_id": "inhibitory_lif"
+      }
+    ],
+    "tick_horizon": 8
+  },
+  "neuron_history": [
+    {
+      "adaptation": 3,
+      "effective_threshold": 4,
+      "model": "alif",
+      "neuron_id": 0,
+      "neuron_type": "excitatory",
+      "spike": true,
+      "tick": 0
+    },
+    {
+      "adaptation": 0,
+      "effective_threshold": 4,
+      "model": "lif",
+      "neuron_id": 1,
+      "neuron_type": "excitatory",
+      "spike": true,
+      "tick": 0
+    },
+    {
+      "adaptation": 5,
+      "effective_threshold": 6,
+      "model": "alif",
+      "neuron_id": 0,
+      "neuron_type": "excitatory",
+      "spike": true,
+      "tick": 1
+    },
+    {
+      "adaptation": 0,
+      "effective_threshold": 4,
+      "model": "lif",
+      "neuron_id": 1,
+      "neuron_type": "excitatory",
+      "spike": true,
+      "tick": 1
+    },
+    {
+      "adaptation": 7,
+      "effective_threshold": 8,
+      "model": "alif",
+      "neuron_id": 0,
+      "neuron_type": "excitatory",
+      "spike": true,
+      "tick": 2
+    },
+    {
+      "adaptation": 0,
+      "effective_threshold": 4,
+      "model": "lif",
+      "neuron_id": 1,
+      "neuron_type": "excitatory",
+      "spike": true,
+      "tick": 2
+    },
+    {
+      "adaptation": 6,
+      "effective_threshold": 10,
+      "model": "alif",
+      "neuron_id": 0,
+      "neuron_type": "excitatory",
+      "spike": false,
+      "tick": 3
+    },
+    {
+      "adaptation": 0,
+      "effective_threshold": 4,
+      "model": "lif",
+      "neuron_id": 1,
+      "neuron_type": "excitatory",
+      "spike": true,
+      "tick": 3
+    },
+    {
+      "adaptation": 8,
+      "effective_threshold": 9,
+      "model": "alif",
+      "neuron_id": 0,
+      "neuron_type": "excitatory",
+      "spike": true,
+      "tick": 4
+    },
+    {
+      "adaptation": 0,
+      "effective_threshold": 4,
+      "model": "lif",
+      "neuron_id": 1,
+      "neuron_type": "excitatory",
+      "spike": true,
+      "tick": 4
+    },
+    {
+      "adaptation": 7,
+      "effective_threshold": 11,
+      "model": "alif",
+      "neuron_id": 0,
+      "neuron_type": "excitatory",
+      "spike": false,
+      "tick": 5
+    },
+    {
+      "adaptation": 0,
+      "effective_threshold": 4,
+      "model": "lif",
+      "neuron_id": 1,
+      "neuron_type": "excitatory",
+      "spike": true,
+      "tick": 5
+    }
+  ],
+  "operation_order": [
+    "combine contributions",
+    "decay voltage",
+    "decay adaptation",
+    "add input",
+    "narrow effective threshold",
+    "compare candidate >= effective threshold",
+    "reset voltage after spike",
+    "increment adaptation after spike"
+  ],
+  "pending_contributions": [],
+  "program_fingerprint": "b0359062433d7263c01a153f27ed040a539ea21c252b136171782deeeae02775",
+  "schema_version": "1.0-alif-types",
+  "spikes": [
+    {
+      "neuron_id": 0,
+      "tick": 0
+    },
+    {
+      "neuron_id": 1,
+      "tick": 0
+    },
+    {
+      "neuron_id": 0,
+      "tick": 1
+    },
+    {
+      "neuron_id": 1,
+      "tick": 1
+    },
+    {
+      "neuron_id": 0,
+      "tick": 2
+    },
+    {
+      "neuron_id": 1,
+      "tick": 2
+    },
+    {
+      "neuron_id": 1,
+      "tick": 3
+    },
+    {
+      "neuron_id": 0,
+      "tick": 4
+    },
+    {
+      "neuron_id": 1,
+      "tick": 4
+    },
+    {
+      "neuron_id": 1,
+      "tick": 5
+    }
+  ],
+  "trace_sha256": "f046fc9bd82de4eee8afc25b2ec506e36e164ca22532f69a3c675050bf52c9f9"
+}
