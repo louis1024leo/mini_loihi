@@ -13,6 +13,19 @@ dist/
 .v7_1d2_tmp/
 .v7_1d2_formal/
 .v7_1d2_formal_local_reset/
+.v9c_tmp/
+.v9c_pytest_tmp/
+.codex_tmp/
+formal/v9_0c1_active_table_bmc/
+formal/v9_0c1_ingress_bmc/
+formal/v9_0c1_learning_state_bmc/
+formal/v9_0c1_pipeline_bmc/
+formal/v9_0c_pair_table_bmc/
+formal/v81c_pipeline_bmc/
+formal/v9_0c3_barrier_bmc/
+formal/v9_0c3_learning_commit_bmc/
+formal/v9_0c3_pair_order_bmc/
+formal/v9_0c3_pending_storage_bmc/
 
 # Editors and local agent state
 .vscode/

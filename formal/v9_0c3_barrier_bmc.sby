@@ -1,0 +1,15 @@
+[options]
+mode bmc
+depth 32
+
+[engines]
+smtbmc boolector
+
+[script]
+read -formal -D FORMAL v9_0c_profile_pkg.sv v9_0c_learning_phase_controller.sv v9_0c3_barrier_formal.sv
+prep -top v9_0c3_barrier_formal
+
+[files]
+rtl/v9_0c/v9_0c_profile_pkg.sv
+rtl/v9_0c/v9_0c_learning_phase_controller.sv
+formal/v9_0c3_barrier_formal.sv

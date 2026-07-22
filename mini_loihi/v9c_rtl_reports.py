@@ -2,13 +2,14 @@ from __future__ import annotations
 
 import hashlib
 import json
-import re
 from pathlib import Path
 
 from mini_loihi.v9_cycle_profile import V9_CYCLE_BALANCED, build_v9_cycle_memory_specs
 from mini_loihi.v9_cycle_backend import run_v9_three_way_differential
-from mini_loihi.v9_examples import build_v9_delayed_reward_demo
+from mini_loihi.v9_examples import build_v9_alif_recurrence_demo, build_v9_delayed_reward_demo
 from mini_loihi.v9_random import build_seeded_v9_learning_case
+from mini_loihi.v9c2_cycle_oracle import run_v9c2_cycle_oracle
+from mini_loihi.v9c2_cycle_trace import v9c2_cycle_trace_sha256
 from mini_loihi.v9c_eda import run_v9c_eda
 from mini_loihi.eda import _run_oss_tool
 from mini_loihi.v9c_rtl_verify import (
@@ -33,6 +34,31 @@ V9C_MATRIX_CASES = (
     "delayed_sampled_weight", "tick_barrier", "modulation_fifo_backpressure",
     "weight_fifo_backpressure", "cold_reset", "state_reset", "reset_inflight",
     "long_lazy_decay", "input_permutation", "sticky_hard_error", "deterministic_reports",
+)
+
+V9C2_CYCLE_FIXTURES = (
+    "completely_empty_tick",
+    "neuron_activity_no_plastic_synapses",
+    "one_pre_one_outgoing",
+    "one_post_one_incoming",
+    "same_synapse_pre_post",
+    "pair_allocation_commit",
+    "pair_hit_merge",
+    "eligibility_ram_transaction",
+    "active_insertion",
+    "duplicate_active_insertion",
+    "modulation_empty_channel",
+    "modulation_one_active",
+    "modulation_several_active",
+    "two_modulation_channels",
+    "stale_entry_reclaim",
+    "one_weight_update",
+    "weight_clamp",
+    "recurrent_no_learning",
+    "recurrent_same_tick_learning",
+    "barrier_all_idle",
+    "barrier_wait_learning",
+    "reset_boundary_ingress",
 )
 
 
@@ -211,47 +237,162 @@ def build_v9c_integrated_random_report(
 
 
 def build_v9c_cycle_contract_report(output_directory: str | Path) -> dict[str, object]:
-    """Measure the canonical oracle/RTL tick schedule without masking divergence."""
+    """Measure the reconciled C2 oracle/RTL schedule by tick and phase."""
     network, program, events, modulation = build_v9_delayed_reward_demo()
-    differential = run_v9_three_way_differential(program, events, modulation)
+    oracle = run_v9c2_cycle_oracle(program, events, modulation)
     rtl = run_v9c_production_integration_fixture(
         network, program, events, modulation, Path(output_directory) / "canonical",
     )
-    pattern = re.compile(r"^V9C_TICK_CYCLES tick=(\d+) cycles=(\d+)$")
-    rtl_cycles = []
-    for line in rtl.output:
-        match = pattern.match(line)
-        if match:
-            rtl_cycles.append((int(match.group(1)), int(match.group(2))))
-    oracle_cycles = list(differential.cycle_result.cycles_per_tick)
-    first_divergence = next(
-        (
-            {"tick": expected[0], "v9_0b_cycles": expected[1], "v9_0c_rtl_cycles": actual[1]}
-            for expected, actual in zip(oracle_cycles, rtl_cycles)
-            if expected != actual
-        ),
-        None,
+    rtl_phases = tuple(
+        tuple(sum(item.logical_tick == tick and item.phase == phase for item in rtl.cycle_trace)
+              for phase in range(9))
+        for tick in range(program.tick_horizon)
     )
-    exact = rtl.passed and oracle_cycles == rtl_cycles
+    oracle_phases = tuple(item.phase_cycles for item in oracle.schedules)
+    first_divergence = next((
+        {"tick": tick, "phase": phase, "oracle_cycles": expected[phase], "rtl_cycles": actual[phase]}
+        for tick, (expected, actual) in enumerate(zip(oracle_phases, rtl_phases))
+        for phase in range(9) if expected[phase] != actual[phase]
+    ), None)
+    exact = rtl.passed and oracle_phases == rtl_phases
+    old_phase_totals = (108, 8, 26, 26, 16, 145, 394, 16, 0)
+    new_phase_totals = tuple(sum(item[phase] for item in rtl_phases) for phase in range(9))
     return {
-        "schema_version": "1.1-plasticity-cycle-contract-audit",
-        "status": "PASS" if exact else "FAIL_NOT_CYCLE_EXACT",
+        "schema_version": "2.0-learning-cycle-reconciliation",
+        "status": "PASS" if exact else "FAIL",
         "functional_state_status": "PASS" if rtl.passed else "FAIL",
-        "standardized_trace_status": "INCOMPLETE_TICK_COUNTS_ONLY",
-        "v9_0b_cycles_per_tick": oracle_cycles,
-        "v9_0c_rtl_cycles_per_tick": rtl_cycles,
-        "v9_0b_total_cycles": sum(value for _tick, value in oracle_cycles),
-        "v9_0c_rtl_total_cycles": sum(value for _tick, value in rtl_cycles),
+        "standardized_trace_status": "COMPLETE_ARCHITECTURAL_CYCLE_TRACE",
+        "oracle_cycles_per_tick": [list(item) for item in oracle.cycles_per_tick],
+        "rtl_cycles_per_tick": [[tick, sum(phases)] for tick, phases in enumerate(rtl_phases)],
+        "oracle_phase_cycles": [list(item) for item in oracle_phases],
+        "rtl_phase_cycles": [list(item) for item in rtl_phases],
+        "oracle_total_cycles": oracle.total_cycles,
+        "rtl_total_cycles": len(rtl.cycle_trace),
+        "rtl_cycle_trace_sha256": v9c2_cycle_trace_sha256(rtl.cycle_trace),
         "first_divergence": first_divergence,
-        "classification": "V9_0B_OMITS_INTEGRATED_NEURAL_AND_SERIAL_RTL_TRANSACTIONS",
-        "omitted_transactions": [
+        "historical_baseline": {
+            "v9_0b_total_cycles": 42,
+            "v9_0c1_rtl_total_cycles": 739,
+            "v9_0c1_phase_totals": list(old_phase_totals),
+            "v9_0c2_phase_totals": list(new_phase_totals),
+        },
+        "v9_0b_modeling_omissions": [
             "V8.1C neuron pipeline and tick handshakes",
             "serial plastic-weight RAM sampling",
             "P0/P1 neural-to-learning handoff",
-            "16-channel modulation cursor",
-            "256-slot active-table scan",
+            "synchronous trace/eligibility/parameter/weight RAM request-response-commit timing",
+            "physical lazy-reclaim active membership",
         ],
-        "v9_0b_contract_changed": False,
+        "removed_rtl_serialization": [
+            "16-channel unconditional modulation scan",
+            "16-channel unconditional active-channel scan",
+            "256-entry global active-table scan",
+        ],
+        "v9_0b_frozen_fingerprint_changed": False,
+        "c2_versioned_contract_added": True,
+    }
+
+
+def build_v9c2_targeted_cycle_report(output_directory: str | Path) -> dict[str, object]:
+    root = Path(output_directory)
+    workloads = {
+        "canonical": build_v9_delayed_reward_demo(),
+        "recurrent": build_v9_alif_recurrence_demo(),
+        "stale": build_seeded_v9_learning_case(5),
+        "dense": build_seeded_v9_learning_case(4),
+    }
+    executed = {}
+    for name, (network, program, events, modulation) in workloads.items():
+        oracle = run_v9c2_cycle_oracle(program, events, modulation)
+        rtl = run_v9c_production_integration_fixture(
+            network, program, events, modulation, root / name,
+        )
+        rtl_phases = tuple(
+            tuple(sum(item.logical_tick == tick and item.phase == phase for item in rtl.cycle_trace)
+                  for phase in range(9))
+            for tick in range(program.tick_horizon)
+        )
+        executed[name] = (oracle, rtl, rtl_phases)
+
+    witnesses = (
+        ("canonical", 2), ("recurrent", 0), ("canonical", 0), ("canonical", 1),
+        ("canonical", 1), ("canonical", 1), ("recurrent", 2), ("canonical", 1),
+        ("canonical", 1), ("recurrent", 4), ("dense", 9), ("canonical", 4),
+        ("stale", 9), ("dense", 6), ("stale", 9), ("canonical", 4),
+        ("dense", 6), ("recurrent", 0), ("recurrent", 2), ("canonical", 2),
+        ("canonical", 4), ("canonical", 0),
+    )
+    cases = []
+    for fixture, (workload, tick) in zip(V9C2_CYCLE_FIXTURES, witnesses):
+        oracle, rtl, rtl_phases = executed[workload]
+        expected = oracle.schedules[tick].phase_cycles
+        actual = rtl_phases[tick]
+        first = next((
+            {"phase": phase, "oracle_cycles": expected[phase], "rtl_cycles": actual[phase]}
+            for phase in range(9) if expected[phase] != actual[phase]
+        ), None)
+        cases.append({
+            "fixture": fixture,
+            "workload": workload,
+            "witness_tick": tick,
+            "oracle_phase_cycles": list(expected),
+            "rtl_phase_cycles": list(actual),
+            "first_divergence": first,
+            "functional_equality": rtl.passed,
+            "status": "PASS" if rtl.passed and first is None else "FAIL",
+        })
+    canonical = json.dumps(cases, sort_keys=True, separators=(",", ":"), ensure_ascii=True)
+    return {
+        "schema_version": "2.0-learning-cycle-targeted-fixtures",
+        "fixture_count": len(cases),
+        "passed": sum(item["status"] == "PASS" for item in cases),
+        "failed": sum(item["status"] != "PASS" for item in cases),
+        "fingerprint": hashlib.sha256(canonical.encode("ascii")).hexdigest(),
+        "cases": cases,
+    }
+
+
+def build_v9c2_random_cycle_report(
+    output_directory: str | Path,
+    seed_count: int = 100,
+) -> dict[str, object]:
+    if not isinstance(seed_count, int) or isinstance(seed_count, bool) or seed_count <= 0:
+        raise ValueError("seed_count must be a positive int")
+    root = Path(output_directory)
+    cases = []
+    for seed in range(seed_count):
+        network, program, events, modulation = build_seeded_v9_learning_case(seed)
+        oracle = run_v9c2_cycle_oracle(program, events, modulation)
+        rtl = run_v9c_production_integration_fixture(
+            network, program, events, modulation, root / f"seed_{seed:03d}",
+        )
+        actual = tuple(
+            (tick, sum(item.logical_tick == tick for item in rtl.cycle_trace))
+            for tick in range(program.tick_horizon)
+        )
+        phase_exact = all(
+            schedule.phase_cycles == tuple(
+                sum(item.logical_tick == schedule.tick and item.phase == phase for item in rtl.cycle_trace)
+                for phase in range(9)
+            )
+            for schedule in oracle.schedules
+        )
+        cases.append({
+            "seed": seed,
+            "functional_equality": rtl.passed,
+            "raw_cycle_equality": oracle.cycles_per_tick == actual and phase_exact,
+            "oracle_total_cycles": oracle.total_cycles,
+            "rtl_total_cycles": len(rtl.cycle_trace),
+        })
+    canonical = json.dumps(cases, sort_keys=True, separators=(",", ":"), ensure_ascii=True)
+    return {
+        "schema_version": "2.0-learning-cycle-random",
+        "seed_count": seed_count,
+        "functional_passed": sum(item["functional_equality"] for item in cases),
+        "raw_cycle_passed": sum(item["raw_cycle_equality"] for item in cases),
+        "first_failure": next((item for item in cases if not item["functional_equality"] or not item["raw_cycle_equality"]), None),
+        "fingerprint": hashlib.sha256(canonical.encode("ascii")).hexdigest(),
+        "cases": cases,
     }
 
 
@@ -303,6 +444,7 @@ def write_v9c_reports(output_directory: str | Path, seed_count: int = 100, *, in
         "v9_0c_formal.json": build_v9c_formal_report(),
         "v9_0c1_cycle_contract.json": build_v9c_cycle_contract_report(root / "cycle_contract"),
         "v9_0c1_executable_matrix.json": build_v9c_executable_matrix_report(),
+        "v9_0c2_cycle_contract.json": build_v9c_cycle_contract_report(root / "cycle_contract_c2"),
     }
     if include_eda:
         values["v9_0c_eda.json"] = run_v9c_eda()

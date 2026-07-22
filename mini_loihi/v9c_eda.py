@@ -26,6 +26,10 @@ def run_v9c_eda() -> dict[str, object]:
     return {
         "schema_version": "1.0-plasticity-rtl-eda",
         "profile": "v9_0b_balanced",
+        "status": (
+            "PASS" if all(item["status"] == "PASS" for item in (lint, generation, yosys))
+            else "FAIL"
+        ),
         "vivado_invoked": False,
         "verilator_lint": lint,
         "verilator_generation": generation,
@@ -74,7 +78,9 @@ def _run_yosys(work: Path) -> dict[str, object]:
     learning_multiplier_cells = _run_learning_multiplier_count(work)
     warnings = tuple(line for line in _stable_messages(text) if line.startswith("Warning:"))
     errors = tuple(line for line in _stable_messages(text) if "ERROR:" in line.upper())
-    hard_warnings = tuple(line for line in warnings if any(word in line.lower() for word in ("multiple conflicting", "latch", "undriven")))
+    hard_warnings = tuple(line for line in warnings if any(
+        word in line.lower() for word in ("multiple conflicting", "latch", "undriven", "no driver")
+    ))
     return {
         "status": "PASS" if completed.returncode == 0 and not hard_warnings and learning_multiplier_cells == 2 else "FAIL",
         "returncode": completed.returncode,
@@ -85,7 +91,10 @@ def _run_yosys(work: Path) -> dict[str, object]:
         "latches": 0 if not any("latch" in item.lower() for item in hard_warnings) else 1,
         "multiple_drivers": 0 if not any("multiple conflicting" in item.lower() for item in hard_warnings) else 1,
         "combinational_loops": 0 if "Found an SCC" not in text else 1,
-        "undriven": 0 if not any("undriven" in item.lower() for item in hard_warnings) else 1,
+        "undriven": 0 if not any(
+            "undriven" in item.lower() or "no driver" in item.lower()
+            for item in hard_warnings
+        ) else 1,
         "warnings": list(warnings),
         "errors": list(errors),
     }

@@ -1,0 +1,47 @@
+{
+  "rtl/v8_0e": {
+    "files": {
+      "mini_loihi_v8e_ram_wheel_core.sv": "a889fa38929239207bc04f77e3e28e76285b53e867ea03bf434bef753fead744",
+      "mini_loihi_v8e_ram_wheel_image_top.sv": "499448c77bf2d58635fc56b514c8ac4e7f25cb08a98f42729265275ba23c703f",
+      "v8e_ram_delay_wheel_storage.sv": "35b65405772a790b69fdeb2418d326b06c7d87df50f3e08317e46328a83f9efb"
+    },
+    "git_status": "UNCHANGED",
+    "sha256": "722144c8972064d69d7f45d6723598b4b40b16f702fb6bf5a7fb5b1e26c84770"
+  },
+  "rtl/v8_1c": {
+    "files": {
+      "mini_loihi_v81c_alif_core.sv": "19d0997803d884c8ba845569e4ab79aba71b8aec84fd99d84c990e45c3d4b185",
+      "mini_loihi_v81c_alif_image_top.sv": "3c2cd5bd7c36d356f9fac863b6515e84fa954a3fc93d3e6db1dda44a0a8d7196",
+      "v81c_lif_alif_pipeline.sv": "ae9d1050021efd54e91c1b3ba30e2d221a886ce17f2131a6371e3a71b8a2ba35",
+      "v81c_sync_param_rom.sv": "8ef061587deef559795840317378ae68cdba981f80aaf175529ddb08b77c9286",
+      "v81c_sync_state_ram.sv": "1b43583ecc4cda9276705e0fda1bfba530d59a0c0a518fec9c908f95558e8a32"
+    },
+    "git_status": "UNCHANGED",
+    "sha256": "7935d5caeb90e78df3b3c70e7720863bc00426c9e0c6375e9283cdd6214814d9"
+  },
+  "rtl/v9_0c": {
+    "files": {
+      "mini_loihi_v9_0c_core.sv": "8fcbc5f5214344bde90cae37890f52999579447fc72edaf657a9f58a249fc447",
+      "mini_loihi_v9_0c_image_top.sv": "8a3ad4cb73888052351f3f7d2bf33659dd7f8db041bdeb21d27c293c9291d0d7",
+      "mini_loihi_v9_0c_neural_core.sv": "c7abe1868794b6f5e63d2cfa8a935f20e2cf98a965555782114a9b0c99fdb5ab",
+      "v9_0c_active_table.sv": "12271f31452d9702b6a200637feca0fc5030793db1c1c4c2739a3550c19b6d09",
+      "v9_0c_eligibility_engine.sv": "edc54a9fc9867fe6820679207388ee7bb330a3e5215c5fe298560976d7ec49df",
+      "v9_0c_fifo.sv": "9135a6ca3a3ae84dad03937d8d6fa9290a36e8469acfae21f4f42880f03dbe0e",
+      "v9_0c_learning_ingress.sv": "34764f33a6e10d853bdedcafd04ef2bba5e048e9c06a841cfdb656fb615bc88a",
+      "v9_0c_learning_phase_controller.sv": "2360daf274c5cf4c2e44c2ede212981b15fe6112079b80816eba0c3550333461",
+      "v9_0c_learning_state.sv": "2dd7a05e6e79153e56116a49f5e64ebe7d7c93b243574baa4be176acd8dd696c",
+      "v9_0c_learning_top.sv": "747d422d71398d66fef5de1185b3457927d357b0128b717b4207808fe493cd00",
+      "v9_0c_modulation_ingress.sv": "0ed100a67c89b9a683e6bec46c215c2a459b2eed02fda05e209d7629f2b783ad",
+      "v9_0c_multiplier_path.sv": "9ebb6d6292901a2865885b847895f311850c909ae63a898f98c51dade4916b50",
+      "v9_0c_pair_expander.sv": "c0e68fc2f6a86c0fb33639442fc1b876a729ac4622694e645106d33bb266c7de",
+      "v9_0c_pair_transaction_table.sv": "f33b09d1d7c22a7641136426d7cad8f173f94b9bf2861ab6ca1c0db63e0f6e47",
+      "v9_0c_profile_pkg.sv": "7ac96b605346517860fdfd0393c2d4102609968803cf1c8c64588e74cc6c5bd5",
+      "v9_0c_sync_1r1w_ram.sv": "3f3c9af101127a90f9c230078dfaa6ef4046db9e6822c3d1850f46ba750cb075",
+      "v9_0c_sync_rom.sv": "6e28565125071ce01bd02fd0f9fbd660845a4423c67f94a8ad055df223e78f38",
+      "v9_0c_trace_engine.sv": "7e31121bd95f546c617364e95db0f4a448dbe4779f1b7cdbb819884553297f86",
+      "v9_0c_weight_update_engine.sv": "6abd24c95d8f943c27624b6e31cb79511bdcc160f3ce680dd6dc28d66751a858"
+    },
+    "sha256": "6f8b226fe59781ebf82b59402292791f2d0dc9747a2dd858b58dedb6bc8f8cc0"
+  },
+  "schema_version": "3.0-plasticity-final-acceptance"
+}

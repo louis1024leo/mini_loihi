@@ -2,6 +2,9 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from mini_loihi.v9c2_cycle_trace import V9C2CycleRecord
+from mini_loihi.v9c3_cycle_trace import V9C3CycleRecord
+
 
 @dataclass(frozen=True)
 class V9CRTLToolStatus:
@@ -20,6 +23,8 @@ class V9CRTLTransactionResult:
     active_cases: int
     simulator: V9CRTLToolStatus
     output: tuple[str, ...]
+    cycle_trace: tuple[V9C2CycleRecord, ...] = ()
+    c3_cycle_trace: tuple[V9C3CycleRecord, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -33,4 +38,3 @@ class V9CFourWayResult:
     rtl_trace_sha256: str
     total_cycles: int
     rtl_total_cycles: int
-

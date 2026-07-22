@@ -35,10 +35,14 @@ module v9_0c_learning_phase_controller (
     end
   end
 `ifdef FORMAL
+  logic formal_past_valid = 1'b0;
   always_ff @(posedge clk) begin
-    assert (phase <= v9_0c_profile_pkg::V9C_P8_BARRIER);
-    if (tick_done_valid) assert (phase == v9_0c_profile_pkg::V9C_P8_BARRIER);
-    if ($past(tick_done_valid && !tick_done_ready)) begin
+    formal_past_valid <= 1'b1;
+    if (formal_past_valid && !rst) begin
+      assert (phase <= v9_0c_profile_pkg::V9C_P8_BARRIER);
+      if (tick_done_valid) assert (phase == v9_0c_profile_pkg::V9C_P8_BARRIER);
+    end
+    if (formal_past_valid && !$past(rst) && $past(tick_done_valid && !tick_done_ready)) begin
       assert (tick_done_valid);
       assert (phase == $past(phase));
     end

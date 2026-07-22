@@ -1,0 +1,823 @@
+{
+  "cases": [
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 0,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 1,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 2,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 3,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 4,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 5,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 6,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 7,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 8,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 9,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 10,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 11,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 12,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 13,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 14,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 15,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 16,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 17,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 18,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 19,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 20,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 21,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 22,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 23,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 24,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 25,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 26,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 27,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 28,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 29,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 30,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 31,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 32,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 33,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 34,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 35,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 36,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 37,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 38,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 39,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 40,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 41,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 42,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 43,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 44,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 45,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 46,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 47,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 48,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 49,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 50,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 51,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 52,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 53,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 54,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 55,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 56,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 57,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 58,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 59,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 60,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 61,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 62,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 63,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 64,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 65,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 66,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 67,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 68,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 69,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 70,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 71,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 72,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 73,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 74,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 75,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 76,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 77,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 78,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 79,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 80,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 81,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 82,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 83,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 84,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 85,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 86,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 87,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 88,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 89,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 90,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 91,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 92,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 93,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 94,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 95,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 96,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 97,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 98,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    },
+    {
+      "first_failure": "",
+      "production_rtl_equivalent": true,
+      "seed": 99,
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "three_way_equivalent": true
+    }
+  ],
+  "fingerprint": "7ec7e900e802052aeeef8e4546287e98ab1cae6971c27e26bb3e8156db53b5e7",
+  "functional_fields": [
+    "spikes",
+    "membrane",
+    "adaptation",
+    "last_update_tick",
+    "pending_contribution_count",
+    "pre_post_traces",
+    "eligibility",
+    "logical_active_membership",
+    "weights",
+    "commit_counts",
+    "sticky_error"
+  ],
+  "passed": 100,
+  "raw_cycle_status": "FAIL_NOT_CYCLE_EXACT",
+  "requested_seeds": 100,
+  "schema_version": "1.1-plasticity-integration-closure",
+  "status": "PASS"
+}

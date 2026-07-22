@@ -9,7 +9,7 @@ from mini_loihi.v9_cycle_profile import V9_CYCLE_BALANCED
 from mini_loihi.v9_hardware_ir import V9CompiledProgram, V9CompiledSynapse
 
 
-V9C_ARTIFACT_SCHEMA_VERSION = "1.0-plasticity-rtl"
+V9C_ARTIFACT_SCHEMA_VERSION = "1.1-plasticity-rtl-active-init"
 
 
 @dataclass(frozen=True)
@@ -98,6 +98,11 @@ def export_v9c_rtl_artifacts(program: V9CompiledProgram, output_directory: str |
             recurrent_plastic_id[address] = numeric[item.synapse_id]
     out_ptr, out_len, out_adj = _csr(outgoing)
     in_ptr, in_len, in_adj = _csr(incoming)
+    initial_active = [
+        (numeric[item.synapse_id], item.plasticity.modulation_channel)
+        for item in plastic
+        if item.plasticity is not None and item.plasticity.initial_eligibility != 0
+    ]
 
     values: dict[str, tuple[int, tuple[int, ...]]] = {
         "pre_trace.mem": (16, tuple(pre_trace)),
@@ -107,6 +112,8 @@ def export_v9c_rtl_artifacts(program: V9CompiledProgram, output_directory: str |
         "post_trace_decay.mem": (16, tuple(post_decay)),
         "post_trace_increment.mem": (16, tuple(post_increment)),
         "eligibility.mem": (24, tuple(item.plasticity.initial_eligibility & 0xFFFFFF for item in plastic)),
+        "active_initial_synapse.mem": (10, tuple(item[0] for item in initial_active) or (0,)),
+        "active_initial_channel.mem": (4, tuple(item[1] for item in initial_active) or (0,)),
         "plastic_initial_weight.mem": (8, tuple(item.initial_weight & 0xFF for item in plastic)),
         "plasticity_parameters.mem": (169, tuple(pack_v9c_parameters(item) for item in plastic)),
         "plastic_synapse_identity.mem": (34, tuple(_identity(item) for item in plastic)),
@@ -131,6 +138,7 @@ def export_v9c_rtl_artifacts(program: V9CompiledProgram, output_directory: str |
         "program_fingerprint": program.build_fingerprint,
         "balanced_profile": asdict(V9_CYCLE_BALANCED),
         "synapse_ids": [item.synapse_id for item in plastic],
+        "initial_active_count": len(initial_active),
         "files": {name: _sha(root / name) for name in written},
         "parameter_reserved_bits": [147, 168],
     }

@@ -1,0 +1,710 @@
+{
+  "cases": [
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 389,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 389,
+      "seed": 0
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 389,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 389,
+      "seed": 1
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 349,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 349,
+      "seed": 2
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 388,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 388,
+      "seed": 3
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 532,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 532,
+      "seed": 4
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 816,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 816,
+      "seed": 5
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 399,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 399,
+      "seed": 6
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 544,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 544,
+      "seed": 7
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 369,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 369,
+      "seed": 8
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 437,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 437,
+      "seed": 9
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 462,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 462,
+      "seed": 10
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 515,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 515,
+      "seed": 11
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 489,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 489,
+      "seed": 12
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 341,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 341,
+      "seed": 13
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 423,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 423,
+      "seed": 14
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 372,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 372,
+      "seed": 15
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 632,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 632,
+      "seed": 16
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 501,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 501,
+      "seed": 17
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 381,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 381,
+      "seed": 18
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 489,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 489,
+      "seed": 19
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 606,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 606,
+      "seed": 20
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 381,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 381,
+      "seed": 21
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 470,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 470,
+      "seed": 22
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 458,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 458,
+      "seed": 23
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 478,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 478,
+      "seed": 24
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 506,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 506,
+      "seed": 25
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 458,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 458,
+      "seed": 26
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 494,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 494,
+      "seed": 27
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 446,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 446,
+      "seed": 28
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 639,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 639,
+      "seed": 29
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 639,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 639,
+      "seed": 30
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 329,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 329,
+      "seed": 31
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 426,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 426,
+      "seed": 32
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 349,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 349,
+      "seed": 33
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 401,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 401,
+      "seed": 34
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 361,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 361,
+      "seed": 35
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 425,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 425,
+      "seed": 36
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 349,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 349,
+      "seed": 37
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 379,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 379,
+      "seed": 38
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 403,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 403,
+      "seed": 39
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 510,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 510,
+      "seed": 40
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 381,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 381,
+      "seed": 41
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 517,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 517,
+      "seed": 42
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 341,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 341,
+      "seed": 43
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 913,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 913,
+      "seed": 44
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 714,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 714,
+      "seed": 45
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 361,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 361,
+      "seed": 46
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 369,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 369,
+      "seed": 47
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 538,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 538,
+      "seed": 48
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 434,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 434,
+      "seed": 49
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 875,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 875,
+      "seed": 50
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 463,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 463,
+      "seed": 51
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 369,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 369,
+      "seed": 52
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 461,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 461,
+      "seed": 53
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 556,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 556,
+      "seed": 54
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 443,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 443,
+      "seed": 55
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 421,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 421,
+      "seed": 56
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 387,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 387,
+      "seed": 57
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 389,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 389,
+      "seed": 58
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 466,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 466,
+      "seed": 59
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 425,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 425,
+      "seed": 60
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 401,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 401,
+      "seed": 61
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 478,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 478,
+      "seed": 62
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 361,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 361,
+      "seed": 63
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 446,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 446,
+      "seed": 64
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 341,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 341,
+      "seed": 65
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 369,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 369,
+      "seed": 66
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 370,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 370,
+      "seed": 67
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 517,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 517,
+      "seed": 68
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 349,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 349,
+      "seed": 69
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 369,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 369,
+      "seed": 70
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 388,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 388,
+      "seed": 71
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 417,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 417,
+      "seed": 72
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 401,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 401,
+      "seed": 73
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 534,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 534,
+      "seed": 74
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 635,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 635,
+      "seed": 75
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 567,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 567,
+      "seed": 76
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 401,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 401,
+      "seed": 77
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 341,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 341,
+      "seed": 78
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 349,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 349,
+      "seed": 79
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 396,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 396,
+      "seed": 80
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 512,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 512,
+      "seed": 81
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 461,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 461,
+      "seed": 82
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 446,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 446,
+      "seed": 83
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 361,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 361,
+      "seed": 84
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 370,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 370,
+      "seed": 85
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 361,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 361,
+      "seed": 86
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 369,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 369,
+      "seed": 87
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 434,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 434,
+      "seed": 88
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 446,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 446,
+      "seed": 89
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 389,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 389,
+      "seed": 90
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 369,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 369,
+      "seed": 91
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 633,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 633,
+      "seed": 92
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 504,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 504,
+      "seed": 93
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 369,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 369,
+      "seed": 94
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 540,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 540,
+      "seed": 95
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 511,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 511,
+      "seed": 96
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 462,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 462,
+      "seed": 97
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 401,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 401,
+      "seed": 98
+    },
+    {
+      "functional_equality": true,
+      "oracle_total_cycles": 361,
+      "raw_cycle_equality": true,
+      "rtl_total_cycles": 361,
+      "seed": 99
+    }
+  ],
+  "fingerprint": "60e5eb2684b3875a7c416f3123eb0e4cf03d528170582a8cabcc5c43d7955c87",
+  "first_failure": null,
+  "functional_passed": 100,
+  "raw_cycle_passed": 100,
+  "schema_version": "2.0-learning-cycle-random",
+  "seed_count": 100
+}

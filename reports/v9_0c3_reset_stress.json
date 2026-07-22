@@ -1,0 +1,75 @@
+{
+  "cases": [
+    {
+      "evidence": "V9C3-46",
+      "name": "reset_during_learning_ingress",
+      "status": "PASS"
+    },
+    {
+      "evidence": "production_learning_top_reset_pulse",
+      "name": "reset_during_adjacency_scan",
+      "status": "PASS"
+    },
+    {
+      "evidence": "production_learning_top_reset_pulse",
+      "name": "reset_during_pair_allocation",
+      "status": "PASS"
+    },
+    {
+      "evidence": "production_learning_top_reset_pulse",
+      "name": "reset_during_pair_merge",
+      "status": "PASS"
+    },
+    {
+      "evidence": "production_learning_top_reset_pulse",
+      "name": "reset_during_pair_drain",
+      "status": "PASS"
+    },
+    {
+      "evidence": "production_learning_top_reset_pulse",
+      "name": "reset_during_eligibility_response_reservation",
+      "status": "PASS"
+    },
+    {
+      "evidence": "production_learning_top_reset_pulse",
+      "name": "reset_during_active_insertion",
+      "status": "PASS"
+    },
+    {
+      "evidence": "production_learning_top_reset_pulse",
+      "name": "reset_during_active_reclaim",
+      "status": "PASS"
+    },
+    {
+      "evidence": "production_learning_top_reset_pulse",
+      "name": "reset_during_modulation_scan",
+      "status": "PASS"
+    },
+    {
+      "evidence": "production_learning_top_reset_pulse",
+      "name": "reset_before_weight_commit",
+      "status": "PASS"
+    },
+    {
+      "evidence": "production_learning_top_reset_pulse",
+      "name": "reset_after_weight_commit",
+      "status": "PASS"
+    },
+    {
+      "evidence": "V9C3-28",
+      "name": "generation_counter_near_wrap",
+      "status": "PASS"
+    },
+    {
+      "evidence": "V9C3-26/27",
+      "name": "active_slot_reuse_across_generation",
+      "status": "PASS"
+    }
+  ],
+  "fingerprint": "3e917929423bb52d6dbd139e7facb3c9357b7cdc3e8487a866cfb6c242e50ea4",
+  "internal_reset_fingerprint": "2744e6661782b4a081a0a0ef79744173a6025a5556d58364843f076dd1faa42c",
+  "passed": 13,
+  "required": 13,
+  "schema_version": "3.0-plasticity-final-acceptance",
+  "status": "PASS"
+}

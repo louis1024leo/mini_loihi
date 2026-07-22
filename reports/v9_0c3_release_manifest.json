@@ -1,0 +1,49 @@
+{
+  "active_architecture": "per-channel linked lists with reverse membership and 256-entry shared pool",
+  "artifact_fingerprints": {
+    "v9_0c3_compatibility.json": "648daa2d7fd7ce33f636473e2a031df918682c9c69d01a7d656f9bc8e43252bd",
+    "v9_0c3_eda.json": "e57cb079e3c02086d4d1f28abe5591a36c95b06cf393a64068443b824dcf8103",
+    "v9_0c3_executable_matrix.json": "3c750722f367d9d044e504aee73bef8a3d1a0ce3ce5e1379493fc8e81297df39",
+    "v9_0c3_field_cycle_differential.json": "0441d08b42e763632b2fd3fed0d7e7271efb54b5c4c4cb55fb661ea128b160f1",
+    "v9_0c3_formal.json": "857036a44d5b5d0521cb00cb57118e939335918fb2c870fe2bbf33ada53fad0b",
+    "v9_0c3_random_integrated.json": "c152d1e72a929c78c29700078dbf3c0c7c71fbda7dbe306b67b40052f1665a6f",
+    "v9_0c3_reset_stress.json": "269ab24630e8b12c0e50e461bf438e6e5ebfefd82bfd1b3f5cfd91ef79f83759",
+    "v9_0c3_rtl_sha256.json": "3cec9d156161fb208c9086882c9b91661d387354fd015b8d8ca0b34518ddaf83"
+  },
+  "blocking_reasons": [],
+  "canonical_phase_cycles": [
+    61,
+    73,
+    12,
+    12,
+    28,
+    12,
+    12,
+    12
+  ],
+  "canonical_total_cycles": 222,
+  "cycle_contract": "V9.0C2 per-channel linked active-list schedule",
+  "cycle_trace_schema": "3.0-plasticity-final-acceptance",
+  "gates": {
+    "compatibility": "PASS",
+    "eda": "PASS",
+    "formal_f01_f16": "PASS",
+    "frozen_rtl": "PASS",
+    "random_field_cycle": "PASS",
+    "random_functional": "PASS",
+    "reset_generation_stress": "PASS",
+    "targeted_field_cycle": "PASS",
+    "targeted_matrix": "PASS"
+  },
+  "production_top": "mini_loihi_v9_0c_image_top",
+  "profile": "v9_0b_balanced",
+  "ready_to_tag": true,
+  "rtl_hierarchy_fingerprint": "6f8b226fe59781ebf82b59402292791f2d0dc9747a2dd858b58dedb6bc8f8cc0",
+  "schema_version": "3.0-plasticity-final-acceptance",
+  "semantic_baseline": "V9.0A three-factor plasticity",
+  "start_v9_0d": true,
+  "unsupported_non_release_properties": [
+    "unbounded liveness"
+  ],
+  "vivado_invoked": false
+}

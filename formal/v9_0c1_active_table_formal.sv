@@ -12,6 +12,7 @@ module v9_0c1_active_table_formal;
   logic [7:0] scan_generation;
   logic [1:0] occupancy;
   logic duplicate_suppressed, invalid_generation, generation_wrap, full_error;
+  logic initialization_busy;
   logic past_valid = 1'b0;
 
   v9_0c_active_table #(.ACTIVE_CAPACITY(2), .SYNAPSE_COUNT(3)) dut (.*);

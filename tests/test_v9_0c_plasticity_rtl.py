@@ -125,13 +125,13 @@ def test_v9c_transaction_fingerprint_excludes_simulator_paths(canonical) -> None
     assert first.rtl_trace_sha256 == second.rtl_trace_sha256
 
 
-def test_v9c_cycle_contract_report_preserves_measured_divergence(tmp_path: Path) -> None:
+def test_v9c2_cycle_contract_report_closes_measured_divergence(tmp_path: Path) -> None:
     report = build_v9c_cycle_contract_report(tmp_path)
-    assert report["status"] == "FAIL_NOT_CYCLE_EXACT"
-    assert (report["v9_0b_total_cycles"], report["v9_0c_rtl_total_cycles"]) == (42, 739)
-    assert report["first_divergence"] == {
-        "tick": 0, "v9_0b_cycles": 11, "v9_0c_rtl_cycles": 94,
-    }
+    assert report["status"] == "PASS"
+    assert report["oracle_total_cycles"] == report["rtl_total_cycles"] == 222
+    assert report["first_divergence"] is None
+    assert report["historical_baseline"]["v9_0b_total_cycles"] == 42
+    assert report["historical_baseline"]["v9_0c1_rtl_total_cycles"] == 739
 
 
 def test_v9c_matrix_report_does_not_promote_generic_execution() -> None:

@@ -1,0 +1,36 @@
+{
+  "compileall": "PASS",
+  "frozen_rtl": {
+    "rtl/v8_0e": "PASS_UNCHANGED",
+    "rtl/v8_1c": "PASS_UNCHANGED"
+  },
+  "git_diff_check": "PASS",
+  "pytest": {
+    "duration_seconds": 1109.81,
+    "failed": 0,
+    "passed": 712
+  },
+  "python_environment": "OSS CAD Python 3.11.6 with C:/venvs/mini_loihi/Lib/site-packages",
+  "regressions": {
+    "v7_0": {
+      "fingerprint": "19f33cc621e82ff27af8dde38541d1ffc14df9212e59b4f979b0867c4a11b0ac",
+      "passed": 100
+    },
+    "v7_1b1": {
+      "fingerprint": "c04494bba52185f6e69ce773bc0737bcaf8534f3b12ddcec71b30377764c8bf0",
+      "passed": 100
+    },
+    "v7_1b2": {
+      "fingerprint": "9cf9c2b73c0b0d31aa6b8b61d93dc387ca29c1d385f85b00933760d771dbfb50",
+      "passed": 100
+    },
+    "v7_1d2": {
+      "fingerprint": "3f7443bd2d5ae9ffa412724093677032014d76768e2179dcf717a266700916ba",
+      "passed": 100
+    }
+  },
+  "schema_version": "3.0-plasticity-final-acceptance",
+  "status": "PASS",
+  "venv_launcher_note": "C:/venvs/mini_loihi/Scripts/python.exe cannot create a process from the Unicode workspace path",
+  "vivado_invoked": false
+}

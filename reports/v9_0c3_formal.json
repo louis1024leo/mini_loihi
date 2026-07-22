@@ -1,0 +1,267 @@
+{
+  "engine": "smtbmc_boolector",
+  "jobs": {
+    "active_table": {
+      "depth": 30,
+      "engine": "smtbmc_boolector",
+      "harness": "formal/v9_0c1_active_table_bmc.sby",
+      "status": "PASS"
+    },
+    "barrier": {
+      "depth": 32,
+      "engine": "smtbmc_boolector",
+      "harness": "formal/v9_0c3_barrier_bmc.sby",
+      "status": "PASS"
+    },
+    "ingress": {
+      "depth": 40,
+      "engine": "smtbmc_boolector",
+      "harness": "formal/v9_0c1_ingress_bmc.sby",
+      "status": "PASS"
+    },
+    "learning_commit": {
+      "depth": 30,
+      "engine": "smtbmc_boolector",
+      "harness": "formal/v9_0c3_learning_commit_bmc.sby",
+      "status": "PASS"
+    },
+    "learning_state": {
+      "depth": 24,
+      "engine": "smtbmc_boolector",
+      "harness": "formal/v9_0c1_learning_state_bmc.sby",
+      "status": "PASS"
+    },
+    "neural_pipeline": {
+      "depth": 32,
+      "engine": "smtbmc_boolector",
+      "harness": "formal/v81c_pipeline_bmc.sby",
+      "status": "PASS"
+    },
+    "pair_order": {
+      "depth": 8,
+      "engine": "smtbmc_boolector",
+      "harness": "formal/v9_0c3_pair_order_bmc.sby",
+      "status": "PASS"
+    },
+    "pair_table": {
+      "depth": 30,
+      "engine": "smtbmc_boolector",
+      "harness": "formal/v9_0c_pair_table_bmc.sby",
+      "status": "PASS"
+    },
+    "pending_storage": {
+      "depth": 40,
+      "engine": "smtbmc_boolector",
+      "harness": "formal/v9_0c3_pending_storage_bmc.sby",
+      "status": "PASS"
+    },
+    "pipelines": {
+      "depth": 30,
+      "engine": "smtbmc_boolector",
+      "harness": "formal/v9_0c1_pipeline_bmc.sby",
+      "status": "PASS"
+    }
+  },
+  "passed": 16,
+  "properties": [
+    {
+      "assumptions": "legal stable IDs; ready-valid stability",
+      "depth": 40,
+      "description": "committed spike at most one pre increment",
+      "jobs": [
+        "ingress"
+      ],
+      "limitations": "bounded safety proof; unbounded liveness is outside the release gate",
+      "property_id": "F01",
+      "shortest_cover_witness": null,
+      "status": "PASS"
+    },
+    {
+      "assumptions": "legal stable IDs; ready-valid stability",
+      "depth": 40,
+      "description": "committed spike at most one post increment",
+      "jobs": [
+        "ingress"
+      ],
+      "limitations": "bounded safety proof; unbounded liveness is outside the release gate",
+      "property_id": "F02",
+      "shortest_cover_witness": null,
+      "status": "PASS"
+    },
+    {
+      "assumptions": "learning boundary is driven only by commit_fire",
+      "depth": 32,
+      "description": "killed or uncommitted neuron transaction creates no learning event",
+      "jobs": [
+        "neural_pipeline"
+      ],
+      "limitations": "bounded safety proof; unbounded liveness is outside the release gate",
+      "property_id": "F03",
+      "shortest_cover_witness": null,
+      "status": "PASS"
+    },
+    {
+      "assumptions": "bounded exact production table",
+      "depth": 30,
+      "description": "one live pair entry per stable synapse ID",
+      "jobs": [
+        "pair_table"
+      ],
+      "limitations": "bounded safety proof; unbounded liveness is outside the release gate",
+      "property_id": "F04",
+      "shortest_cover_witness": null,
+      "status": "PASS"
+    },
+    {
+      "assumptions": "two-event symbolic permutation miter",
+      "depth": 8,
+      "description": "scanner arrival order preserves batched pair sum",
+      "jobs": [
+        "pair_order"
+      ],
+      "limitations": "bounded safety proof; unbounded liveness is outside the release gate",
+      "property_id": "F05",
+      "shortest_cover_witness": null,
+      "status": "PASS"
+    },
+    {
+      "assumptions": "top handshake coupling plus unique reverse membership",
+      "depth": 30,
+      "description": "eligibility value timestamp and active insert commit atomically",
+      "jobs": [
+        "learning_commit",
+        "active_table"
+      ],
+      "limitations": "bounded safety proof; unbounded liveness is outside the release gate",
+      "property_id": "F06",
+      "shortest_cover_witness": null,
+      "status": "PASS"
+    },
+    {
+      "assumptions": "legal synapse IDs",
+      "depth": 30,
+      "description": "active insert cannot duplicate reverse membership",
+      "jobs": [
+        "active_table"
+      ],
+      "limitations": "bounded safety proof; unbounded liveness is outside the release gate",
+      "property_id": "F07",
+      "shortest_cover_witness": null,
+      "status": "PASS"
+    },
+    {
+      "assumptions": "matching slot ID and generation",
+      "depth": 30,
+      "description": "active reclaim clears entry and reverse membership atomically",
+      "jobs": [
+        "active_table"
+      ],
+      "limitations": "bounded safety proof; unbounded liveness is outside the release gate",
+      "property_id": "F08",
+      "shortest_cover_witness": null,
+      "status": "PASS"
+    },
+    {
+      "assumptions": "arbitrary reclaim tags",
+      "depth": 30,
+      "description": "stale generation cannot reclaim another entry",
+      "jobs": [
+        "active_table"
+      ],
+      "limitations": "bounded safety proof; unbounded liveness is outside the release gate",
+      "property_id": "F09",
+      "shortest_cover_witness": null,
+      "status": "PASS"
+    },
+    {
+      "assumptions": "reduced active capacity; production weight FSM",
+      "depth": 30,
+      "description": "weight transaction cannot commit twice",
+      "jobs": [
+        "learning_commit"
+      ],
+      "limitations": "bounded safety proof; unbounded liveness is outside the release gate",
+      "property_id": "F10",
+      "shortest_cover_witness": null,
+      "status": "PASS"
+    },
+    {
+      "assumptions": "sampling P0/P1; commit P6/P7; monotonic phases",
+      "depth": 30,
+      "description": "tick-t weight commit cannot feed tick-t emission",
+      "jobs": [
+        "learning_commit",
+        "barrier"
+      ],
+      "limitations": "bounded safety proof; unbounded liveness is outside the release gate",
+      "property_id": "F11",
+      "shortest_cover_witness": null,
+      "status": "PASS"
+    },
+    {
+      "assumptions": "stored contribution payload has no weight-RAM write path",
+      "depth": 40,
+      "description": "pending delayed contribution ignores later weight writes",
+      "jobs": [
+        "pending_storage"
+      ],
+      "limitations": "bounded safety proof; unbounded liveness is outside the release gate",
+      "property_id": "F12",
+      "shortest_cover_witness": null,
+      "status": "PASS"
+    },
+    {
+      "assumptions": "symbolic done timing over exact production phase controller",
+      "depth": 32,
+      "description": "tick advance requires all current work complete",
+      "jobs": [
+        "barrier"
+      ],
+      "limitations": "bounded safety proof; unbounded liveness is outside the release gate",
+      "property_id": "F13",
+      "shortest_cover_witness": null,
+      "status": "PASS"
+    },
+    {
+      "assumptions": "legal reset protocol and no writes during scrub",
+      "depth": 24,
+      "description": "state reset preserves learned weights",
+      "jobs": [
+        "learning_state"
+      ],
+      "limitations": "bounded safety proof; unbounded liveness is outside the release gate",
+      "property_id": "F14",
+      "shortest_cover_witness": null,
+      "status": "PASS"
+    },
+    {
+      "assumptions": "legal reset protocol and no writes during scrub",
+      "depth": 24,
+      "description": "cold reset restores compiled initial weights",
+      "jobs": [
+        "learning_state"
+      ],
+      "limitations": "bounded safety proof; unbounded liveness is outside the release gate",
+      "property_id": "F15",
+      "shortest_cover_witness": null,
+      "status": "PASS"
+    },
+    {
+      "assumptions": "environment holds unaccepted input payload",
+      "depth": 30,
+      "description": "stalled valid payload remains stable",
+      "jobs": [
+        "pipelines",
+        "ingress"
+      ],
+      "limitations": "bounded safety proof; unbounded liveness is outside the release gate",
+      "property_id": "F16",
+      "shortest_cover_witness": null,
+      "status": "PASS"
+    }
+  ],
+  "required": 16,
+  "schema_version": "3.0-plasticity-formal-closure",
+  "status": "PASS",
+  "unbounded_liveness": "UNSUPPORTED_NON_RELEASE"
+}

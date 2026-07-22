@@ -1,0 +1,34 @@
+[options]
+mode bmc
+depth 30
+
+[engines]
+smtbmc boolector
+
+[script]
+read -formal -D FORMAL v9_0c_profile_pkg.sv v9_0c_fifo.sv v9_0c_sync_1r1w_ram.sv v9_0c_sync_rom.sv v9_0c_multiplier_path.sv v9_0c_pair_transaction_table.sv v9_0c_active_table.sv v9_0c_modulation_ingress.sv v9_0c_learning_state.sv v9_0c_learning_phase_controller.sv v9_0c_learning_top.sv v9_0c3_learning_commit_formal.sv
+prep -top v9_0c3_learning_commit_formal
+memory_map
+opt
+
+[files]
+rtl/v9_0c/v9_0c_profile_pkg.sv
+rtl/v9_0c/v9_0c_fifo.sv
+rtl/v9_0c/v9_0c_sync_1r1w_ram.sv
+rtl/v9_0c/v9_0c_sync_rom.sv
+rtl/v9_0c/v9_0c_multiplier_path.sv
+rtl/v9_0c/v9_0c_pair_transaction_table.sv
+rtl/v9_0c/v9_0c_active_table.sv
+rtl/v9_0c/v9_0c_modulation_ingress.sv
+rtl/v9_0c/v9_0c_learning_state.sv
+rtl/v9_0c/v9_0c_learning_phase_controller.sv
+rtl/v9_0c/v9_0c_learning_top.sv
+formal/v9_0c3_learning_commit_formal.sv
+formal/c3_pre.mem
+formal/c3_post.mem
+formal/c3_eligibility.mem
+formal/c3_weight.mem
+formal/c3_parameter.mem
+formal/c3_identity.mem
+formal/c3_active_synapse.mem
+formal/c3_active_channel.mem

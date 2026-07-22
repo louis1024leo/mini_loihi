@@ -44,7 +44,10 @@ module mini_loihi_v9_0c_core #(
   parameter BASE_PLASTIC_VALID_INIT = "base_plastic_valid.mem",
   parameter BASE_PLASTIC_ID_INIT = "base_plastic_id.mem",
   parameter RECURRENT_PLASTIC_VALID_INIT = "recurrent_plastic_valid.mem",
-  parameter RECURRENT_PLASTIC_ID_INIT = "recurrent_plastic_id.mem"
+  parameter RECURRENT_PLASTIC_ID_INIT = "recurrent_plastic_id.mem",
+  parameter int unsigned INITIAL_ACTIVE_COUNT = 0,
+  parameter ACTIVE_INITIAL_SYNAPSE_INIT = "active_initial_synapse.mem",
+  parameter ACTIVE_INITIAL_CHANNEL_INIT = "active_initial_channel.mem"
 ) (
   input logic clk,
   input logic rst,
@@ -191,7 +194,10 @@ module mini_loihi_v9_0c_core #(
     .NEURON_COUNT(NEURON_COUNT), .SYNAPSE_COUNT(PLASTIC_SYNAPSE_COUNT),
     .PRE_TRACE_INIT(PRE_TRACE_INIT), .POST_TRACE_INIT(POST_TRACE_INIT),
     .ELIGIBILITY_INIT(ELIGIBILITY_INIT), .INITIAL_WEIGHT_INIT(INITIAL_WEIGHT_INIT),
-    .PARAMETER_INIT(PARAMETER_INIT), .IDENTITY_INIT(IDENTITY_INIT)
+    .PARAMETER_INIT(PARAMETER_INIT), .IDENTITY_INIT(IDENTITY_INIT),
+    .INITIAL_ACTIVE_COUNT(INITIAL_ACTIVE_COUNT),
+    .ACTIVE_INITIAL_SYNAPSE_INIT(ACTIVE_INITIAL_SYNAPSE_INIT),
+    .ACTIVE_INITIAL_CHANNEL_INIT(ACTIVE_INITIAL_CHANNEL_INIT)
   ) learning (
     .clk, .rst, .cold_reset_valid, .state_reset_valid,
     .reset_ready(learning_reset_ready), .reset_busy(learning_reset_busy), .reset_done(learning_reset_done),

@@ -6,7 +6,11 @@ module v9_0c_learning_top #(
   parameter ELIGIBILITY_INIT = "",
   parameter INITIAL_WEIGHT_INIT = "",
   parameter PARAMETER_INIT = "",
-  parameter IDENTITY_INIT = ""
+  parameter IDENTITY_INIT = "",
+  parameter int unsigned INITIAL_ACTIVE_COUNT = 0,
+  parameter int unsigned ACTIVE_CAPACITY = 256,
+  parameter ACTIVE_INITIAL_SYNAPSE_INIT = "",
+  parameter ACTIVE_INITIAL_CHANNEL_INIT = ""
 ) (
   input logic clk,
   input logic rst,
@@ -76,6 +80,9 @@ module v9_0c_learning_top #(
   logic [15:0] eligibility_timestamp_write_data;
   logic active_insert_valid, active_insert_ready, active_full, active_duplicate;
   logic active_bad_generation, active_generation_wrap;
+  logic active_initialization_busy;
+  logic state_reset_busy, state_reset_done;
+  logic reset_completion_pending;
   logic modulation_drain_busy, modulation_channel_valid, modulation_channel_ready;
   logic [3:0] modulation_channel_id;
   logic signed [15:0] modulation_channel_value;
@@ -117,6 +124,8 @@ module v9_0c_learning_top #(
   logic [7:0] active_scan_generation;
   logic [4:0] channel_cursor;
   logic channel_scan_in_progress;
+  logic pending_channel_found;
+  logic [3:0] pending_channel_selected;
   logic weight_fifo_valid, weight_fifo_ready;
   logic [41:0] weight_fifo_data;
   logic [5:0] weight_fifo_occupancy;
@@ -141,8 +150,9 @@ module v9_0c_learning_top #(
   logic signed [63:0] first_weight_product;
   logic signed [63:0] weight_delta, weight_candidate_wide;
   logic signed [7:0] effective_weight_min, effective_weight_max;
-  integer channel_index;
+  integer channel_index, pending_channel_index;
 
+  assign reset_busy = state_reset_busy || active_initialization_busy;
   assign reset_ready = !reset_busy && !tick_start_valid && phase == v9_0c_profile_pkg::V9C_P8_BARRIER;
   assign sample_weight_ready = (phase == v9_0c_profile_pkg::V9C_P0_NEURON
     || phase == v9_0c_profile_pkg::V9C_P1_RECURRENT) && !reset_busy
@@ -168,11 +178,12 @@ module v9_0c_learning_top #(
   assign modulation_channel_ready = 1'b1;
   assign p5_done = phase == v9_0c_profile_pkg::V9C_P5_MODULATION && modulation_ingress_done &&
                    !modulation_valid && !modulation_drain_busy;
-  assign p6_done = phase == v9_0c_profile_pkg::V9C_P6_ACTIVE_SCAN && channel_cursor >= 16 && !channel_scan_in_progress;
+  assign p6_done = phase == v9_0c_profile_pkg::V9C_P6_ACTIVE_SCAN
+    && !pending_channel_found && !channel_scan_in_progress;
   assign p7_done = phase == v9_0c_profile_pkg::V9C_P7_WEIGHT && !weight_fifo_valid && weight_state == 0;
 
   v9_0c_pair_transaction_table pair_table (
-    .clk, .rst(rst || reset_busy), .event_valid(pair_event_valid && phase == v9_0c_profile_pkg::V9C_P2_EXPAND),
+    .clk, .rst(rst || state_reset_busy), .event_valid(pair_event_valid && phase == v9_0c_profile_pkg::V9C_P2_EXPAND),
     .event_ready(table_event_ready), .event_synapse_id(pair_event_synapse_id),
     .event_pre(pair_event_pre), .event_post(pair_event_post),
     .drain_enable(phase == v9_0c_profile_pkg::V9C_P3_ELIGIBILITY), .drain_valid(pair_drain_valid),
@@ -182,7 +193,7 @@ module v9_0c_learning_top #(
   );
 
   v9_0c_fifo #(.WIDTH(42), .DEPTH(32)) trace_fifo (
-    .clk, .rst(rst || reset_busy), .in_valid(trace_event_valid),
+    .clk, .rst(rst || state_reset_busy), .in_valid(trace_event_valid),
     .in_ready(trace_event_ready),
     .in_data({trace_event_neuron_id, trace_event_pre, trace_event_post,
               trace_event_decay, trace_event_increment}),
@@ -200,7 +211,8 @@ module v9_0c_learning_top #(
     .PARAMETER_INIT(PARAMETER_INIT), .IDENTITY_INIT(IDENTITY_INIT)
   ) state_store (
     .clk, .rst, .cold_reset_start(cold_reset_valid && reset_ready),
-    .state_reset_start(state_reset_valid && reset_ready), .reset_busy, .reset_done,
+    .state_reset_start(state_reset_valid && reset_ready),
+    .reset_busy(state_reset_busy), .reset_done(state_reset_done),
     .pre_read_enable, .pre_read_address, .post_read_enable, .post_read_address,
     .pre_trace_read_data, .pre_timestamp_read_data, .post_trace_read_data,
     .post_timestamp_read_data,
@@ -222,8 +234,14 @@ module v9_0c_learning_top #(
 
   assign active_insert_valid = eligibility_out_valid && eligibility_out_value != 0;
   assign active_channel = transaction_channel;
-  v9_0c_active_table #(.ACTIVE_CAPACITY(256), .SYNAPSE_COUNT(SYNAPSE_COUNT)) active_table (
-    .clk, .rst(rst || reset_busy), .insert_valid(active_insert_valid), .insert_ready(active_insert_ready),
+  v9_0c_active_table #(
+    .ACTIVE_CAPACITY(ACTIVE_CAPACITY), .SYNAPSE_COUNT(SYNAPSE_COUNT),
+    .INITIAL_ACTIVE_COUNT(INITIAL_ACTIVE_COUNT),
+    .INITIAL_SYNAPSE_INIT(ACTIVE_INITIAL_SYNAPSE_INIT),
+    .INITIAL_CHANNEL_INIT(ACTIVE_INITIAL_CHANNEL_INIT)
+  ) active_table (
+    .clk, .rst(rst || state_reset_busy), .initialization_busy(active_initialization_busy),
+    .insert_valid(active_insert_valid), .insert_ready(active_insert_ready),
     .insert_synapse_id(eligibility_out_id), .insert_channel(active_channel),
     .reclaim_valid(active_reclaim_valid), .reclaim_ready(active_reclaim_ready),
     .reclaim_slot(active_reclaim_slot), .reclaim_synapse_id(active_reclaim_synapse),
@@ -239,17 +257,19 @@ module v9_0c_learning_top #(
 
   assign active_scan_ready = weight_fifo_ready;
   v9_0c_fifo #(.WIDTH(42), .DEPTH(32)) weight_queue (
-    .clk, .rst(rst || reset_busy),
+    .clk, .rst(rst || state_reset_busy),
     .in_valid(active_scan_valid), .in_ready(weight_fifo_ready),
     .in_data({active_scan_slot, active_scan_generation, active_scan_synapse_id,
               pending_modulation[channel_cursor]}),
-    .out_valid(weight_fifo_valid), .out_ready(weight_state == 0 && phase == v9_0c_profile_pkg::V9C_P7_WEIGHT),
+    .out_valid(weight_fifo_valid),
+    .out_ready(weight_state == 0 && (phase == v9_0c_profile_pkg::V9C_P7_WEIGHT
+      || (phase == v9_0c_profile_pkg::V9C_P6_ACTIVE_SCAN && weight_fifo_occupancy == 32))),
     .out_data(weight_fifo_data), .occupancy(weight_fifo_occupancy)
   );
 
 
   v9_0c_modulation_ingress modulation (
-    .clk, .rst(rst || reset_busy), .in_valid(modulation_valid), .in_ready(modulation_ready),
+    .clk, .rst(rst || state_reset_busy), .in_valid(modulation_valid), .in_ready(modulation_ready),
     .in_tick(modulation_tick), .expected_tick(tick_id), .in_channel(modulation_channel), .in_value(modulation_value),
     .drain_enable(phase == v9_0c_profile_pkg::V9C_P5_MODULATION), .drain_busy(modulation_drain_busy),
     .channel_valid(modulation_channel_valid), .channel_ready(modulation_channel_ready),
@@ -259,7 +279,7 @@ module v9_0c_learning_top #(
   );
 
   v9_0c_learning_phase_controller controller (
-    .clk, .rst(rst || reset_busy), .tick_start_valid, .tick_start_ready,
+    .clk, .rst(rst || state_reset_busy), .tick_start_valid, .tick_start_ready,
     .p0_done(neuron_phase_done), .p1_done(recurrent_phase_done), .p2_done,
     .p3_done, .p4_done, .p5_done, .p6_done, .p7_done,
     .tick_done_valid, .tick_done_ready, .phase
@@ -333,9 +353,72 @@ module v9_0c_learning_top #(
   assign eligibility_out_tick = tick_id;
   assign weight_out_synapse = weight_synapse;
 
+  always_comb begin
+    pending_channel_found = 1'b0;
+    pending_channel_selected = '0;
+    for (pending_channel_index = 15; pending_channel_index >= 0;
+         pending_channel_index = pending_channel_index - 1) begin
+      if (pending_modulation_valid[pending_channel_index]) begin
+        pending_channel_found = 1'b1;
+        pending_channel_selected = pending_channel_index[3:0];
+      end
+    end
+  end
+
+  always_ff @(posedge clk) begin
+    reset_done <= 1'b0;
+    if (rst) reset_completion_pending <= 1'b0;
+    else begin
+      if ((cold_reset_valid || state_reset_valid) && reset_ready)
+        reset_completion_pending <= 1'b1;
+      if (reset_completion_pending && !state_reset_busy && !active_initialization_busy) begin
+        reset_done <= 1'b1;
+        reset_completion_pending <= 1'b0;
+      end
+    end
+  end
+
+`ifdef FORMAL
+  logic formal_past_valid = 1'b0;
+  logic [7:0] formal_weight_accepted = 0;
+  logic [7:0] formal_weight_committed = 0;
+  always_ff @(posedge clk) begin
+    formal_past_valid <= 1'b1;
+    if (rst || state_reset_busy) begin
+      formal_weight_accepted <= 0;
+      formal_weight_committed <= 0;
+    end else begin
+      if (weight_fifo_valid && weight_state == 0
+          && (phase == v9_0c_profile_pkg::V9C_P7_WEIGHT
+            || (phase == v9_0c_profile_pkg::V9C_P6_ACTIVE_SCAN
+              && weight_fifo_occupancy == 32)))
+        formal_weight_accepted <= formal_weight_accepted + 1'b1;
+      if (weight_write_enable)
+        formal_weight_committed <= formal_weight_committed + 1'b1;
+      assert (formal_weight_committed <= formal_weight_accepted);
+      if (weight_write_enable) begin
+        assert (phase == v9_0c_profile_pkg::V9C_P6_ACTIVE_SCAN
+          || phase == v9_0c_profile_pkg::V9C_P7_WEIGHT);
+        assert (!(sample_weight_valid && sample_weight_ready));
+      end
+      if (sample_weight_valid && sample_weight_ready)
+        assert (phase == v9_0c_profile_pkg::V9C_P0_NEURON
+          || phase == v9_0c_profile_pkg::V9C_P1_RECURRENT);
+      if (formal_past_valid && !$past(rst || state_reset_busy)
+          && $past(eligibility_state == 8 && eligibility_out_value != 0
+            && active_insert_ready)) begin
+        assert (eligibility_write_enable);
+        assert (synapse_write_address == $past(eligibility_out_id));
+        assert (eligibility_timestamp_write_data == $past(eligibility_out_tick));
+        assert ($past(active_insert_valid && active_insert_ready));
+      end
+    end
+  end
+`endif
+
   always_ff @(posedge clk) begin
     sample_weight_response_valid <= 1'b0;
-    if (rst || reset_busy) begin
+    if (rst || state_reset_busy) begin
       sample_weight_pending <= 1'b0;
     end else begin
       if (sample_weight_valid && sample_weight_ready) sample_weight_pending <= 1'b1;
@@ -349,7 +432,7 @@ module v9_0c_learning_top #(
 
   always_ff @(posedge clk) begin
     active_scan_start <= 1'b0;
-    if (rst || reset_busy) begin
+    if (rst || state_reset_busy) begin
       channel_cursor <= 0; channel_scan_in_progress <= 1'b0;
       for (channel_index = 0; channel_index < 16; channel_index = channel_index + 1) begin
         pending_modulation[channel_index] <= 0; pending_modulation_valid[channel_index] <= 1'b0;
@@ -361,13 +444,15 @@ module v9_0c_learning_top #(
       end
       if (phase != v9_0c_profile_pkg::V9C_P6_ACTIVE_SCAN) begin
         channel_cursor <= 0; channel_scan_in_progress <= 1'b0;
-      end else if (channel_cursor < 16) begin
-        if (!pending_modulation_valid[channel_cursor]) channel_cursor <= channel_cursor + 1'b1;
-        else if (!channel_scan_in_progress) begin active_scan_start <= 1'b1; channel_scan_in_progress <= 1'b1; end
-        else if (active_scan_done) begin
+      end else if (channel_scan_in_progress) begin
+        if (active_scan_done) begin
           pending_modulation_valid[channel_cursor] <= 1'b0;
-          channel_cursor <= channel_cursor + 1'b1; channel_scan_in_progress <= 1'b0;
+          channel_scan_in_progress <= 1'b0;
         end
+      end else if (pending_channel_found) begin
+        channel_cursor <= {1'b0, pending_channel_selected};
+        active_scan_start <= 1'b1;
+        channel_scan_in_progress <= 1'b1;
       end
     end
   end
@@ -377,7 +462,7 @@ module v9_0c_learning_top #(
     eligibility_write_enable <= 1'b0; weight_write_enable <= 1'b0;
     weight_pre_write_enable <= 1'b0; weight_post_write_enable <= 1'b0;
     active_reclaim_valid <= 1'b0;
-    if (rst || reset_busy) begin
+    if (rst || state_reset_busy) begin
       eligibility_state <= 0; weight_state <= 0; eligibility_commit_count <= 0;
       weight_commit_count <= 0; clamped_update_count <= 0;
     end else begin
@@ -415,7 +500,9 @@ module v9_0c_learning_top #(
         end
       endcase
       case (weight_state)
-        0: if (phase == v9_0c_profile_pkg::V9C_P7_WEIGHT && weight_fifo_valid) begin
+        0: if ((phase == v9_0c_profile_pkg::V9C_P7_WEIGHT
+            || (phase == v9_0c_profile_pkg::V9C_P6_ACTIVE_SCAN && weight_fifo_occupancy == 32))
+            && weight_fifo_valid) begin
           weight_slot <= weight_fifo_data[41:34]; weight_generation <= weight_fifo_data[33:26];
           weight_synapse <= weight_fifo_data[25:16]; weight_modulation <= weight_fifo_data[15:0];
           synapse_read_address <= weight_fifo_data[25:16]; synapse_read_enable <= 1'b1; weight_state <= 1;
@@ -464,7 +551,7 @@ module v9_0c_learning_top #(
 
   always_ff @(posedge clk) begin
     pre_write_enable <= 1'b0; post_write_enable <= 1'b0;
-    if (rst || reset_busy) trace_state <= 0;
+    if (rst || state_reset_busy) trace_state <= 0;
     else begin
       case (trace_state)
         0: if (trace_fifo_valid && trace_fifo_ready) begin

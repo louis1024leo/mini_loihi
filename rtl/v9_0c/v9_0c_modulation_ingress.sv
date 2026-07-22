@@ -28,7 +28,8 @@ module v9_0c_modulation_ingress #(
   logic present [0:CHANNELS-1];
   logic [4:0] emit_cursor;
   logic emitting, drain_complete;
-  integer i;
+  logic selected_valid;
+  integer i, select_i;
   logic fifo_in_ready;
   assign in_ready = fifo_in_ready && in_tick == expected_tick && in_channel < CHANNELS;
   v9_0c_fifo #(.WIDTH(36), .DEPTH(FIFO_DEPTH)) fifo (
@@ -36,11 +37,21 @@ module v9_0c_modulation_ingress #(
     .in_data({in_tick, in_channel, in_value}), .out_valid(fifo_out_valid),
     .out_ready(fifo_out_ready), .out_data(fifo_out_data), .occupancy
   );
-  assign fifo_out_ready = drain_enable && !emitting;
-  assign drain_busy = drain_enable && !drain_complete;
-  assign channel_valid = emitting && emit_cursor < CHANNELS && present[emit_cursor];
+  assign fifo_out_ready = drain_enable;
+  assign drain_busy = drain_enable && (fifo_out_valid || selected_valid);
+  assign emitting = drain_enable && !fifo_out_valid && selected_valid;
+  assign drain_complete = !fifo_out_valid && !selected_valid;
+  assign channel_valid = emitting;
   assign channel_id = emit_cursor[3:0];
   always_comb begin
+    selected_valid = 1'b0;
+    emit_cursor = '0;
+    for (select_i = CHANNELS-1; select_i >= 0; select_i = select_i - 1) begin
+      if (present[select_i]) begin
+        selected_valid = 1'b1;
+        emit_cursor = select_i[4:0];
+      end
+    end
     if (accumulator[emit_cursor] > 32767) begin channel_value = 16'sh7fff; channel_saturated = 1'b1; end
     else if (accumulator[emit_cursor] < -32768) begin channel_value = -16'sh8000; channel_saturated = 1'b1; end
     else begin channel_value = accumulator[emit_cursor][15:0]; channel_saturated = 1'b0; end
@@ -50,23 +61,15 @@ module v9_0c_modulation_ingress #(
     invalid_channel <= in_valid && in_channel >= CHANNELS;
     invalid_tick <= in_valid && in_tick != expected_tick;
     if (rst) begin
-      emitting <= 1'b0; emit_cursor <= '0; drain_complete <= 1'b0;
       for (i = 0; i < CHANNELS; i = i + 1) begin accumulator[i] <= '0; present[i] <= 1'b0; end
     end else begin
       if (fifo_out_valid && fifo_out_ready) begin
         accumulator[fifo_out_data[19:16]] <= accumulator[fifo_out_data[19:16]] + $signed(fifo_out_data[15:0]);
         present[fifo_out_data[19:16]] <= 1'b1;
       end
-      if (!drain_enable) drain_complete <= 1'b0;
-      if (drain_enable && !fifo_out_valid && !emitting && !drain_complete) begin
-        emitting <= 1'b1; emit_cursor <= '0;
-      end
-      if (emitting && (!channel_valid || channel_ready)) begin
-        if (channel_valid) begin accumulator[emit_cursor] <= '0; present[emit_cursor] <= 1'b0; end
-        if (emit_cursor == CHANNELS-1) begin
-          emitting <= 1'b0; emit_cursor <= CHANNELS; drain_complete <= 1'b1;
-        end
-        else emit_cursor <= emit_cursor + 1'b1;
+      if (channel_valid && channel_ready) begin
+        accumulator[emit_cursor] <= '0;
+        present[emit_cursor] <= 1'b0;
       end
     end
   end

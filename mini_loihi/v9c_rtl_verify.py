@@ -12,6 +12,8 @@ from mini_loihi.v9_cycle_backend import run_v9_three_way_differential
 from mini_loihi.v9_hardware_ir import V9CompiledProgram
 from mini_loihi.v9_model_ir import V9ModulationEvent
 from mini_loihi.v9c_rtl_state import V9CFourWayResult, V9CRTLToolStatus, V9CRTLTransactionResult
+from mini_loihi.v9c2_cycle_trace import parse_v9c2_cycle_records
+from mini_loihi.v9c3_rtl_trace import decode_v9c3_rtl_trace, parse_v9c3_edge_records
 from mini_loihi.v9c_rtl_artifacts import export_v9c_rtl_artifacts
 from mini_loihi.v81c_rtl_artifacts import export_v81c_rtl_fixture
 from mini_loihi.v9_model_ir import V9NetworkIR
@@ -111,7 +113,7 @@ def run_v9c_ingress_reset_boundary_fixture(
     result = V9CRTLTransactionResult(
         passed, 0, 0, 0, 0,
         V9CRTLToolStatus("iverilog/vvp", "PASS" if passed else "FAIL", returncode, messages),
-        output,
+        output, parse_v9c2_cycle_records(output),
     )
     if directory_context:
         directory_context.cleanup()
@@ -204,6 +206,9 @@ def run_v9c_production_integration_fixture(
     external_events: tuple[ReferenceInputEvent, ...],
     modulation_events: tuple[V9ModulationEvent, ...],
     output_directory: str | Path | None = None,
+    *,
+    scenario_id: str = "",
+    scenario_assertions: tuple[str, ...] = (),
 ) -> V9CRTLTransactionResult:
     """Execute source and committed-neuron learning through the production core."""
     directory_context = tempfile.TemporaryDirectory(prefix="v9c_production_") if output_directory is None else None
@@ -213,7 +218,11 @@ def run_v9c_production_integration_fixture(
     export_v9c_rtl_artifacts(program, root)
     testbench = root / "tb_v9c_production.sv"
     testbench.write_text(
-        _production_integration_testbench(program, external_events, modulation_events),
+        _production_integration_testbench(
+            program, external_events, modulation_events,
+            scenario_id=scenario_id,
+            scenario_assertions=scenario_assertions,
+        ),
         encoding="ascii", newline="\n",
     )
     executable = root / "v9c_production_fixture.vvp"
@@ -232,12 +241,15 @@ def run_v9c_production_integration_fixture(
         output = _messages(simulation.stdout)
         messages += _messages(simulation.stderr)
     passed = returncode == 0 and any(line.startswith("V9C_PRODUCTION_PASS") for line in output)
+    if scenario_id:
+        passed = passed and f"V9C3_SCENARIO_PASS id={scenario_id}" in output
     cycle = run_v9_three_way_differential(program, external_events, modulation_events).cycle_result
+    c2_trace = parse_v9c2_cycle_records(output)
     result = V9CRTLTransactionResult(
         passed, cycle.counters.eligibility_commits, cycle.counters.weight_updates_committed,
         cycle.counters.pair_updates_processed, cycle.counters.active_insertions,
         V9CRTLToolStatus("iverilog/vvp", "PASS" if passed else "FAIL", returncode, messages),
-        output,
+        output, c2_trace, decode_v9c3_rtl_trace(c2_trace, parse_v9c3_edge_records(output)),
     )
     if directory_context:
         directory_context.cleanup()
@@ -415,12 +427,19 @@ def _production_integration_testbench(
     program: V9CompiledProgram,
     external_events: tuple[ReferenceInputEvent, ...],
     modulation_events: tuple[V9ModulationEvent, ...],
+    *,
+    scenario_id: str = "",
+    scenario_assertions: tuple[str, ...] = (),
 ) -> str:
     def signed_literal(width: int, value: int) -> str:
         return f"-{width}'sd{-value}" if value < 0 else f"{width}'sd{value}"
 
     core = program.base_program.base_program.cores[0]
     plastic = tuple(item for item in program.synapses if item.plasticity is not None)
+    initial_active_count = sum(
+        item.plasticity is not None and item.plasticity.initial_eligibility != 0
+        for item in plastic
+    )
     source_by_axon: dict[int, int] = {}
     by_address = {item.base_address: item for item in program.synapses if item.base_address is not None}
     for axon, (pointer, length) in enumerate(zip(core.axon_fanout_ptr, core.axon_fanout_len)):
@@ -504,7 +523,171 @@ module tb;
   logic [3:0] hard_error_reason,learning_phase;
   logic [31:0] eligibility_commit_count,weight_commit_count,clamped_update_count;
   integer tick,guard,observed_spikes=0,physical_cycle=0,tick_cycle_start=0;
+  integer architectural_cycle=0;
+  integer scenario_pair_lookup_count=0,scenario_pair_hit_count=0;
+  integer scenario_pair_allocate_count=0,scenario_pair_drain_count=0;
+  integer scenario_outgoing_count=0,scenario_incoming_count=0;
+  integer scenario_active_insert_count=0,scenario_active_duplicate_count=0;
+  integer scenario_active_scan_count=0,scenario_active_reclaim_count=0;
+  integer scenario_mod_accept_count=0,scenario_mod_consume_count=0;
+  integer scenario_weight_write_count=0,scenario_max_pair_occupancy=0;
+  integer scenario_max_active_occupancy=0,scenario_max_weight_occupancy=0;
+  integer trace_previous_phase=8;
+  logic trace_active=0;
   always @(posedge clk) if(!rst) physical_cycle=physical_cycle+1;
+
+  always @(posedge clk) if(!rst) begin
+    if(dut.pair_event_valid && dut.pair_event_ready) begin
+      scenario_pair_lookup_count=scenario_pair_lookup_count+1;
+      if(dut.learning.pair_table.match_found) scenario_pair_hit_count=scenario_pair_hit_count+1;
+      if(dut.learning.pair_table.allocate_entry) scenario_pair_allocate_count=scenario_pair_allocate_count+1;
+    end
+    if(dut.learning.pair_table.drain_fire) scenario_pair_drain_count=scenario_pair_drain_count+1;
+    if(dut.learning_ingress.expander.busy && dut.learning_ingress.expander.do_pre &&
+       dut.learning_ingress.expander.out_cursor<dut.learning_ingress.expander.out_end)
+      scenario_outgoing_count=scenario_outgoing_count+1;
+    if(dut.learning_ingress.expander.busy && dut.learning_ingress.expander.do_post &&
+       dut.learning_ingress.expander.in_cursor<dut.learning_ingress.expander.in_end)
+      scenario_incoming_count=scenario_incoming_count+1;
+    if(dut.learning.active_insert_valid && dut.learning.active_insert_ready)
+      scenario_active_insert_count=scenario_active_insert_count+1;
+    if(dut.learning.active_table.duplicate_suppressed)
+      scenario_active_duplicate_count=scenario_active_duplicate_count+1;
+    if(dut.learning.active_scan_valid && dut.learning.active_scan_ready)
+      scenario_active_scan_count=scenario_active_scan_count+1;
+    if(dut.learning.active_reclaim_valid && dut.learning.active_reclaim_ready)
+      scenario_active_reclaim_count=scenario_active_reclaim_count+1;
+    if(modulation_valid && modulation_ready) scenario_mod_accept_count=scenario_mod_accept_count+1;
+    if(dut.learning.modulation.fifo_out_valid && dut.learning.modulation.fifo_out_ready)
+      scenario_mod_consume_count=scenario_mod_consume_count+1;
+    if(dut.learning.weight_write_enable) scenario_weight_write_count=scenario_weight_write_count+1;
+    if(dut.pair_occupancy>scenario_max_pair_occupancy) scenario_max_pair_occupancy=dut.pair_occupancy;
+    if(dut.active_occupancy>scenario_max_active_occupancy) scenario_max_active_occupancy=dut.active_occupancy;
+    if(dut.learning.weight_fifo_occupancy>scenario_max_weight_occupancy)
+      scenario_max_weight_occupancy=dut.learning.weight_fifo_occupancy;
+  end
+
+  always @(posedge clk) if(!rst && trace_active) begin
+    $display("V9C2_CYCLE physical_cycle=%0d logical_tick=%0d phase=%0d phase_substate=%0d phase_entry=%0d phase_exit=%0d selected_kind=%0d selected_id=%0d neuron_busy=%0d recurrent_wheel_busy=%0d outgoing_valid=%0d outgoing_ready=%0d outgoing_index=%0d incoming_valid=%0d incoming_ready=%0d incoming_index=%0d pair_lookup=%0d pair_hit=%0d pair_allocation=%0d pair_drain=%0d pair_occupancy=%0d pre_trace_request=%0d pre_trace_response=%0d pre_trace_commit=%0d post_trace_request=%0d post_trace_response=%0d post_trace_commit=%0d eligibility_request=%0d eligibility_response=%0d eligibility_commit=%0d eligibility_substate=%0d active_lookup=%0d active_insertion=%0d active_scan=%0d active_reclaim=%0d active_commit=%0d active_channel=%0d active_entry=%0d modulation_accept=%0d modulation_consume=%0d modulation_accumulate=%0d weight_request=%0d weight_response=%0d weight_commit=%0d multiplier_request=%0d multiplier_response=%0d ingress_occupancy=%0d trace_occupancy=%0d modulation_occupancy=%0d weight_occupancy=%0d active_occupancy=%0d stall_reason=%0d neural_barrier_ready=%0d learning_barrier_ready=%0d tick_done=%0d sticky_error=%0d",
+      architectural_cycle,tick_id,learning_phase,
+      learning_phase==0 ? dut.neural_core.state : learning_phase==1 ? dut.neural_core.state :
+      learning_phase==2 ? dut.learning_ingress.state : learning_phase==3 ? dut.learning.eligibility_state :
+      learning_phase==4 ? dut.learning.trace_state : learning_phase==5 ? dut.learning.modulation.emit_cursor :
+      learning_phase==6 ? dut.learning.channel_cursor : learning_phase==7 ? dut.learning.weight_state : 0,
+      learning_phase!=trace_previous_phase,
+      (learning_phase==0 && dut.core_tick_done_valid) || (learning_phase==1 && dut.core_tick_done_valid) ||
+      (learning_phase==2 && dut.learning.p2_done) || (learning_phase==3 && dut.learning.p3_done) ||
+      (learning_phase==4 && dut.learning.p4_done) || (learning_phase==5 && dut.learning.p5_done) ||
+      (learning_phase==6 && dut.learning.p6_done) || (learning_phase==7 && dut.learning.p7_done),
+      learning_phase==2 ? 1 : learning_phase==3 ? 2 : learning_phase==4 ? 3 :
+      learning_phase==6 ? 4 : learning_phase==7 ? 5 : 0,
+      learning_phase==2 ? dut.learning_ingress.transaction_neuron :
+      learning_phase==3 ? dut.learning.transaction_id : learning_phase==4 ? dut.learning.trace_neuron :
+      learning_phase==6 ? dut.learning.active_scan_synapse_id : learning_phase==7 ? dut.learning.weight_synapse : 0,
+      dut.neural_core.state!=17,dut.neural_core.storage_drain_remaining!=0,
+      dut.learning_ingress.expander.busy && dut.learning_ingress.expander.do_pre &&
+        dut.learning_ingress.expander.out_cursor<dut.learning_ingress.expander.out_end,
+      dut.pair_event_ready,dut.learning_ingress.expander.out_cursor,
+      dut.learning_ingress.expander.busy && dut.learning_ingress.expander.do_post &&
+        dut.learning_ingress.expander.in_cursor<dut.learning_ingress.expander.in_end,
+      dut.pair_event_ready,dut.learning_ingress.expander.in_cursor,
+      dut.pair_event_valid,dut.learning.pair_table.match_found,
+      dut.learning.pair_table.allocate_entry,dut.learning.pair_table.drain_fire,dut.pair_occupancy,
+      dut.learning.pre_read_enable,dut.learning.eligibility_state==3 || dut.learning.trace_state==1 || dut.learning.weight_state==3,
+      dut.learning.pre_write_enable || dut.learning.weight_pre_write_enable,
+      dut.learning.post_read_enable,dut.learning.eligibility_state==4 || dut.learning.trace_state==2 || dut.learning.weight_state==4,
+      dut.learning.post_write_enable || dut.learning.weight_post_write_enable,
+      dut.learning.synapse_read_enable && dut.learning.eligibility_state==0,dut.learning.eligibility_state==2,
+      dut.learning.eligibility_write_enable && dut.learning.eligibility_state==8,dut.learning.eligibility_state,
+      dut.learning.active_insert_valid,dut.learning.active_insert_valid && dut.learning.active_insert_ready,
+      dut.learning.active_scan_valid,dut.learning.active_reclaim_valid,
+      (dut.learning.active_insert_valid && dut.learning.active_insert_ready) ||
+        (dut.learning.active_reclaim_valid && dut.learning.active_reclaim_ready),
+      dut.learning.channel_cursor,dut.learning.active_scan_slot,
+      modulation_valid && modulation_ready,
+      dut.learning.modulation.fifo_out_valid && dut.learning.modulation.fifo_out_ready,
+      dut.learning.modulation.fifo_out_valid && dut.learning.modulation.fifo_out_ready,
+      dut.learning.synapse_read_enable && dut.learning.weight_state==0,dut.learning.weight_state==2,
+      dut.learning.weight_write_enable,dut.learning.eligibility_state>=3 && dut.learning.eligibility_state<=7 ||
+        dut.learning.weight_state>=3 && dut.learning.weight_state<=7,
+      dut.learning.eligibility_state==7 || dut.learning.weight_state==7,
+      dut.learning_ingress_occupancy,dut.learning.trace_fifo_occupancy,
+      dut.learning.modulation.occupancy,dut.learning.weight_fifo_occupancy,dut.active_occupancy,
+      event_valid && !event_ready ? 1 : dut.pair_event_valid && !dut.pair_event_ready ? 2 :
+      dut.trace_event_valid && !dut.trace_event_ready ? 3 :
+      dut.learning.weight_fifo_valid && dut.learning.weight_state!=0 ? 4 :
+      dut.learning.active_table.scanning && !dut.learning.active_scan_valid ? 5 :
+      learning_phase==6 && dut.learning.channel_cursor<16 && !dut.learning.pending_modulation_valid[dut.learning.channel_cursor] ? 6 : 0,
+      dut.core_tick_done_valid,dut.learning_tick_done_valid,tick_done_valid,hard_error);
+    $display("V9C3_EDGE external_accept=%0d external_source=%0d committed_accept=%0d committed_neuron=%0d pair_accept=%0d pair_id=%0d pair_pre=%0d pair_post=%0d pair_drain_id=%0d ingress_neuron=%0d outgoing_start=%0d outgoing_cursor=%0d outgoing_end=%0d incoming_start=%0d incoming_cursor=%0d incoming_end=%0d outgoing_scan_id=%0d incoming_scan_id=%0d trace_accept=%0d trace_neuron=%0d trace_pre=%0d trace_post=%0d trace_decay=%0d trace_increment=%0d modulation_accept=%0d modulation_channel=%0d modulation_value=%0d modulation_fifo_channel=%0d modulation_fifo_value=%0d hard_error_reason=%0d eligibility_state=%0d transaction_id=%0d transaction_pre=%0d transaction_post=%0d transaction_pre_trace=%0d transaction_post_trace=%0d transaction_eligibility=%0d eligibility_out_value=%0d eligibility_write_enable=%0d synapse_write_address=%0d eligibility_write_data=%0d active_insert_valid=%0d active_insert_ready=%0d active_duplicate=%0d active_insert_is_duplicate=%0d active_insert_slot=%0d active_insert_generation=%0d active_insert_channel=%0d active_head_update=%0d active_tail_update=%0d active_scan_start=%0d active_scan_valid=%0d active_scan_ready=%0d active_scan_slot=%0d active_scan_id=%0d active_scan_generation=%0d active_scan_done=%0d active_reclaim_valid=%0d active_reclaim_ready=%0d active_reclaim_slot=%0d active_reclaim_id=%0d active_reclaim_generation=%0d modulation_channel_valid=%0d modulation_channel_id=%0d modulation_channel_value=%0d weight_state=%0d weight_fifo_valid=%0d weight_fifo_ready=%0d weight_fifo_data=%0d weight_read_data=%0d weight_write_enable=%0d weight_write_data=%0d weight_result=%0d weight_synapse=%0d weight_eligibility_decayed=%0d weight_eligibility_result=%0d update_product=%0d weight_delta=%0d weight_candidate=%0d weight_clamped=%0d pre_read_data=%0d post_read_data=%0d pre_write_data=%0d post_write_data=%0d weight_pre_write_data=%0d weight_post_write_data=%0d pre_read_address=%0d post_read_address=%0d identity_read_data=%0d eligibility_read_data=%0d eligibility_timestamp_read_data=%0d pre_decayed=%0d post_decayed=%0d eligibility_decayed=%0d eligibility_plus=%0d eligibility_candidate=%0d",
+      event_valid && event_ready,event_source_id,
+      dut.learning_spike_valid && dut.learning_spike_ready,dut.frozen_spike_neuron,
+      dut.pair_event_valid && dut.pair_event_ready,dut.pair_event_synapse_id,
+      dut.pair_event_pre,dut.pair_event_post,dut.learning.pair_drain_id,
+      dut.learning_ingress.transaction_neuron,
+      dut.learning_ingress.expander.out_ptr[dut.learning_ingress.transaction_neuron],
+      dut.learning_ingress.expander.out_cursor,dut.learning_ingress.expander.out_end,
+      dut.learning_ingress.expander.in_ptr[dut.learning_ingress.transaction_neuron],
+      dut.learning_ingress.expander.in_cursor,
+      dut.learning_ingress.expander.in_end,
+      dut.learning_ingress.expander.out_cursor < dut.learning_ingress.expander.out_end ?
+        dut.learning_ingress.expander.out_adj[dut.learning_ingress.expander.out_cursor] : 0,
+      dut.learning_ingress.expander.in_cursor < dut.learning_ingress.expander.in_end ?
+        dut.learning_ingress.expander.in_adj[dut.learning_ingress.expander.in_cursor] : 0,
+      dut.trace_event_valid && dut.trace_event_ready,dut.trace_event_neuron_id,
+      dut.trace_event_pre,dut.trace_event_post,dut.trace_event_decay,dut.trace_event_increment,
+      modulation_valid && modulation_ready,modulation_channel,$signed(modulation_value),
+      dut.learning.modulation.fifo_out_data[19:16],
+      $signed(dut.learning.modulation.fifo_out_data[15:0]),
+      hard_error_reason,dut.learning.eligibility_state,dut.learning.transaction_id,
+      dut.learning.transaction_pre,dut.learning.transaction_post,
+      dut.learning.transaction_pre_trace,dut.learning.transaction_post_trace,
+      $signed(dut.learning.transaction_eligibility),$signed(dut.learning.eligibility_out_value),
+      dut.learning.eligibility_write_enable,dut.learning.synapse_write_address,
+      $signed(dut.learning.eligibility_write_data),dut.learning.active_insert_valid,
+      dut.learning.active_insert_ready,dut.learning.active_duplicate,
+      dut.learning.active_insert_valid &&
+        dut.learning.active_table.member_valid[dut.learning.eligibility_out_id] &&
+        dut.learning.active_table.member_epoch[dut.learning.eligibility_out_id] == dut.learning.active_table.reset_epoch,
+      dut.learning.active_table.free_slot,
+      dut.learning.active_table.entry_epoch[dut.learning.active_table.free_slot] == dut.learning.active_table.reset_epoch ?
+        dut.learning.active_table.generation[dut.learning.active_table.free_slot] : 0,
+      dut.learning.active_channel,
+      dut.learning.active_insert_valid && dut.learning.active_insert_ready &&
+        !(dut.learning.active_table.member_valid[dut.learning.eligibility_out_id] &&
+          dut.learning.active_table.member_epoch[dut.learning.eligibility_out_id] == dut.learning.active_table.reset_epoch) &&
+        !dut.learning.active_table.channel_head_valid[dut.learning.active_channel],
+      dut.learning.active_insert_valid && dut.learning.active_insert_ready &&
+        !(dut.learning.active_table.member_valid[dut.learning.eligibility_out_id] &&
+          dut.learning.active_table.member_epoch[dut.learning.eligibility_out_id] == dut.learning.active_table.reset_epoch),
+      dut.learning.active_scan_start,dut.learning.active_scan_valid,dut.learning.active_scan_ready,
+      dut.learning.active_scan_slot,dut.learning.active_scan_synapse_id,
+      dut.learning.active_scan_generation,dut.learning.active_scan_done,
+      dut.learning.active_reclaim_valid,dut.learning.active_reclaim_ready,
+      dut.learning.active_reclaim_slot,dut.learning.active_reclaim_synapse,
+      dut.learning.active_reclaim_generation,dut.learning.modulation_channel_valid,
+      dut.learning.modulation_channel_id,$signed(dut.learning.modulation_channel_value),
+      dut.learning.weight_state,dut.learning.weight_fifo_valid,dut.learning.weight_fifo_ready,
+      dut.learning.weight_fifo_data,$signed(dut.learning.weight_read_data),
+      dut.learning.weight_write_enable,$signed(dut.learning.weight_write_data),
+      $signed(dut.learning.weight_out_value),
+      dut.learning.weight_synapse,$signed(dut.learning.weight_eligibility_decayed),
+      $signed(dut.learning.decay_eligibility_amount(
+        dut.learning.eligibility_read_data,dut.learning.path0_product[63:0])),
+      $signed(dut.learning.path1_product),$signed(dut.learning.weight_delta),
+      $signed(dut.learning.weight_candidate_wide),dut.learning.weight_out_clamped,
+      dut.learning.pre_trace_read_data,dut.learning.post_trace_read_data,
+      dut.learning.pre_trace_write_data,dut.learning.post_trace_write_data,
+      dut.learning.weight_pre_trace_data,dut.learning.weight_post_trace_data,
+      dut.learning.pre_read_address,dut.learning.post_read_address,
+      dut.learning.identity_read_data,$signed(dut.learning.eligibility_read_data),
+      dut.learning.eligibility_timestamp_read_data,dut.learning.pre_trace_decayed,
+      dut.learning.post_trace_decayed,$signed(dut.learning.eligibility_decayed_wide),
+      $signed(dut.learning.eligibility_plus_term),
+      $signed(dut.learning.eligibility_candidate_wide));
+    trace_previous_phase=learning_phase;
+    architectural_cycle=architectural_cycle+1;
+  end
 
   function automatic integer materialize(input integer value,input integer timestamp,
       input integer decay,input integer horizon_tick);
@@ -524,7 +707,10 @@ module tb;
 
   mini_loihi_v9_0c_core #(.NEURON_COUNT({len(core.neuron_model_ids)}),
     .AXON_COUNT({max(1, len(core.axon_fanout_ptr))}),.BASE_SYNAPSE_COUNT({base_count}),
-    .RECURRENT_SYNAPSE_COUNT({recurrent_count}),.PLASTIC_SYNAPSE_COUNT({max(1, len(plastic))})) dut(.*);
+    .RECURRENT_SYNAPSE_COUNT({recurrent_count}),.PLASTIC_SYNAPSE_COUNT({max(1, len(plastic))}),
+    .INITIAL_ACTIVE_COUNT({initial_active_count}),
+    .ACTIVE_INITIAL_SYNAPSE_INIT("active_initial_synapse.mem"),
+    .ACTIVE_INITIAL_CHANNEL_INIT("active_initial_channel.mem")) dut(.*);
 
   always @(posedge clk) if(spike_valid && spike_ready) begin
     case(observed_spikes)
@@ -549,6 +735,7 @@ module tb;
       @(negedge clk); tick_id=tick[15:0]; tick_start_valid=1;
       while(!tick_start_ready) @(negedge clk); @(negedge clk); tick_start_valid=0;
       tick_cycle_start=physical_cycle;
+      trace_previous_phase=8; architectural_cycle=0; trace_active=1;
 {chr(10).join(event_lines) if event_lines else '      // No external events.'}
 {chr(10).join(modulation_lines) if modulation_lines else '      // No modulation events.'}
       ingress_done_valid=1; while(!ingress_done_ready) @(negedge clk);
@@ -556,6 +743,7 @@ module tb;
       while(!tick_done_valid && !hard_error) begin @(negedge clk); guard=guard+1; if(guard>5000) $fatal(1,"tick timeout phase=%0d",learning_phase); end
       if(hard_error) $fatal(1,"hard error reason=%0d phase=%0d",hard_error_reason,learning_phase);
       $display("V9C_TICK_CYCLES tick=%0d cycles=%0d",tick,physical_cycle-tick_cycle_start);
+      trace_active=0;
       @(negedge clk);
     end
     $display("V9C_PRODUCTION_STATE weight=%0d pre=%0d post=%0d eligibility=%0d weight_commits=%0d spikes=%0d neuron_commits=%0d",
@@ -570,6 +758,8 @@ module tb;
 {chr(10).join(trace_checks)}
 {chr(10).join(neuron_checks)}
 {chr(10).join(learning_checks)}
+{chr(10).join(f'    {line}' for line in scenario_assertions)}
+{f'    $display("V9C3_SCENARIO_PASS id={scenario_id}");' if scenario_id else '    // No C3 scenario assertion marker.'}
     if(dut.neural_core.pool_occupancy!=={len(cycle.pending_contributions)}) $fatal(1,"pending contribution count=%0d",dut.neural_core.pool_occupancy);
     if(observed_spikes!=={len(cycle.spikes)}) $fatal(1,"spike count=%0d",observed_spikes);
     if(eligibility_commit_count!=={cycle.counters.eligibility_commits}

@@ -1,5 +1,10 @@
 # Mini-Loihi V9.0C Finite-Resource Plasticity RTL
 
+> Historical C1 note: the cycle-gap discussion below records the V9.0C1
+> baseline. V9.0C2 closes that gap; see
+> `docs/V9_0C2_CYCLE_ARCHITECTURE_RECONCILIATION.md` for the reconciled
+> 222-cycle contract and activity-proportional active architecture.
+
 ## Scope
 
 V9.0C implements only the frozen `v9_0b_balanced` learning profile. V9.0A is

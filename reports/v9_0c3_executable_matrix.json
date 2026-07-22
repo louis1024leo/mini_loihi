@@ -1,0 +1,1030 @@
+{
+  "cases": [
+    {
+      "artifact": ".codex_tmp/v9c3-matrix-final/V9C3-01/tb_v9c_production.sv",
+      "cycle_count": 36,
+      "field_cycle_mode": "full_production_c3_trace",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "production_core",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:62: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:63: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process."
+      ],
+      "name": "static_learning_idle",
+      "oracle_trace_sha256": "ef3e5d5fabbe5b95dae375a00ff027f22a2fb3cb789aa7f75ca5125541825c07",
+      "rtl_trace_sha256": "ef3e5d5fabbe5b95dae375a00ff027f22a2fb3cb789aa7f75ca5125541825c07",
+      "scenario_id": "V9C3-01",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "if(eligibility_commit_count!==0 || weight_commit_count!==0) $fatal(1,\"static engine not idle\");"
+      ]
+    },
+    {
+      "artifact": ".codex_tmp/v9c3-matrix-final/V9C3-02/tb_v9c_production.sv",
+      "cycle_count": 36,
+      "field_cycle_mode": "full_production_c3_trace",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "production_core",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:62: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:63: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process."
+      ],
+      "name": "plastic_no_spike_activity",
+      "oracle_trace_sha256": "ef3e5d5fabbe5b95dae375a00ff027f22a2fb3cb789aa7f75ca5125541825c07",
+      "rtl_trace_sha256": "ef3e5d5fabbe5b95dae375a00ff027f22a2fb3cb789aa7f75ca5125541825c07",
+      "scenario_id": "V9C3-02",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "if(scenario_pair_lookup_count!==0 || weight_commit_count!==0) $fatal(1,\"inactive plastic work\");"
+      ]
+    },
+    {
+      "artifact": ".codex_tmp/v9c3-matrix-final/V9C3-03/tb_v9c_production.sv",
+      "cycle_count": 97,
+      "field_cycle_mode": "full_production_c3_trace",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "production_core",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:62: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:63: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process."
+      ],
+      "name": "pair_activity_zero_modulation",
+      "oracle_trace_sha256": "bba0a8a7f055ebb6416c101e31ee6faa225925af7c0ad05e1ba7ef0a366a5af2",
+      "rtl_trace_sha256": "bba0a8a7f055ebb6416c101e31ee6faa225925af7c0ad05e1ba7ef0a366a5af2",
+      "scenario_id": "V9C3-03",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "if(scenario_pair_lookup_count==0 || weight_commit_count!==0) $fatal(1,\"zero modulation contract\");"
+      ]
+    },
+    {
+      "artifact": ".codex_tmp/v9c3-matrix-final/V9C3-04/tb_v9c_production.sv",
+      "cycle_count": 43,
+      "field_cycle_mode": "full_production_c3_trace",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "production_core",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:62: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:63: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process."
+      ],
+      "name": "modulation_empty_active_channel",
+      "oracle_trace_sha256": "fd4022b3cdc92dd980ef2a438a948e93be065633c3721835d4d2037545cc0064",
+      "rtl_trace_sha256": "fd4022b3cdc92dd980ef2a438a948e93be065633c3721835d4d2037545cc0064",
+      "scenario_id": "V9C3-04",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "if(scenario_mod_accept_count!==1 || scenario_active_scan_count!==0 || weight_commit_count!==0) $fatal(1,\"empty channel scanned\");"
+      ]
+    },
+    {
+      "artifact": ".codex_tmp/v9c3-matrix-final/V9C3-05/tb_v9c_production.sv",
+      "cycle_count": 146,
+      "field_cycle_mode": "full_production_c3_trace",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "production_core",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:62: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:63: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process."
+      ],
+      "name": "causal_pre_before_post",
+      "oracle_trace_sha256": "baa35530eb2f4eb4330bf7b2c002f838fada7a2b582474e010d0d4691fe6dcfb",
+      "rtl_trace_sha256": "baa35530eb2f4eb4330bf7b2c002f838fada7a2b582474e010d0d4691fe6dcfb",
+      "scenario_id": "V9C3-05",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "if(scenario_pair_lookup_count==0 || $signed(dut.learning.state_store.eligibility[0])<=0) $fatal(1,\"causal pair\");"
+      ]
+    },
+    {
+      "artifact": ".codex_tmp/v9c3-matrix-final/V9C3-06/tb_v9c_production.sv",
+      "cycle_count": 157,
+      "field_cycle_mode": "full_production_c3_trace",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "production_core",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:62: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:63: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process."
+      ],
+      "name": "anti_causal_post_before_pre",
+      "oracle_trace_sha256": "8f7541c78d613ca7efa8a8cb5feb7d2d37cdcab8a8754da6f3e158eaae33acc5",
+      "rtl_trace_sha256": "8f7541c78d613ca7efa8a8cb5feb7d2d37cdcab8a8754da6f3e158eaae33acc5",
+      "scenario_id": "V9C3-06",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "if(scenario_pair_lookup_count==0 || $signed(dut.learning.state_store.eligibility[0])>=0) $fatal(1,\"anti causal pair\");"
+      ]
+    },
+    {
+      "artifact": ".codex_tmp/v9c3-matrix-final/V9C3-07/tb_v9c_production.sv",
+      "cycle_count": 97,
+      "field_cycle_mode": "full_production_c3_trace",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "production_core",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:62: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:63: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process."
+      ],
+      "name": "simultaneous_pre_post",
+      "oracle_trace_sha256": "5bbc696340e4706989a3cf5b1b22dc888c9486f3d448f5ca77c627418c9bea54",
+      "rtl_trace_sha256": "5bbc696340e4706989a3cf5b1b22dc888c9486f3d448f5ca77c627418c9bea54",
+      "scenario_id": "V9C3-07",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "if(scenario_pair_hit_count==0 || eligibility_commit_count!==1) $fatal(1,\"simultaneous pair merge\");"
+      ]
+    },
+    {
+      "artifact": ".codex_tmp/v9c3-matrix-final/V9C3-08/tb_v9c_production.sv",
+      "cycle_count": 97,
+      "field_cycle_mode": "full_production_c3_trace",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "production_core",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:62: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:63: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process."
+      ],
+      "name": "outgoing_incoming_same_synapse",
+      "oracle_trace_sha256": "5bbc696340e4706989a3cf5b1b22dc888c9486f3d448f5ca77c627418c9bea54",
+      "rtl_trace_sha256": "5bbc696340e4706989a3cf5b1b22dc888c9486f3d448f5ca77c627418c9bea54",
+      "scenario_id": "V9C3-08",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "if(scenario_outgoing_count==0 || scenario_incoming_count==0 || scenario_pair_hit_count==0) $fatal(1,\"dual scanner merge\");"
+      ]
+    },
+    {
+      "artifact": ".codex_tmp/v9c3-matrix-final/V9C3-09/tb_v9c_production.sv",
+      "cycle_count": 49,
+      "field_cycle_mode": "full_production_c3_trace",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "production_core",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:62: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:63: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process."
+      ],
+      "name": "duplicate_plastic_synapses_independent",
+      "oracle_trace_sha256": "335ee224d7509c57c73d1a50b187a78e4d5ba775a5bfcfe463ae14ee81e4792a",
+      "rtl_trace_sha256": "335ee224d7509c57c73d1a50b187a78e4d5ba775a5bfcfe463ae14ee81e4792a",
+      "scenario_id": "V9C3-09",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "if(dut.active_occupancy!==2 || weight_commit_count!==2) $fatal(1,\"duplicate synapses not independent\");"
+      ]
+    },
+    {
+      "artifact": ".codex_tmp/v9c3-matrix-final/V9C3-10/tb_v9c_production.sv",
+      "cycle_count": 208,
+      "field_cycle_mode": "full_production_c3_trace",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "production_core",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:62: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:63: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process."
+      ],
+      "name": "plastic_recurrent_self_loop",
+      "oracle_trace_sha256": "150a9197b1bea65d930e5e2373105c9cb0792433176f72d17d130b2978734087",
+      "rtl_trace_sha256": "150a9197b1bea65d930e5e2373105c9cb0792433176f72d17d130b2978734087",
+      "scenario_id": "V9C3-10",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "if(dut.neural_core.recurrent_expansion_count_total==0 || scenario_pair_lookup_count==0) $fatal(1,\"plastic recurrence\");"
+      ]
+    },
+    {
+      "artifact": ".codex_tmp/v9c3-matrix-final/V9C3-11/tb_v9c_production.sv",
+      "cycle_count": 208,
+      "field_cycle_mode": "full_production_c3_trace",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "production_core",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:62: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:63: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process."
+      ],
+      "name": "delay_zero_recurrent_plastic_self_loop",
+      "oracle_trace_sha256": "150a9197b1bea65d930e5e2373105c9cb0792433176f72d17d130b2978734087",
+      "rtl_trace_sha256": "150a9197b1bea65d930e5e2373105c9cb0792433176f72d17d130b2978734087",
+      "scenario_id": "V9C3-11",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "if(dut.neural_core.recurrent_expansion_count_total==0 || dut.neural_core.inserted_contribution_count==0) $fatal(1,\"delay zero recurrence\");"
+      ]
+    },
+    {
+      "artifact": ".codex_tmp/v9c3-matrix-final/V9C3-12/tb_v9c_production.sv",
+      "cycle_count": 162,
+      "field_cycle_mode": "full_production_c3_trace",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "production_core",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:62: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:63: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process."
+      ],
+      "name": "multiple_outgoing_adjacency",
+      "oracle_trace_sha256": "31dd7102ebe53a67e7b32527ded30c4df048df03911a3932511768d2a48e0463",
+      "rtl_trace_sha256": "31dd7102ebe53a67e7b32527ded30c4df048df03911a3932511768d2a48e0463",
+      "scenario_id": "V9C3-12",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "if(scenario_outgoing_count<3 || scenario_pair_allocate_count<3) $fatal(1,\"outgoing adjacency\");"
+      ]
+    },
+    {
+      "artifact": ".codex_tmp/v9c3-matrix-final/V9C3-13/tb_v9c_production.sv",
+      "cycle_count": 163,
+      "field_cycle_mode": "full_production_c3_trace",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "production_core",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:62: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:63: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process."
+      ],
+      "name": "multiple_incoming_adjacency",
+      "oracle_trace_sha256": "b85b2816e09d1458df9880c03fb6b9ee7a2d2475fa01f366e0eb91a2a02e4f3b",
+      "rtl_trace_sha256": "b85b2816e09d1458df9880c03fb6b9ee7a2d2475fa01f366e0eb91a2a02e4f3b",
+      "scenario_id": "V9C3-13",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "if(scenario_incoming_count<3 || scenario_pair_allocate_count<3) $fatal(1,\"incoming adjacency\");"
+      ]
+    },
+    {
+      "artifact": "C:/Users/\u7075\u800014air/Documents/info os/.codex_tmp/v9c3-matrix-final/V9C3-14/tb.sv",
+      "cycle_count": 1,
+      "field_cycle_mode": "cycle_anchored_ready_valid_assertions",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "pair_transaction_table",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\v9_0c\\v9_0c_pair_transaction_table.sv:36: sorry: constant selects in always_* processes are not fully supported (the process will be sensitive to all bits in '+i[31:0]').",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\v9_0c\\v9_0c_pair_transaction_table.sv:38: sorry: constant selects in always_* processes are not fully supported (the process will be sensitive to all bits in '+i[31:0]').",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\v9_0c\\v9_0c_pair_transaction_table.sv:39: sorry: constant selects in always_* processes are not fully supported (the process will be sensitive to all bits in '+i[31:0]')."
+      ],
+      "name": "pair_first_allocation",
+      "oracle_trace_sha256": "",
+      "rtl_trace_sha256": "",
+      "scenario_id": "V9C3-14",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "first allocation occupies one slot"
+      ]
+    },
+    {
+      "artifact": "C:/Users/\u7075\u800014air/Documents/info os/.codex_tmp/v9c3-matrix-final/V9C3-15/tb.sv",
+      "cycle_count": 3,
+      "field_cycle_mode": "cycle_anchored_ready_valid_assertions",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "pair_transaction_table",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\v9_0c\\v9_0c_pair_transaction_table.sv:36: sorry: constant selects in always_* processes are not fully supported (the process will be sensitive to all bits in '+i[31:0]').",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\v9_0c\\v9_0c_pair_transaction_table.sv:38: sorry: constant selects in always_* processes are not fully supported (the process will be sensitive to all bits in '+i[31:0]').",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\v9_0c\\v9_0c_pair_transaction_table.sv:39: sorry: constant selects in always_* processes are not fully supported (the process will be sensitive to all bits in '+i[31:0]')."
+      ],
+      "name": "pair_same_synapse_merge",
+      "oracle_trace_sha256": "",
+      "rtl_trace_sha256": "",
+      "scenario_id": "V9C3-15",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "same stable ID merges pre/post into one slot"
+      ]
+    },
+    {
+      "artifact": "C:/Users/\u7075\u800014air/Documents/info os/.codex_tmp/v9c3-matrix-final/V9C3-16/tb.sv",
+      "cycle_count": 5,
+      "field_cycle_mode": "cycle_anchored_ready_valid_assertions",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "pair_transaction_table",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\v9_0c\\v9_0c_pair_transaction_table.sv:36: sorry: constant selects in always_* processes are not fully supported (the process will be sensitive to all bits in '+i[31:0]').",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\v9_0c\\v9_0c_pair_transaction_table.sv:38: sorry: constant selects in always_* processes are not fully supported (the process will be sensitive to all bits in '+i[31:0]').",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\v9_0c\\v9_0c_pair_transaction_table.sv:39: sorry: constant selects in always_* processes are not fully supported (the process will be sensitive to all bits in '+i[31:0]')."
+      ],
+      "name": "pair_deterministic_drain_order",
+      "oracle_trace_sha256": "",
+      "rtl_trace_sha256": "",
+      "scenario_id": "V9C3-16",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "drain uses deterministic lowest-slot order"
+      ]
+    },
+    {
+      "artifact": "C:/Users/\u7075\u800014air/Documents/info os/.codex_tmp/v9c3-matrix-final/V9C3-17/tb.sv",
+      "cycle_count": 127,
+      "field_cycle_mode": "cycle_anchored_ready_valid_assertions",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "pair_transaction_table",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\v9_0c\\v9_0c_pair_transaction_table.sv:36: sorry: constant selects in always_* processes are not fully supported (the process will be sensitive to all bits in '+i[31:0]').",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\v9_0c\\v9_0c_pair_transaction_table.sv:38: sorry: constant selects in always_* processes are not fully supported (the process will be sensitive to all bits in '+i[31:0]').",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\v9_0c\\v9_0c_pair_transaction_table.sv:39: sorry: constant selects in always_* processes are not fully supported (the process will be sensitive to all bits in '+i[31:0]')."
+      ],
+      "name": "pair_exact_capacity",
+      "oracle_trace_sha256": "",
+      "rtl_trace_sha256": "",
+      "scenario_id": "V9C3-17",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "64 unique entries legal; full-table hit remains legal"
+      ]
+    },
+    {
+      "artifact": "C:/Users/\u7075\u800014air/Documents/info os/.codex_tmp/v9c3-matrix-final/V9C3-18/tb.sv",
+      "cycle_count": 129,
+      "field_cycle_mode": "cycle_anchored_ready_valid_assertions",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "pair_transaction_table",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\v9_0c\\v9_0c_pair_transaction_table.sv:36: sorry: constant selects in always_* processes are not fully supported (the process will be sensitive to all bits in '+i[31:0]').",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\v9_0c\\v9_0c_pair_transaction_table.sv:38: sorry: constant selects in always_* processes are not fully supported (the process will be sensitive to all bits in '+i[31:0]').",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\v9_0c\\v9_0c_pair_transaction_table.sv:39: sorry: constant selects in always_* processes are not fully supported (the process will be sensitive to all bits in '+i[31:0]')."
+      ],
+      "name": "pair_overflow_hard_error",
+      "oracle_trace_sha256": "",
+      "rtl_trace_sha256": "",
+      "scenario_id": "V9C3-18",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "65th unique entry is rejected with overflow pulse"
+      ]
+    },
+    {
+      "artifact": ".codex_tmp/v9c3-matrix-final/V9C3-19/tb_v9c_production.sv",
+      "cycle_count": 146,
+      "field_cycle_mode": "full_production_c3_trace",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "production_core",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:62: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:63: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process."
+      ],
+      "name": "pre_trace_raw_forwarding",
+      "oracle_trace_sha256": "baa35530eb2f4eb4330bf7b2c002f838fada7a2b582474e010d0d4691fe6dcfb",
+      "rtl_trace_sha256": "baa35530eb2f4eb4330bf7b2c002f838fada7a2b582474e010d0d4691fe6dcfb",
+      "scenario_id": "V9C3-19",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "if(dut.learning.pre_write_enable===1'bx || eligibility_commit_count==0) $fatal(1,\"pre RAW\");"
+      ]
+    },
+    {
+      "artifact": ".codex_tmp/v9c3-matrix-final/V9C3-20/tb_v9c_production.sv",
+      "cycle_count": 157,
+      "field_cycle_mode": "full_production_c3_trace",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "production_core",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:62: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:63: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process."
+      ],
+      "name": "post_trace_raw_forwarding",
+      "oracle_trace_sha256": "8f7541c78d613ca7efa8a8cb5feb7d2d37cdcab8a8754da6f3e158eaae33acc5",
+      "rtl_trace_sha256": "8f7541c78d613ca7efa8a8cb5feb7d2d37cdcab8a8754da6f3e158eaae33acc5",
+      "scenario_id": "V9C3-20",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "if(dut.learning.post_write_enable===1'bx || eligibility_commit_count==0) $fatal(1,\"post RAW\");"
+      ]
+    },
+    {
+      "artifact": ".codex_tmp/v9c3-matrix-final/V9C3-21/tb_v9c_production.sv",
+      "cycle_count": 97,
+      "field_cycle_mode": "full_production_c3_trace",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "production_core",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:62: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:63: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process."
+      ],
+      "name": "eligibility_raw_forwarding",
+      "oracle_trace_sha256": "5bbc696340e4706989a3cf5b1b22dc888c9486f3d448f5ca77c627418c9bea54",
+      "rtl_trace_sha256": "5bbc696340e4706989a3cf5b1b22dc888c9486f3d448f5ca77c627418c9bea54",
+      "scenario_id": "V9C3-21",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "if(eligibility_commit_count!==1 || scenario_pair_hit_count==0) $fatal(1,\"eligibility RAW\");"
+      ]
+    },
+    {
+      "artifact": ".codex_tmp/v9c3-matrix-final/V9C3-22/tb_v9c_production.sv",
+      "cycle_count": 101,
+      "field_cycle_mode": "full_production_c3_trace",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "production_core",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:62: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:63: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process."
+      ],
+      "name": "weight_raw_forwarding",
+      "oracle_trace_sha256": "14c51fc1ec57ee11d107f27fb60d88a446f229597213b2037000b4a573c0bb98",
+      "rtl_trace_sha256": "14c51fc1ec57ee11d107f27fb60d88a446f229597213b2037000b4a573c0bb98",
+      "scenario_id": "V9C3-22",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "if(weight_commit_count!==1 || dut.neural_core.accepted_external_count!==1) $fatal(1,\"weight RAW\");"
+      ]
+    },
+    {
+      "artifact": "C:/Users/\u7075\u800014air/Documents/info os/.codex_tmp/v9c3-matrix-final/V9C3-23/tb.sv",
+      "cycle_count": 1,
+      "field_cycle_mode": "cycle_anchored_ready_valid_assertions",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "active_table",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\v9_0c\\v9_0c_active_table.sv:90: sorry: constant selects in always_* processes are not fully supported (the process will be sensitive to all bits in 'next_unused[2:0]')."
+      ],
+      "name": "active_zero_to_nonzero_insertion",
+      "oracle_trace_sha256": "",
+      "rtl_trace_sha256": "",
+      "scenario_id": "V9C3-23",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "zero-to-nonzero insertion creates reverse membership"
+      ]
+    },
+    {
+      "artifact": "C:/Users/\u7075\u800014air/Documents/info os/.codex_tmp/v9c3-matrix-final/V9C3-24/tb.sv",
+      "cycle_count": 3,
+      "field_cycle_mode": "cycle_anchored_ready_valid_assertions",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "active_table",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\v9_0c\\v9_0c_active_table.sv:90: sorry: constant selects in always_* processes are not fully supported (the process will be sensitive to all bits in 'next_unused[2:0]')."
+      ],
+      "name": "active_duplicate_insertion_suppression",
+      "oracle_trace_sha256": "",
+      "rtl_trace_sha256": "",
+      "scenario_id": "V9C3-24",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "duplicate insert preserves occupancy and pulses suppression"
+      ]
+    },
+    {
+      "artifact": "C:/Users/\u7075\u800014air/Documents/info os/.codex_tmp/v9c3-matrix-final/V9C3-25/tb.sv",
+      "cycle_count": 9,
+      "field_cycle_mode": "cycle_anchored_ready_valid_assertions",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "active_table",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\v9_0c\\v9_0c_active_table.sv:90: sorry: constant selects in always_* processes are not fully supported (the process will be sensitive to all bits in 'next_unused[2:0]')."
+      ],
+      "name": "active_per_channel_linked_traversal",
+      "oracle_trace_sha256": "",
+      "rtl_trace_sha256": "",
+      "scenario_id": "V9C3-25",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "per-channel linked traversal preserves insertion order"
+      ]
+    },
+    {
+      "artifact": "C:/Users/\u7075\u800014air/Documents/info os/.codex_tmp/v9c3-matrix-final/V9C3-26/tb.sv",
+      "cycle_count": 4,
+      "field_cycle_mode": "cycle_anchored_ready_valid_assertions",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "active_table",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\v9_0c\\v9_0c_active_table.sv:90: sorry: constant selects in always_* processes are not fully supported (the process will be sensitive to all bits in 'next_unused[2:0]')."
+      ],
+      "name": "stale_active_entry_reclaim",
+      "oracle_trace_sha256": "",
+      "rtl_trace_sha256": "",
+      "scenario_id": "V9C3-26",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "second reclaim is rejected without occupancy change"
+      ]
+    },
+    {
+      "artifact": "C:/Users/\u7075\u800014air/Documents/info os/.codex_tmp/v9c3-matrix-final/V9C3-27/tb.sv",
+      "cycle_count": 2,
+      "field_cycle_mode": "cycle_anchored_ready_valid_assertions",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "active_table",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\v9_0c\\v9_0c_active_table.sv:90: sorry: constant selects in always_* processes are not fully supported (the process will be sensitive to all bits in 'next_unused[2:0]')."
+      ],
+      "name": "generation_mismatch_rejection",
+      "oracle_trace_sha256": "",
+      "rtl_trace_sha256": "",
+      "scenario_id": "V9C3-27",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "wrong generation cannot reclaim live entry"
+      ]
+    },
+    {
+      "artifact": "C:/Users/\u7075\u800014air/Documents/info os/.codex_tmp/v9c3-matrix-final/V9C3-28/tb.sv",
+      "cycle_count": 4,
+      "field_cycle_mode": "cycle_anchored_ready_valid_assertions",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "active_table",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\v9_0c\\v9_0c_active_table.sv:90: sorry: constant selects in always_* processes are not fully supported (the process will be sensitive to all bits in 'next_unused[2:0]')."
+      ],
+      "name": "generation_wrap_protection",
+      "oracle_trace_sha256": "",
+      "rtl_trace_sha256": "",
+      "scenario_id": "V9C3-28",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "slot generation 255 and reset epoch 255 both raise sticky wrap protection"
+      ]
+    },
+    {
+      "artifact": "C:/Users/\u7075\u800014air/Documents/info os/.codex_tmp/v9c3-matrix-final/V9C3-29/tb.sv",
+      "cycle_count": 511,
+      "field_cycle_mode": "cycle_anchored_ready_valid_assertions",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "active_table",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\v9_0c\\v9_0c_active_table.sv:90: sorry: constant selects in always_* processes are not fully supported (the process will be sensitive to all bits in 'next_unused[8:0]')."
+      ],
+      "name": "active_pool_exact_capacity",
+      "oracle_trace_sha256": "",
+      "rtl_trace_sha256": "",
+      "scenario_id": "V9C3-29",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "all 256 active slots are legal"
+      ]
+    },
+    {
+      "artifact": "C:/Users/\u7075\u800014air/Documents/info os/.codex_tmp/v9c3-matrix-final/V9C3-30/tb.sv",
+      "cycle_count": 513,
+      "field_cycle_mode": "cycle_anchored_ready_valid_assertions",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "active_table",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\v9_0c\\v9_0c_active_table.sv:90: sorry: constant selects in always_* processes are not fully supported (the process will be sensitive to all bits in 'next_unused[8:0]')."
+      ],
+      "name": "active_pool_overflow_hard_error",
+      "oracle_trace_sha256": "",
+      "rtl_trace_sha256": "",
+      "scenario_id": "V9C3-30",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "257th active allocation is rejected without a drop"
+      ]
+    },
+    {
+      "artifact": ".codex_tmp/v9c3-matrix-final/V9C3-31/tb_v9c_production.sv",
+      "cycle_count": 52,
+      "field_cycle_mode": "full_production_c3_trace",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "production_core",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:62: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:63: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process."
+      ],
+      "name": "positive_modulation_update",
+      "oracle_trace_sha256": "1368141ea0479cc0fd3af7449be2b5dbe3598d0179db6c23db26fd4e53a92db5",
+      "rtl_trace_sha256": "1368141ea0479cc0fd3af7449be2b5dbe3598d0179db6c23db26fd4e53a92db5",
+      "scenario_id": "V9C3-31",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "if($signed(dut.learning.state_store.current_weight[0])<=1 || weight_commit_count!==1) $fatal(1,\"positive update\");"
+      ]
+    },
+    {
+      "artifact": ".codex_tmp/v9c3-matrix-final/V9C3-32/tb_v9c_production.sv",
+      "cycle_count": 52,
+      "field_cycle_mode": "full_production_c3_trace",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "production_core",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:62: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:63: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process."
+      ],
+      "name": "negative_modulation_update",
+      "oracle_trace_sha256": "01aeec81667fa4fa8ce70580d7a1d4b14e9e7496480d03f0ad8c7dce2b83b19b",
+      "rtl_trace_sha256": "01aeec81667fa4fa8ce70580d7a1d4b14e9e7496480d03f0ad8c7dce2b83b19b",
+      "scenario_id": "V9C3-32",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "if($signed(dut.learning.state_store.current_weight[0])>=1 || weight_commit_count!==1) $fatal(1,\"negative update\");"
+      ]
+    },
+    {
+      "artifact": ".codex_tmp/v9c3-matrix-final/V9C3-33/tb_v9c_production.sv",
+      "cycle_count": 55,
+      "field_cycle_mode": "full_production_c3_trace",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "production_core",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:62: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:63: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process."
+      ],
+      "name": "multiple_modulation_one_channel",
+      "oracle_trace_sha256": "7b381414952ca6f8ef9ce3e63cebd1ed2492ca3736b262a62d5eaf55913fb46d",
+      "rtl_trace_sha256": "7b381414952ca6f8ef9ce3e63cebd1ed2492ca3736b262a62d5eaf55913fb46d",
+      "scenario_id": "V9C3-33",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "if(scenario_mod_accept_count!==2 || $signed(dut.learning.state_store.current_weight[0])!==7) $fatal(1,\"mod aggregation\");"
+      ]
+    },
+    {
+      "artifact": ".codex_tmp/v9c3-matrix-final/V9C3-34/tb_v9c_production.sv",
+      "cycle_count": 56,
+      "field_cycle_mode": "full_production_c3_trace",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "production_core",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:62: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:63: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process."
+      ],
+      "name": "multiple_modulation_channel_isolation",
+      "oracle_trace_sha256": "cc25fa11bdaedc36d8c39ae00da15023aebf684ac51e17d15c97f820bfa706ca",
+      "rtl_trace_sha256": "cc25fa11bdaedc36d8c39ae00da15023aebf684ac51e17d15c97f820bfa706ca",
+      "scenario_id": "V9C3-34",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "if(scenario_mod_accept_count!==2 || scenario_active_scan_count!==2) $fatal(1,\"channel isolation\");"
+      ]
+    },
+    {
+      "artifact": ".codex_tmp/v9c3-matrix-final/V9C3-35/tb_v9c_production.sv",
+      "cycle_count": 68,
+      "field_cycle_mode": "full_production_c3_trace",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "production_core",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:62: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:63: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process."
+      ],
+      "name": "excitatory_lower_upper_clamp",
+      "oracle_trace_sha256": "a7839ae18887c848ab2cbbd79982c1aea65bf9fc3840f9b3cd90807ea8c5ee91",
+      "rtl_trace_sha256": "a7839ae18887c848ab2cbbd79982c1aea65bf9fc3840f9b3cd90807ea8c5ee91",
+      "scenario_id": "V9C3-35",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "if(clamped_update_count!==2 || $signed(dut.learning.state_store.current_weight[0])!==0) $fatal(1,\"exc clamps\");"
+      ]
+    },
+    {
+      "artifact": ".codex_tmp/v9c3-matrix-final/V9C3-36/tb_v9c_production.sv",
+      "cycle_count": 68,
+      "field_cycle_mode": "full_production_c3_trace",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "production_core",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:62: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:63: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process."
+      ],
+      "name": "inhibitory_lower_upper_clamp",
+      "oracle_trace_sha256": "b0ef72cb62e12d7f580afe9a1195677e7572985138391e9d2c264712f9d2a7e4",
+      "rtl_trace_sha256": "b0ef72cb62e12d7f580afe9a1195677e7572985138391e9d2c264712f9d2a7e4",
+      "scenario_id": "V9C3-36",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "if(clamped_update_count!==2 || $signed(dut.learning.state_store.current_weight[0])!==0) $fatal(1,\"inh clamps\");"
+      ]
+    },
+    {
+      "artifact": ".codex_tmp/v9c3-matrix-final/V9C3-37/tb_v9c_production.sv",
+      "cycle_count": 52,
+      "field_cycle_mode": "full_production_c3_trace",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "production_core",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:62: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:63: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process."
+      ],
+      "name": "custom_signed_weight_crossing_zero",
+      "oracle_trace_sha256": "b1638133598d17fd3972e1d0231d62dcbca730f771b2d1b1aa79fb35bddc75c6",
+      "rtl_trace_sha256": "b1638133598d17fd3972e1d0231d62dcbca730f771b2d1b1aa79fb35bddc75c6",
+      "scenario_id": "V9C3-37",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "if($signed(dut.learning.state_store.current_weight[0])!==1) $fatal(1,\"custom crossing\");"
+      ]
+    },
+    {
+      "artifact": ".codex_tmp/v9c3-matrix-final/V9C3-38/tb_v9c_production.sv",
+      "cycle_count": 162,
+      "field_cycle_mode": "full_production_c3_trace",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "production_core",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:62: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:63: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process."
+      ],
+      "name": "new_weight_visible_next_tick",
+      "oracle_trace_sha256": "0533c20b42d9d2e73a434ee7020c8cc7ff31ebc5973c2fd3a0f4fca81d627b73",
+      "rtl_trace_sha256": "0533c20b42d9d2e73a434ee7020c8cc7ff31ebc5973c2fd3a0f4fca81d627b73",
+      "scenario_id": "V9C3-38",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "if(weight_commit_count!==1 || observed_spikes!==1) $fatal(1,\"next tick visibility\");"
+      ]
+    },
+    {
+      "artifact": ".codex_tmp/v9c3-matrix-final/V9C3-39/tb_v9c_production.sv",
+      "cycle_count": 71,
+      "field_cycle_mode": "full_production_c3_trace",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "production_core",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:62: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:63: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process."
+      ],
+      "name": "delayed_contribution_sampled_old_weight",
+      "oracle_trace_sha256": "c9860fc431a7c13d2c8a3d7e6ac49d66e638757e77f6e5f2676224a791c3ffa5",
+      "rtl_trace_sha256": "c9860fc431a7c13d2c8a3d7e6ac49d66e638757e77f6e5f2676224a791c3ffa5",
+      "scenario_id": "V9C3-39",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "if(dut.neural_core.pool_occupancy==0 || $signed(dut.learning.state_store.current_weight[0])!==3) $fatal(1,\"pending old sample contract\");"
+      ]
+    },
+    {
+      "artifact": ".codex_tmp/v9c3-matrix-final/V9C3-40/tb_v9c_production.sv",
+      "cycle_count": 146,
+      "field_cycle_mode": "full_production_c3_trace",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "production_core",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:62: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:63: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process."
+      ],
+      "name": "barrier_waits_pair_eligibility",
+      "oracle_trace_sha256": "baa35530eb2f4eb4330bf7b2c002f838fada7a2b582474e010d0d4691fe6dcfb",
+      "rtl_trace_sha256": "baa35530eb2f4eb4330bf7b2c002f838fada7a2b582474e010d0d4691fe6dcfb",
+      "scenario_id": "V9C3-40",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "if(eligibility_commit_count==0 || scenario_pair_drain_count==0) $fatal(1,\"pair barrier work\");"
+      ]
+    },
+    {
+      "artifact": ".codex_tmp/v9c3-matrix-final/V9C3-41/tb_v9c_production.sv",
+      "cycle_count": 52,
+      "field_cycle_mode": "full_production_c3_trace",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "production_core",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:62: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:63: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process."
+      ],
+      "name": "barrier_waits_active_weight",
+      "oracle_trace_sha256": "1368141ea0479cc0fd3af7449be2b5dbe3598d0179db6c23db26fd4e53a92db5",
+      "rtl_trace_sha256": "1368141ea0479cc0fd3af7449be2b5dbe3598d0179db6c23db26fd4e53a92db5",
+      "scenario_id": "V9C3-41",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "if(weight_commit_count==0 || scenario_active_scan_count==0) $fatal(1,\"weight barrier work\");"
+      ]
+    },
+    {
+      "artifact": "C:/Users/\u7075\u800014air/Documents/info os/.codex_tmp/v9c3-matrix-final/V9C3-42/tb.sv",
+      "cycle_count": 65,
+      "field_cycle_mode": "cycle_anchored_ready_valid_assertions",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "modulation_ingress",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\v9_0c\\v9_0c_modulation_ingress.sv:52: sorry: constant selects in always_* processes are not fully supported (the process will be sensitive to all bits in '+select_i[31:0]').",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\v9_0c\\v9_0c_modulation_ingress.sv:57: sorry: constant selects in always_* processes are not fully supported (the process will be sensitive to all bits in '+accumulator[word=<select=emit_cursor[4:0][(0)+:6] expr_type=logic>][31:0]')."
+      ],
+      "name": "modulation_fifo_backpressure",
+      "oracle_trace_sha256": "",
+      "rtl_trace_sha256": "",
+      "scenario_id": "V9C3-42",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "32 entries accepted; 33rd observes ready low and overflow pulse"
+      ]
+    },
+    {
+      "artifact": ".codex_tmp/v9c3-matrix-final/V9C3-43/tb_v9c_production.sv",
+      "cycle_count": 325,
+      "field_cycle_mode": "full_production_c3_trace",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "production_core",
+      "messages": [
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:62: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:63: warning: System task ($error) cannot be synthesized in an always_ff process.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\common\\rv_fifo.sv:64: warning: System task ($error) cannot be synthesized in an always_ff process."
+      ],
+      "name": "weight_queue_backpressure",
+      "oracle_trace_sha256": "c787b443210a0e4edcd00f6d110b31ed1b2c6f038774e05f1837694830ea5b1d",
+      "rtl_trace_sha256": "c787b443210a0e4edcd00f6d110b31ed1b2c6f038774e05f1837694830ea5b1d",
+      "scenario_id": "V9C3-43",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "if(scenario_max_weight_occupancy!==32 || weight_commit_count!==33) $fatal(1,\"weight queue pressure\");"
+      ]
+    },
+    {
+      "artifact": "C:/Users/\u7075\u800014air/Documents/info os/.codex_tmp/v9c3-matrix-final/V9C3-44/tb.sv",
+      "cycle_count": 4,
+      "field_cycle_mode": "cycle_anchored_ready_valid_assertions",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "learning_state",
+      "messages": [],
+      "name": "cold_reset_restores_initial_weight",
+      "oracle_trace_sha256": "",
+      "rtl_trace_sha256": "",
+      "scenario_id": "V9C3-44",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "cold reset restores compiled initial weight"
+      ]
+    },
+    {
+      "artifact": "C:/Users/\u7075\u800014air/Documents/info os/.codex_tmp/v9c3-matrix-final/V9C3-45/tb.sv",
+      "cycle_count": 4,
+      "field_cycle_mode": "cycle_anchored_ready_valid_assertions",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "learning_state",
+      "messages": [],
+      "name": "state_reset_preserves_learned_weight",
+      "oracle_trace_sha256": "",
+      "rtl_trace_sha256": "",
+      "scenario_id": "V9C3-45",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "state reset preserves learned current weight"
+      ]
+    },
+    {
+      "artifact": ".codex_tmp/v9c3-matrix-final/V9C3-46/tb_v9c_ingress_reset_boundary.sv",
+      "cycle_count": 0,
+      "field_cycle_mode": "cycle_anchored_ready_valid_assertions",
+      "field_cycle_status": "PASS",
+      "first_field_cycle_divergence": "",
+      "fixture": "learning_ingress",
+      "messages": [
+        "       :   -- module v9_0c_sync_rom declared here: C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\v9_0c\\v9_0c_sync_rom.sv:1",
+        "       :   -- package v9_0c_profile_pkg declared here: C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\v9_0c\\v9_0c_profile_pkg.sv:1",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\v9_0c\\v9_0c_learning_ingress.sv:95: warning: Port 9 (occupancy) of module v9_0c_fifo expects 2 bit(s), given 6.",
+        "C:\\Users\\\u7075\u800014air\\Documents\\info os\\rtl\\v9_0c\\v9_0c_learning_ingress.sv:95:        : Padding 4 high bits of the expression."
+      ],
+      "name": "tick_clear_boundary_sticky_error",
+      "oracle_trace_sha256": "",
+      "rtl_trace_sha256": "",
+      "scenario_id": "V9C3-46",
+      "simulator": "iverilog/vvp",
+      "status": "PASS",
+      "targeted_assertions": [
+        "ready-low tick-clear event is not captured",
+        "ingress drains exactly one subsequently accepted transaction"
+      ]
+    }
+  ],
+  "field_cycle_passed": 46,
+  "field_cycle_status": "PASS",
+  "fingerprint": "be60ca1c1dde1b282456d17c4d37e3cc1ea59f739f6520318ee74ffca317d6a5",
+  "passed": 46,
+  "required": 46,
+  "schema_version": "3.0-targeted-rtl-scenarios",
+  "simulator": "iverilog/vvp",
+  "status": "PASS"
+}

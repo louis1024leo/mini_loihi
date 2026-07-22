@@ -1,0 +1,16 @@
+[options]
+mode bmc
+depth 40
+
+[engines]
+smtbmc boolector
+
+[script]
+read -formal -D FORMAL v8e_ram_delay_wheel_storage.sv v8_0e_ram_storage_formal.sv
+prep -top v8_0e_ram_storage_formal
+memory_map
+opt
+
+[files]
+rtl/v8_0e/v8e_ram_delay_wheel_storage.sv
+formal/v8_0e_ram_storage_formal.sv
