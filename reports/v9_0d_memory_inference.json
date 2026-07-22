@@ -1,0 +1,18 @@
+{
+  "image_reads_confirmed": [
+    "C:/fpga/mini-loihi-vivado-runs/v9_0d/image/axon_len.mem",
+    "C:/fpga/mini-loihi-vivado-runs/v9_0d/image/axon_ptr.mem",
+    "C:/fpga/mini-loihi-vivado-runs/v9_0d/image/base_plastic_id.mem",
+    "C:/fpga/mini-loihi-vivado-runs/v9_0d/image/recurrent_delay.mem",
+    "C:/fpga/mini-loihi-vivado-runs/v9_0d/image/recurrent_len.mem",
+    "C:/fpga/mini-loihi-vivado-runs/v9_0d/image/recurrent_plastic_id.mem",
+    "C:/fpga/mini-loihi-vivado-runs/v9_0d/image/recurrent_ptr.mem",
+    "C:/fpga/mini-loihi-vivado-runs/v9_0d/image/recurrent_target.mem",
+    "C:/fpga/mini-loihi-vivado-runs/v9_0d/image/recurrent_weight.mem",
+    "C:/fpga/mini-loihi-vivado-runs/v9_0d/image/synapse_delay.mem",
+    "C:/fpga/mini-loihi-vivado-runs/v9_0d/image/synapse_target.mem",
+    "C:/fpga/mini-loihi-vivado-runs/v9_0d/image/synapse_weight.mem"
+  ],
+  "reason": "[Synth 8-524] part-select [13:0] out of range of prefix 'request_target'",
+  "status": "NOT_MEASURED"
+}

@@ -1,0 +1,13 @@
+{
+  "configuration_equivalent": false,
+  "reason": "[Synth 8-524] part-select [13:0] out of range of prefix 'request_target'",
+  "v8_1d": {
+    "bram": 4,
+    "dsp": 2,
+    "ff": 2164,
+    "lut": 1885,
+    "lutram": 154,
+    "wns_100mhz_ns": 5.692
+  },
+  "v9_0d": "NOT_MEASURED"
+}

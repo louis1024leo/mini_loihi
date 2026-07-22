@@ -1,0 +1,6 @@
+{
+  "physical_control_sets": "NOT_MEASURED",
+  "reason": "[Synth 8-524] part-select [13:0] out of range of prefix 'request_target'",
+  "reset_protocol": "synchronous reset and sequential state scrub in v9_0c_learning_state",
+  "status": "SOURCE_AUDIT_ONLY"
+}

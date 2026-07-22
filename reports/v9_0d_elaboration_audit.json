@@ -1,0 +1,42 @@
+{
+  "classification": "A",
+  "decision": "RERUN_100MHZ_WITH_EXACT_PRODUCTION_TOP",
+  "failure": {
+    "error": "[Synth 8-524] part-select [13:0] out of range of prefix 'request_target'",
+    "file": "rtl/v8_0e/v8e_ram_delay_wheel_storage.sv",
+    "instance_hierarchy": "v9_0d_ooc_top.dut.neural_core.wheel_storage",
+    "source_line": 152
+  },
+  "failing_wrapper_parameters": {
+    "mini_loihi_v9_0c_core": {"NEURON_COUNT": 256, "AXON_COUNT": 256, "BASE_SYNAPSE_COUNT": 1024, "RECURRENT_SYNAPSE_COUNT": 1024, "PLASTIC_SYNAPSE_COUNT": 1024},
+    "mini_loihi_v9_0c_neural_core": {"NEURON_COUNT": 256, "NEURON_WIDTH": 8, "AXON_WIDTH": 8, "target_width": 8},
+    "v8e_ram_delay_wheel_storage": {"NEURON_COUNT": 256, "NEURON_WIDTH": 8, "TARGET_ENTRIES": 16384, "TARGET_ADDR_WIDTH": 14, "request_target_width": 8}
+  },
+  "production_configuration": {
+    "top": "mini_loihi_v9_0c_image_top",
+    "chain": ["mini_loihi_v9_0c_image_top", "mini_loihi_v9_0c_core", "mini_loihi_v9_0c_neural_core", "v8e_ram_delay_wheel_storage"],
+    "parameters": {"NEURON_COUNT": 2, "NEURON_WIDTH": 8, "AXON_WIDTH": 8, "target_width": 8, "TARGET_ENTRIES": 128, "TARGET_ADDR_WIDTH": 7, "request_target_width": 8},
+    "casts_or_adapters": "none; direct same-width target connection"
+  },
+  "profile_contract": {
+    "v9_0b_balanced_capacity_constants": {"MAX_NEURONS": 256, "MAX_PLASTIC_SYNAPSES": 1024, "MAX_MODULATION_CHANNELS": 16, "ACTIVE_CAPACITY": 256},
+    "binding_into_production_image_top": "none",
+    "evidence": "release Verilator report marks these package constants unused"
+  },
+  "v8_1d_successful_configuration": {
+    "top": "mini_loihi_v81c_alif_image_top",
+    "generated_fixture": "build_v81_alif_demo",
+    "parameters": {"NEURON_COUNT": 2, "NEURON_WIDTH": 8, "TARGET_ADDR_WIDTH": 7, "request_target_width": 8},
+    "same_storage_module": true,
+    "adapter_or_14bit_target": "none"
+  },
+  "storage_contract": {
+    "TARGET_ADDR_WIDTH": "$clog2(WHEEL_SLOTS * NEURON_COUNT)",
+    "request_target_declaration": "logic [NEURON_WIDTH-1:0] request_target [0:1]",
+    "caller_extension_contract": "not declared",
+    "finding": "the parameter combination requires TARGET_ADDR_WIDTH <= NEURON_WIDTH; the wrapper violated it"
+  },
+  "validation_infrastructure_changed": true,
+  "frozen_rtl_changed": false,
+  "higher_frequency_runs": "not started"
+}

@@ -1,0 +1,12 @@
+{
+  "mode": "out_of_context",
+  "part": "xczu7ev-ffvc1156-2-e",
+  "run_root": "C:/fpga/mini-loihi-vivado-runs/v9_0d",
+  "vivado": "v2025.2.1",
+  "windows_workarounds": [
+    "absolute vivado.bat path",
+    "process-local APPDATA",
+    "process-local XILINX_TCLAPP_REPO",
+    "Tcl auto_path appinit"
+  ]
+}
